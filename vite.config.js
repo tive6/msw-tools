@@ -9,9 +9,9 @@ let customElement = false;
 if (isProd) {
   lib = {
     entry: "src/components/index.js",
-    name: "MswTool",
+    name: "MswTools",
     formats: ["umd", "iife"],
-    fileName: "msw-tool.min",
+    fileName: "msw-tools.min",
   };
   customElement = true;
 }

@@ -1,4 +1,4 @@
-<svelte:options tag="msw-tool" />
+<svelte:options tag="msw-tools" />
 
 <div class="msw-container">
   <div on:click={showModal} class="msw-show">MSW</div>
@@ -383,6 +383,7 @@
         font-size: 14px;
         box-shadow: 0 0 10px rgb(0 0 0 / 40%);
         cursor: pointer;
+        user-select: none;
     }
 
     .msw-mask {

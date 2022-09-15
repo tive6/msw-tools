@@ -1,8 +1,23 @@
 {
-  "name": "msw-tool",
-  "private": true,
-  "version": "1.0.0",
-  "main": "dist/msw-tool.min.iife.js",
+  "name": "msw-tools",
+  "version": "1.0.1",
+  "description": "Based on Msw.js and Svelte build a Mock tool for local development, testing, network request and interception",
+  "main": "dist/msw-tools.min.iife.js",
+  "keywords": [
+    "Mock",
+    "MSW",
+    "msw.js",
+    "Svelte",
+    "Web Components",
+    "Vite",
+    "Service Worker"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tive6/tive-cli.git"
+  },
+  "author": "zmer",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,7 +30,6 @@
     "@sveltejs/vite-plugin-svelte": "^1.0.2",
     "sass": "^1.54.9",
     "svelte": "^3.49.0",
-    "axios": "^0.27.2",
     "vite": "^3.1.0"
   },
   "dependencies": {
