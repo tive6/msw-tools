@@ -1,0 +1,24 @@
+{
+  "name": "my-svelte",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/msw-tool.min.iife.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "serve -s dist",
+    "postbuild": "npm run serve"
+  },
+  "devDependencies": {
+    "@sveltejs/vite-plugin-svelte": "^1.0.2",
+    "sass": "^1.54.9",
+    "svelte": "^3.49.0",
+    "axios": "^0.27.2",
+    "vite": "^3.1.0"
+  },
+  "dependencies": {
+    "msw": "^0.47.2"
+  }
+}
