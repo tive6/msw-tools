@@ -1,7 +1,7 @@
 {
   "name": "my-svelte",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "dist/msw-tool.min.iife.js",
   "scripts": {
     "dev": "vite",
