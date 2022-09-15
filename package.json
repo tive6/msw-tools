@@ -2,14 +2,14 @@
   "name": "my-svelte",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "main": "dist/msw-tool.min.iife.js",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "serve": "serve -s dist",
-    "postbuild": "npm run serve"
+    "postbuild": "npm run serve",
+    "git": "tive git -c tive.git.config.js"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.2",
