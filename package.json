@@ -1,5 +1,5 @@
 {
-  "name": "my-svelte",
+  "name": "msw-tool",
   "private": true,
   "version": "1.0.0",
   "main": "dist/msw-tool.min.iife.js",
