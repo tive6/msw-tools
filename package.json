@@ -1,6 +1,6 @@
 {
   "name": "msw-tools",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Based on Msw.js and Svelte build a Mock tool for local development, testing, network request and interception",
   "main": "dist/msw-tools.min.umd.js",
   "keywords": [
@@ -14,7 +14,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:tive6/tive-cli.git"
+    "url": "git@github.com:tive6/msw-tools.git"
   },
   "author": "zmer",
   "license": "MIT",
