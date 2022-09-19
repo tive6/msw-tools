@@ -53,8 +53,6 @@
                   <div on:click={getData} class="msw-handle-test">
                     ☞Fetch: [GET /test]☜
                   </div>
-
-                  <a href={null}>asdas</a>
                 </div>
               </div>
             </div>
@@ -420,7 +418,7 @@
 
 </script>
 
-<style type="text/scss">
+<style lang="scss" type="text/scss">
     * {
         padding: 0;
         margin: 0;
