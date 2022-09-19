@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<script src="./msw-tools.min.umd.js"></script>
+
+<msw-tools base="/"></msw-tools>
+
+<button id="btn">Btn</button>
+
+<script>
+
+
+  btn.onclick = function() {
+
+    fetch('/login').then(res=>{
+      return res.json()
+    }).then(res=>{
+      console.log(res)
+    })
+
+  }
+
+</script>
+</body>
+</html>

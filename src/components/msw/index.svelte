@@ -22,7 +22,7 @@
             {/each}
           </div>
           <div class="msw-tabs-handle">
-            <a on:click={resetHandlers} href="javascript:" class="msw-reset">配 置</a>
+            <a on:click={resetHandlers} href={null} class="msw-reset">配 置</a>
           </div>
         </div>
         <div class="msw-tabs-body">
@@ -30,7 +30,7 @@
             <div class="msw-tabs-wrap">
               <div class="msw-handle-wrap">
                 <div class="msw-handle-li">
-                  <a href="javascript:" on:click={clearData}
+                  <a href={null} on:click={clearData}
                      class="msw-handle-clear">清除数据库</a>
                   <label class="msw-handle-li-global">
                     <input type="checkbox"
@@ -53,6 +53,8 @@
                   <div on:click={getData} class="msw-handle-test">
                     ☞Fetch: [GET /test]☜
                   </div>
+
+                  <a href={null}>asdas</a>
                 </div>
               </div>
             </div>
@@ -67,7 +69,7 @@
                 </select>
                 <input bind:value={reqUrl} type="text" class="msw-config-input"
                        placeholder="/paths">
-                <a href="javascript:" on:click={add} class="msw-config-add">
+                <a href={null} on:click={add} class="msw-config-add">
                   {mockType === 'edit' ? '编 辑' : '添 加'}
                 </a>
               </div>
@@ -129,10 +131,10 @@
                       </label>
                     </td>
                     <td>
-                      <a on:click={edit.bind(null, {...item, index})} href="javascript:"
+                      <a on:click={edit.bind(null, {...item, index})} href={null}
                          class="msw-list-btn edit">编辑</a>
                       <!--                  <br>-->
-                      <a on:click={del.bind(null, {...item, index})} href="javascript:" class="msw-list-btn del">删除</a>
+                      <a on:click={del.bind(null, {...item, index})} href={null} class="msw-list-btn del">删除</a>
                     </td>
                   </tr>
                 {/each}
@@ -429,6 +431,7 @@
         font-style: normal;
         text-decoration: none;
         color: #333;
+        cursor: pointer;
     }
 
     input,
