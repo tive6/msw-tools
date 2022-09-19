@@ -9,8 +9,8 @@
          class="msw-mask"></div>
     <div transition:slide="{{delay: 250, duration: 300, easing: quintOut }}"
        class="msw-box">
-    <h2 on:click={getData} class="msw-title">
-      开发者控制台
+    <h2 class="msw-title">
+      MSW 开发者控制台
       <div on:click|stopPropagation={closeModal} class="msw-close">X</div>
     </h2>
     <div class="msw-tabs">
@@ -49,6 +49,11 @@
                 <input bind:value={failRatio} on:focusout={inputChange.bind(null, 'fail')} 
                        type="text" class="msw-handle-input" placeholder="默认 0 ">
               </div>
+              <div class="msw-handle-li">
+                <div on:click={getData} class="msw-handle-test">
+                  ☞Fetch: [GET /test]☜
+                </div>
+              </div>
             </div>
           </div>
         {/if}
@@ -62,13 +67,17 @@
               </select>
               <input bind:value={reqUrl} type="text" class="msw-config-input"
                      placeholder="/paths">
-              <a href="javascript:" on:click={add} class="msw-config-add">添 加</a>
+              <a href="javascript:" on:click={add} class="msw-config-add">
+                {mockType==='edit'?'编 辑':'添 加'}
+              </a>
             </div>
             <textarea bind:value={mockData} class="msw-config-data"
                       placeholder="Mock数据内容"
                       cols="100" rows="30"></textarea>
-            {#if mockErr}
-              <div class="msw-config-tips">{errMsg}</div>
+            {#if showMsg}
+              <div class="msw-config-tips {msgType==='error'?'error':'success'}">
+                {msgText}
+              </div>
             {/if}
           </div>
         {/if}
@@ -78,11 +87,11 @@
               <thead>
               <tr>
                 <th>Index</th>
-                <th>ID</th>
+<!--                <th>ID</th>-->
                 <th>Url</th>
                 <th>Method</th>
                 <th>Data</th>
-                <th>Date</th>
+<!--                <th>Date</th>-->
                 <th>
                   <label>
                     <input type=checkbox
@@ -98,11 +107,19 @@
               {#each list as item, index (item.id) }
               <tr>
                 <td>{index+1}</td>
-                <td>{item.id}</td>
+<!--                <td>{item.id}</td>-->
                 <td>{item.url}</td>
                 <td>{item.method}</td>
-                <td>{item.data}</td>
-                <td>{item.date}</td>
+                <td>
+<!--                  <textarea value={JSON.stringify(JSON.parse(item.data), null, 2)}-->
+<!--                            class="msw-list-data"-->
+<!--                            placeholder="Mock数据"-->
+<!--                            rows="8"></textarea>-->
+                  <pre class="msw-list-data" contenteditable="true">
+                    { JSON.stringify(JSON.parse(item.data), null, 2) }
+                  </pre>
+                </td>
+<!--                <td>{item.date}</td>-->
                 <td>
                   <label>
                     <input type=checkbox
@@ -112,7 +129,9 @@
                   </label>
                 </td>
                 <td>
-                  <a on:click={del.bind(null, {...item, index})} href="javascript:" class="msw-list-del">删除</a>
+                  <a on:click={edit.bind(null, {...item, index})} href="javascript:" class="msw-list-btn edit">编辑</a>
+<!--                  <br>-->
+                  <a on:click={del.bind(null, {...item, index})} href="javascript:" class="msw-list-btn del">删除</a>
                 </td>
               </tr>
               {/each}
@@ -148,22 +167,23 @@
   //   console.log("value changed", newValue);
   // }
 
+  const defaultData = JSON.stringify({ code: 0, msg: "OK", data: 1}, null, 2)
+
   let isProd = import.meta.env.PROD
   console.log('[ENV]', isProd)
 
-  let show = false
-  let currentTab = "01";
+  let show = true
+  let currentTab = "03";
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1000
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0
-  let reqMethod = 'All'
+  let reqMethod = 'all'
   let reqUrl = ''
-  let mockData = JSON.stringify({
-    code: 0,
-    msg: "OK",
-    data: 1,
-  }, null, 2)
-  let mockErr = false
-  let errMsg = ''
+  let mockData = defaultData
+  let mockType = ''
+  let mockIndex = 0
+  let showMsg = false
+  let msgText = ''
+  let msgType = 'error'
   let list = getLocalList()
   let globalStatus = localStorage.getItem(MSW_GLOBAL_STATUS) === '1'
   let allStatus = localStorage.getItem(MSW_ALL_STATUS) === '1'
@@ -271,8 +291,10 @@
     }
 
     if (!urlPatt.test(url)) {
-      mockErr = true
-      errMsg = `【url输入不正确】 url必须以"/"开始，不能为空""或"/"`
+      message({
+        type: 'error',
+        msg: `【url输入不正确】 url必须以"/"开始，不能为空""或"/"`
+      })
       return
     }
     
@@ -280,25 +302,70 @@
       let json = JSON.parse(mockData)
       console.log(json)
     } catch (err) {
-      mockErr = true
-      errMsg = `【Mock数据JSON格式异常】 ${err}`
+      message({
+        type: 'error',
+        msg: `【Mock数据JSON格式异常】 ${err}`
+      })
       return
     }
 
-    let res = list.find(item=>item.url===url)
+    if (mockType==='edit') {
+      let local = getLocalList()
+      local[mockIndex] = {
+        ...data
+      }
+      list = [
+        ...local
+      ]
 
-    if (res) {
-      mockErr = true
-      errMsg = `【url已存在】 url本地列表已存在，不能重复添加`
-      return;
+      message({
+        type: 'success',
+        msg: `【编辑成功】`
+      })
+      mockType = ''
+    } else {
+      let res = list.find(item=>item.url===url)
+
+      if (res) {
+        message({
+          type: 'error',
+          msg: `【url已存在】 url本地列表已存在，不能重复添加`
+        })
+        return;
+      }
+
+      list = [
+        data,
+        ...getLocalList()
+      ]
+
+      message({
+        type: 'success',
+        msg: `【添加成功】`
+      })
     }
-
-    mockErr = false
-    list = [
-      data,
-      ...getLocalList()
-    ]
     setLocalList()
+    initParams()
+  }
+
+  function edit(item) {
+    let {
+      url,
+      method,
+      data,
+      id,
+      date,
+      checked,
+      index,
+    } = item
+
+    reqUrl = url
+    reqMethod = method
+    mockData = JSON.stringify(JSON.parse(data), null, 2)
+
+    mockType = 'edit'
+    mockIndex = index
+    currentTab = '02'
   }
   
   function del({ id, index }) {
@@ -308,7 +375,7 @@
     ]
     setLocalList()
   }
-  
+
   function changeStatus(item) {
     let { index, checked } = item
     list[index].checked = !checked
@@ -330,10 +397,27 @@
   function uuid() {
     return Math.random().toString(36).slice(4, 10)
   }
+  
+  function message({ type, msg }) {
+    msgType = type
+    msgText = msg
+    showMsg = true
+    let timer = setTimeout(()=>{
+      showMsg = false
+      clearTimeout(timer)
+      timer = null
+    }, 2500)
+  }
+
+  function initParams() {
+    reqUrl = ''
+    mockData = defaultData
+    reqMethod = 'all'
+  }
 
 </script>
 
-<style lang="scss">
+<style type="text/scss">
     * {
         padding: 0;
         margin: 0;
@@ -355,7 +439,7 @@
 
     input::placeholder,
     textarea::placeholder {
-        color: palevioletred;
+        color: #bbb;
     }
 
     label {
@@ -376,7 +460,7 @@
         right: 50px;
         bottom: 50px;
         z-index: 9999;
-        padding: 5px 15px;
+        padding: 8px 15px;
         background-color: #07c160;
         color: #fff;
         border-radius: 4px;
@@ -507,7 +591,7 @@
     }
 
     .msw-config-input {
-        width: 200px;
+        width: 300px;
         height: 30px;
         border: 1px solid #999;
         border-left: none;
@@ -537,56 +621,134 @@
         margin-top: 15px;
         padding: 10px;
         text-indent: 0;
+        background-color: #fff6f7;
     }
 
     .msw-config-tips {
-        color: #f56c6c;
         margin-top: 10px;
+
+        &.error {
+            color: #f56c6c;
+        }
+
+        &.success {
+            color: #67c23a;
+        }
+    }
+
+    @mixin scrollbar {
+      &::-webkit-scrollbar {
+          display: none;
+          height: 0;
+          width: 0;
+          background-color: transparent;
+      }
     }
 
     .table-list {
         height: calc(70vh - 130px);
         //min-height: 300px;
         //max-height: 50vh;
-        overflow-y: auto;
-    }
+        overflow-y: scroll;
 
+        //@include scrollbar;
+    }
 
     .msw-list {
         width: 100%;
         border-color: #ddd;
         border-collapse: collapse;
+        table-layout: fixed;
+
+        th,
+        td {
+            padding: 5px;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        td {
+            word-wrap: break-word;
+        }
+
+        th {
+            background-color: #f0f9eb;
+
+            &:nth-child(1) {
+                width: 60px;
+            }
+
+            &:nth-child(2) {
+                max-width: 300px;
+                width: 20%;
+            }
+
+            &:nth-child(3) {
+                width: 80px;
+            }
+
+            &:nth-child(5) {
+                width: 80px;
+            }
+
+            &:nth-child(6) {
+                width: 86px;
+            }
+        }
+
+        .msw-list-data {
+            //max-width: 100%;
+            width: 100%;
+            padding: 5px;
+            max-height: 300px;
+            min-height: 100px;
+            overflow-y: scroll;
+            background-color: #fff6f7;
+            position: relative;
+            z-index: 10;
+            white-space: break-spaces;
+            outline-color: #fe6c6f;
+
+            @include scrollbar;
+        }
     }
 
-    .msw-list th {
-        background-color: #f0f9eb;
+    @media screen and (max-width: 640px) {
+        .table-list {
+            overflow-x: scroll;
+        }
+
+        .msw-list {
+            width: 960px;
+        }
     }
 
-    .msw-list th:nth-child(1) {
-        width: 55px;
-    }
-    .msw-list th:nth-child(2) {
-        width: 68px;
-    }
-    .msw-list th:nth-child(4) {
-        width: 72px;
-    }
-    .msw-list th:nth-child(6) ,
-    .msw-list th:nth-child(7) ,
-    .msw-list th:nth-child(8) {
-        width: 80px;
-    }
+    .msw-list-btn {
 
-    .msw-list th,
-    .msw-list td {
-        padding: 5px;
-    }
+        &.edit {
+            color: #409eff;
+        }
 
-    .msw-list-del {
-        color: #409eff;
+        &.del {
+            color: #f56c6c;
+        }
     }
 
     .msw-handle-li-global {
         color: #409eff;
+    }
+
+    .msw-handle-test {
+        cursor: pointer;
+        color: #409eff;
+        background: #ecf5ff;
+        border: 1px solid #b3d8ff;
+        border-radius: 4px;
+        padding: 5px 10px;
+
+        &:hover {
+            background-color: #409eff;
+            color: #fff;
+        }
     }
 </style>

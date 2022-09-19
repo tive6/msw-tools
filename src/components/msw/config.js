@@ -15,8 +15,8 @@ const tabs = [
 
 const rests = [
   {
-    value: "All",
-    label: "All",
+    value: "all",
+    label: "all",
   },
   {
     value: "get",
