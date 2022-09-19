@@ -1,6 +1,6 @@
 {
   "name": "msw-tools",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Based on Msw.js and Svelte build a Mock tool for local development, testing, network request and interception",
   "main": "dist/msw-tools.min.umd.js",
   "keywords": [
