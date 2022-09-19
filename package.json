@@ -36,5 +36,8 @@
   },
   "dependencies": {
     "msw": "^0.47.2"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
