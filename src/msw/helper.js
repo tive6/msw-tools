@@ -20,7 +20,7 @@ export function getList(arr) {
   console.log(arr);
 
   if (localStorage.getItem(MSW_GLOBAL_STATUS) !== "1" || !arr.length) return [];
-  localStorage.setItem(MSW_LIST_KEY, JSON.stringify(arr));
+  // localStorage.setItem(MSW_LIST_KEY, JSON.stringify(arr));
 
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1000;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
