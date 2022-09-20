@@ -8,6 +8,7 @@ a {
   font-style: normal;
   text-decoration: none;
   color: #333;
+  cursor: pointer;
 }
 
 input,
@@ -19,7 +20,7 @@ textarea {
 
 input::placeholder,
 textarea::placeholder {
-  color: palevioletred;
+  color: #bbb;
 }
 
 label {
@@ -40,13 +41,14 @@ label {
   right: 50px;
   bottom: 50px;
   z-index: 9999;
-  padding: 5px 15px;
+  padding: 8px 15px;
   background-color: #07c160;
   color: #fff;
   border-radius: 4px;
   font-size: 14px;
   box-shadow: 0 0 10px rgb(0 0 0 / 40%);
   cursor: pointer;
+  user-select: none;
 }
 
 .msw-mask {
@@ -101,8 +103,9 @@ label {
   //margin: 15px 0;
 }
 
-.msw-tabs-handle {
-}
+/*    .msw-tabs-handle {
+
+    }*/
 
 .msw-reset {
   display: block;
@@ -169,7 +172,7 @@ label {
 }
 
 .msw-config-input {
-  width: 200px;
+  width: 300px;
   height: 30px;
   border: 1px solid #999;
   border-left: none;
@@ -183,7 +186,7 @@ label {
   text-align: center;
   //border: 1px solid #ddd;
   margin-left: 30px;
-  background-color: #5787ff;
+  background-color: #5787FF;
   color: #fff;
   border-radius: 3px;
 }
@@ -195,53 +198,137 @@ label {
 .msw-config-data {
   min-width: 80%;
   max-width: 100%;
-  max-height: 300px;
+  max-height: 400px;
   margin-top: 15px;
   padding: 10px;
-  text-indent: 0px;
+  text-indent: 0;
+  background-color: #fff6f7;
+}
+
+.msw-config-tips {
+  margin-top: 10px;
+
+  &.error {
+    color: #f56c6c;
+  }
+
+  &.success {
+    color: #67c23a;
+  }
+}
+
+@mixin scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+    height: 0;
+    width: 0;
+    background-color: transparent;
+  }
 }
 
 .table-list {
   height: calc(70vh - 130px);
   //min-height: 300px;
   //max-height: 50vh;
-  overflow-y: auto;
+  overflow-y: scroll;
+
+  //@include scrollbar;
 }
 
 .msw-list {
   width: 100%;
   border-color: #ddd;
   border-collapse: collapse;
+  table-layout: fixed;
+
+  th,
+  td {
+    padding: 5px;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  td {
+    word-wrap: break-word;
+  }
+
+  th {
+    background-color: #f0f9eb;
+
+    &:nth-child(1) {
+      width: 60px;
+    }
+
+    &:nth-child(2) {
+      max-width: 300px;
+      width: 20%;
+    }
+
+    &:nth-child(3) {
+      width: 80px;
+    }
+
+    &:nth-child(5) {
+      width: 80px;
+    }
+
+    &:nth-child(6) {
+      width: 86px;
+    }
+  }
+
+  .msw-list-data {
+    //max-width: 100%;
+    width: 100%;
+    padding: 5px;
+    max-height: 300px;
+    min-height: 100px;
+    overflow-y: scroll;
+    background-color: #fff6f7;
+    position: relative;
+    z-index: 10;
+    white-space: break-spaces;
+    outline-color: #fe6c6f;
+
+    @include scrollbar;
+  }
 }
 
-.msw-list th {
-  background-color: #f0f9eb;
+@media screen and (max-width: 640px) {
+  .table-list {
+    overflow-x: scroll;
+  }
+
+  .msw-list {
+    width: 960px;
+  }
 }
 
-.msw-list th:nth-child(1) {
-  width: 55px;
-}
-.msw-list th:nth-child(2) {
-  width: 68px;
-}
-.msw-list th:nth-child(4) {
-  width: 72px;
-}
-.msw-list th:nth-child(6),
-.msw-list th:nth-child(7),
-.msw-list th:nth-child(8) {
-  width: 80px;
-}
+.msw-list-btn {
 
-.msw-list th,
-.msw-list td {
-  padding: 5px;
-}
+  &.edit {
+    color: #409eff;
+  }
 
-.msw-list-del {
-  color: #409eff;
+  &.del {
+    color: #f56c6c;
+  }
 }
 
 .msw-handle-li-global {
   color: #409eff;
+}
+
+.msw-handle-test {
+  cursor: pointer;
+  color: #409eff;
+  background: #ecf5ff;
+  border: 1px solid #b3d8ff;
+  border-radius: 4px;
+  padding: 5px 10px;
+
+  &:hover {
+    background-color: #409eff;
+    color: #fff;
+  }
 }
