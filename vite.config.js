@@ -21,6 +21,13 @@ if (isProd) {
 export default defineConfig({
   build: {
     lib,
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
   },
   define: {
     "process.env": {},

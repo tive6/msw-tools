@@ -10,7 +10,7 @@
     <div transition:slide="{{delay: 250, duration: 300, easing: quintOut }}"
          class="msw-box">
       <h2 class="msw-title">
-        MSW 开发者控制台
+        MSW-TOOLS控制台
         <div on:click|stopPropagation={closeModal} class="msw-close">X</div>
       </h2>
       <div class="msw-tabs">
@@ -50,10 +50,28 @@
                          type="text" class="msw-handle-input" placeholder="默认 0 ">
                 </div>
                 <div class="msw-handle-li">
+                  <div class="msw-handle-label">Mock数据导入(json文件)</div>
+                  <a on:click={fileTrigger} href={null} class="msw-handle-export">导 入</a>
+                  <input bind:this={ fileObj } on:change={fileChange}
+                         type="file" class="msw-handle-input"
+                         style="display: none;"
+                         accept=".json"
+                         placeholder="选择文件">
+                </div>
+                <div class="msw-handle-li">
+                  <div class="msw-handle-label">Mock数据导出(json文件)</div>
+                  <a on:click={exportHandle} href={null} class="msw-handle-export">导 出</a>
+                </div>
+                <div class="msw-handle-li">
                   <div on:click={getData} class="msw-handle-test">
                     ☞Fetch: [GET /test]☜
                   </div>
                 </div>
+                {#if showMsg}
+                  <div class="msw-config-tips {msgType==='error'?'error':'success'}">
+                    {msgText}
+                  </div>
+                {/if}
               </div>
             </div>
           {/if}
@@ -68,7 +86,7 @@
                 <input bind:value={reqUrl} type="text" class="msw-config-input"
                        placeholder="/paths">
                 <a href={null} on:click={add} class="msw-config-add">
-                  保存
+                  保 存
                 </a>
               </div>
               <textarea bind:value={mockData} class="msw-config-data"
@@ -150,7 +168,7 @@
   import { onMount } from "svelte";
   import { slide, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-  import { getList } from "../../msw/helper";
+  import { getList, jsonDownload, fileToJson } from "../../msw/helper";
   import { mocker } from "../../msw/browser.js";
   import { tabs, rests } from "./config.js";
   import {
@@ -189,6 +207,7 @@
   let globalStatus = localStorage.getItem(MSW_GLOBAL_STATUS) === "1";
   let allStatus = localStorage.getItem(MSW_ALL_STATUS) === "1";
   let urlPatt = /^[/]\S{1,}/;
+  let fileObj = null;
 
   onMount(async () => {
     console.log("[baseUrl]", base);
@@ -269,6 +288,69 @@
     if (type === "fail") {
       localStorage.setItem(MSW_REQUEST_FAIL_RATIO, failRatio);
     }
+  }
+  
+  function fileChange(e) {
+    let fileList = fileObj.files
+    if (fileList.length>0) {
+      let file = fileList[0]
+      let { type } = file
+      if (type==="application/json") {
+        importHandle(file)
+      } else {
+        message({
+          type: "error",
+          msg: `【操作失败】 选取的不是json文件`
+        });
+      }
+    } else {
+      message({
+        type: "error",
+        msg: `【操作取消】 未选取文件`
+      });
+    }
+  }
+  
+  function fileTrigger() {
+    fileObj.click()
+  }
+
+  async function importHandle(file) {
+    // console.log(file)
+    try {
+      let jsonStr = await fileToJson(file)
+      let res = JSON.parse(jsonStr)
+      // console.log(res)
+      if (Array.isArray(res) && res.length) {
+        if (list.length) {
+          let urlList = list.map(item=>item.url)
+          let lastList = res.filter(item=>!urlList.includes(item.url))
+          list = [
+            ...lastList,
+            ...list,
+          ]
+        } else {
+          list = [
+            ...res
+          ]
+        }
+        setLocalList();
+        message({
+          type: "success",
+          msg: `【导入成功】`
+        });
+      }
+    } catch (err) {
+      console.log(err)
+      message({
+        type: "error",
+        msg: `【导入失败】 ${err}`
+      });
+    }
+  }
+
+  function exportHandle() {
+    jsonDownload(list)
   }
 
   function getLocalList () {

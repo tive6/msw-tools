@@ -1,29 +1,78 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover">
+  <title>Msw-Tools 演示Demo</title>
+  <link rel="icon" href="favicon.ico" />
+  <style>
+      .body {
+          box-sizing: border-box;
+          height: 100vh;
+          margin: 0;
+          padding: 50px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+      }
+      .main {
+          text-align: center;
+      }
+      #btn {
+          /*display: block;*/
+          width: 100px;
+          line-height: 30px;
+          background-color: #00b1fb;
+          color: #fff;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          margin-bottom: 20px;
+      }
+      #textarea {
+          width: 80%;
+          max-width: 80%;
+          border-color: #999;
+          outline: none;
+          padding: 10px;
+          text-indent: 0;
+          background-color: #fff6f7;
+      }
+  </style>
 </head>
-<body>
+<body class="body">
 
-<script src="./msw-tools.min.umd.js"></script>
 
 <msw-tools base="/"></msw-tools>
 
-<button id="btn">Btn</button>
+<main class="main">
+  <p>GET /login</p>
 
+  <button id="btn">发送请求</button>
+  <br>
+
+  <textarea value="" id="textarea" cols="30" rows="10" placeholder="Fetch请求返回的Mock数据"></textarea>
+</main>
+
+
+<script src="https://unpkg.com/msw-tools@latest/dist/msw-tools.min.umd.js"></script>
 <script>
 
 
   btn.onclick = function() {
 
-    fetch('/login').then(res=>{
-      return res.json()
-    }).then(res=>{
-      console.log(res)
-    })
+    fetch("/login").then(res => {
+      return res.json();
+    }).then(res => {
+      console.log(res);
 
-  }
+      textarea.value = JSON.stringify(res, null, 4);
+    }).catch(err=>{
+      textarea.value = ''
+      throw new Error(err)
+    });
+
+  };
 
 </script>
 </body>

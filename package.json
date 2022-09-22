@@ -1,16 +1,17 @@
 {
   "name": "msw-tools",
-  "version": "1.0.6",
-  "description": "Based on Msw.js and Svelte build a Mock tool for local development, testing, network request and interception",
+  "version": "1.0.8",
+  "description": "Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte",
   "main": "dist/msw-tools.min.umd.js",
   "keywords": [
     "Mock",
-    "MSW",
-    "msw.js",
+    "MSW Tools",
+    "Fetch",
+    "Request",
+    "Axios",
     "Svelte",
-    "Web Components",
-    "Vite",
-    "Service Worker"
+    "Service Worker",
+    "Web Components"
   ],
   "repository": {
     "type": "git",
@@ -32,6 +33,7 @@
     "sass": "^1.54.9",
     "svelte": "^3.49.0",
     "svelte-preprocess": "^4.10.7",
+    "terser": "^5.15.0",
     "vite": "^3.1.0"
   },
   "dependencies": {

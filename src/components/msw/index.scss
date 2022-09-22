@@ -158,7 +158,13 @@ label {
 }
 
 .msw-handle-input {
+  width: 200px;
   line-height: 30px;
+}
+
+.msw-handle-export {
+  @extend .msw-config-add;
+  margin-left: 0;
 }
 
 .msw-config {

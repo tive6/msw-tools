@@ -54,3 +54,34 @@ export function getList(arr) {
 
   return reqList;
 }
+
+export function jsonDownload(json) {
+  let data = JSON.stringify(json, null, 4);
+  let blob = new Blob([data], { type: "text/json;charset=utf-8" });
+  let link = window.URL.createObjectURL(blob);
+  let a = document.createElement("a");
+  a.href = link;
+  a.download = `msw-tools-json-data-${Date.now()}.json`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  window.URL.revokeObjectURL(link);
+}
+
+export function fileToJson(file) {
+  return new Promise((resolve, reject) => {
+    // let blob = new Blob([file], {type:"application/json"})
+    // console.log(blob)
+    let fileReader = new FileReader();
+    fileReader.readAsText(file, "utf-8");
+    fileReader.onload = function (e) {
+      // console.log(e)
+      let { result } = fileReader;
+      if (result) {
+        resolve(result);
+      } else {
+        reject();
+      }
+    };
+  });
+}
