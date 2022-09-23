@@ -6,7 +6,7 @@ Msw-tools（Mock Service Worker Tools） is an interface data mock tool for loca
 
 - **无框架限制：** 使用 Svelte 独立封装的 Custom Web Components，像使用 Div 一样无感使用。
 - **无侵入性：** 根据开发环境动态加载，与业务功能代码无依赖、无耦合、无关联。
-- **配置范围广：** 个性化配置 Mock 接口，Response Data、Status code、Request Pending Time。
+- **配置范围广：** 个性化配置 Mock 接口，Response Data、Status Code、Request Pending Time。
 - **控制粒度细：** 可以精确控制到每一个数据接口是否使用 Mock。
 - **操作友好性：** 一键编辑，数据格式化，一键配置，即刻生效。
 - **数据便捷性：** Mock 数据支持以 JSON 文件的形式一键导入，一键导出。

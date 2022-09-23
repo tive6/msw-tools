@@ -11,7 +11,7 @@ if (isProd) {
   lib = {
     entry: "src/components/index.js",
     name: "MswTools",
-    formats: ["umd", "iife"],
+    formats: ["umd", "es"],
     fileName: "msw-tools.min",
   };
   customElement = true;
@@ -24,7 +24,7 @@ export default defineConfig({
     minify: "terser",
     terserOptions: {
       compress: {
-        drop_console: true,
+        drop_console: false,
         drop_debugger: true,
       },
     },

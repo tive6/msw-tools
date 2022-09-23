@@ -220,10 +220,11 @@
         serviceWorker: {
           // Points to the custom location of the Service Worker file.
           // url: 'http://localhost:1234/mockServiceWorker.js',
+          url: `${base || '/' }mockServiceWorker.js`,
           options: {
             // Narrow the scope of the Service Worker to intercept requests
             // only from pages under this path.
-            scope: base || "/"
+            scope: "/"
           }
         }
       });
@@ -240,7 +241,7 @@
   }
 
   function getData () {
-    fetch("/login").then(res => {
+    fetch("/test").then(res => {
       return res.json();
     }).then(res => {
       console.log(res);
@@ -259,6 +260,7 @@
   function tabChange (code) {
     if (code === currentTab) return;
     currentTab = code;
+    showMsg = false
   }
 
   function resetHandlers () {
