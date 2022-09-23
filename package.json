@@ -1,27 +1,37 @@
 {
   "name": "msw-tools",
   "version": "1.0.8",
-  "description": "Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte",
+  "description": "Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte.",
   "main": "dist/msw-tools.min.umd.js",
   "keywords": [
-    "Mock",
-    "MSW Tools",
-    "Fetch",
-    "Request",
-    "Axios",
-    "Svelte",
-    "Service Worker",
-    "Web Components"
+    "mock",
+    "msw-tools",
+    "msw",
+    "api",
+    "fetch",
+    "axios",
+    "server",
+    "mock service worker",
+    "network",
+    "web components"
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:tive6/msw-tools.git"
+    "url": "git+https://github.com/tive6/msw-tools.git"
   },
-  "author": "zmer",
+  "bugs": {
+    "url": "https://github.com/tive6/msw-tools/issues"
+  },
+  "homepage": "https://github.com/tive6/msw-tools#readme",
+  "author": {
+    "name": "tive6",
+    "url": "https//tiven.cn"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:lib": "vite build --mode lib",
     "preview": "vite preview",
     "serve": "serve -s dist",
     "postbuild": "npm run serve",
@@ -41,5 +51,12 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
 }

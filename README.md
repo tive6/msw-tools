@@ -1,6 +1,6 @@
 # msw-tools
 
-Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte
+Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte.
 
 ## Features
 
@@ -69,7 +69,7 @@ if (process.env.NODE_ENV === "development") {
 
 ```html
 <template>
-  <msw-tools v-if="isDev" />
+  <msw-tools base="/" v-if="isDev" />
 
   <router-view />
 </template>
