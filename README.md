@@ -87,7 +87,7 @@ if (process.env.NODE_ENV === "development") {
 
 ## Feedback
 
-- **email：** [tw.email@qq.com](mailto:tw.email@qq.com "天问eMail | msw-tools")
+- **Email：** [tw.email@qq.com](mailto:tw.email@qq.com "天问eMail | msw-tools")
 - **Issues：** [msw-tools](https://github.com/tive6/msw-tools/issues "Issues | msw-tools")
 
 ## License
