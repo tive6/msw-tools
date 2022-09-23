@@ -11,6 +11,10 @@ Msw-tools（Mock Service Worker Tools） is an interface data mock tool for loca
 - **操作友好性：** 一键编辑，数据格式化，一键配置，即刻生效。
 - **数据便捷性：** Mock 数据支持以 JSON 文件的形式一键导入，一键导出。
 
+## Online demo
+
+立即体验：[msw-tools demo](https://tiven.cn/service/demos/msw-tools "msw-tools online demo")
+
 ## Getting started
 
 ### Method 1: Using npm：(Recommended)
