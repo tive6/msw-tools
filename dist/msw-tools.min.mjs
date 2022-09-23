@@ -23426,12 +23426,13 @@ function instance($$self, $$props, $$invalidate) {
     console.log("[baseUrl]", base);
     init2();
     {
+      let basePath = base || "/";
       mocker.start({
         onUnhandledRequest: "bypass",
         serviceWorker: {
-          url: `${base || "/"}mockServiceWorker.js`,
+          url: `${basePath}mockServiceWorker.js`,
           options: {
-            scope: "/"
+            scope: basePath
           }
         }
       });

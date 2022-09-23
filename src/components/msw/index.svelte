@@ -214,17 +214,18 @@
     init();
 
     if (isProd) {
+      let basePath = base || '/'
       mocker.start({
         // 对于没有 mock 的接口直接通过，避免异常
         onUnhandledRequest: "bypass",
         serviceWorker: {
           // Points to the custom location of the Service Worker file.
           // url: 'http://localhost:1234/mockServiceWorker.js',
-          url: `${base || '/' }mockServiceWorker.js`,
+          url: `${basePath}mockServiceWorker.js`,
           options: {
             // Narrow the scope of the Service Worker to intercept requests
             // only from pages under this path.
-            scope: "/"
+            scope: basePath
           }
         }
       });
