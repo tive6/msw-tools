@@ -41,7 +41,7 @@ npx msw init public/ --save
 
 ## Example
 
-以 **Vue3** 为例：
+以 **Vue3** 项目为例：
 
 1. 在入口文件 `main.js` 中根据环境来动态加载
 
