@@ -65,7 +65,7 @@ app.mount("#app");
 
 if (process.env.NODE_ENV === "development") {
   const MswTools = require("msw-tools");
-  MswTools();
+  new MswTools();
 }
 ```
 
