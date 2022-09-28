@@ -13,8 +13,9 @@ Msw-Tools（Mock Service Worker tools） is a data Mock tool built based on MSW.
 
 ## Online demo
 
-立即体验：[msw-tools demo](https://tiven.cn/service/demos/msw-tools "msw-tools online demo")
-工具介绍：[msw-tools blog](https://tiven.cn/p/a0368a1d/ "msw-tools | 天问博客-专注于大前端技术")
+- 立即体验：[msw-tools demo](https://tiven.cn/service/demos/msw-tools "msw-tools online demo")
+- 工具介绍：[msw-tools blog](https://tiven.cn/p/a0368a1d/ "msw-tools | 天问博客-专注于大前端技术")
+
 ![Msw-Tools](https://tiven.cn/assets/img/msw-tools-demos.gif "msw-tools")
 
 ## Getting started
