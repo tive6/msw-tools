@@ -5,6 +5,7 @@ import {
   MSW_GLOBAL_STATUS,
   MSW_REQUEST_TIME,
   MSW_REQUEST_FAIL_RATIO,
+  MSW_RESPONSE_STATUS_CODE,
 } from "../common/keys";
 
 function getStatus(failRatio) {
@@ -17,16 +18,17 @@ export function getList(arr) {
   arr = arr || list;
   arr = arr.filter((item) => item.checked);
 
-  console.log(arr);
-
   if (localStorage.getItem(MSW_GLOBAL_STATUS) !== "1" || !arr.length) return [];
   // localStorage.setItem(MSW_LIST_KEY, JSON.stringify(arr));
+  console.log(arr);
 
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1000;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
+  failRatio = +failRatio > 100 ? 100 : failRatio;
   let reqStatus = getStatus(failRatio);
+  localStorage.setItem(MSW_RESPONSE_STATUS_CODE, reqStatus);
 
-  console.log(`[status] ${reqStatus}  [delay] ${reqTimes}`);
+  // console.log(`[status] ${reqStatus}  [delay] ${reqTimes}`);
 
   let reqList = arr.map((item) => {
     return rest.all(item.url, (req, res, ctx) => {

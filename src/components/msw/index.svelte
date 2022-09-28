@@ -5,7 +5,7 @@
 
   {#if show }
     <div transition:fade="{{delay: 200, duration: 200}}"
-         on:click|stopPropagation={()=>show=false}
+         on:click|stopPropagation={closeModal}
          class="msw-mask"></div>
     <div transition:slide="{{delay: 250, duration: 300, easing: quintOut }}"
          class="msw-box">
@@ -50,6 +50,13 @@
                          type="text" class="msw-handle-input" placeholder="默认 0 ">
                 </div>
                 <div class="msw-handle-li">
+                  <div class="msw-handle-label">当前状态码
+                    <span class="status-code {+statusCode===200?'':'error'}">
+                      [ {statusCode} ]
+                    </span>
+                  </div>
+                </div>
+                <div class="msw-handle-li">
                   <div class="msw-handle-label">Mock数据导入(json文件)</div>
                   <a on:click={fileTrigger} href={null} class="msw-handle-export">导 入</a>
                   <input bind:this={ fileObj } on:change={fileChange}
@@ -62,11 +69,13 @@
                   <div class="msw-handle-label">Mock数据导出(json文件)</div>
                   <a on:click={exportHandle} href={null} class="msw-handle-export">导 出</a>
                 </div>
-                <div class="msw-handle-li">
-                  <div on:click={getData} class="msw-handle-test">
-                    ☞Fetch: [GET /test]☜
+                {#if !isProd }
+                  <div class="msw-handle-li">
+                    <div on:click={getData} class="msw-handle-test">
+                      ☞Fetch: [GET /test]☜
+                    </div>
                   </div>
-                </div>
+                {/if}
                 {#if showMsg}
                   <div class="msw-config-tips {msgType==='error'?'error':'success'}">
                     {msgText}
@@ -176,7 +185,8 @@
     MSW_ALL_STATUS,
     MSW_GLOBAL_STATUS,
     MSW_REQUEST_TIME,
-    MSW_REQUEST_FAIL_RATIO
+    MSW_REQUEST_FAIL_RATIO,
+    MSW_RESPONSE_STATUS_CODE,
   } from "../../common/keys";
 
   export let base = "";
@@ -195,6 +205,7 @@
   let currentTab = "01";
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1000;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
+  let statusCode = 200;
   let reqMethod = "all";
   let reqUrl = "";
   let mockData = defaultData;
@@ -269,6 +280,7 @@
     mocker.printHandlers();
     mocker.restoreHandlers();
     mocker.listHandlers();
+    statusCode = localStorage.getItem(MSW_RESPONSE_STATUS_CODE);
   }
 
   function clearData () {

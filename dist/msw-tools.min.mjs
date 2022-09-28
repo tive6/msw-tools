@@ -22230,6 +22230,7 @@ const MSW_ALL_STATUS = "__MSW_ALL_STATUS__";
 const MSW_GLOBAL_STATUS = "__MSW_GLOBAL_STATUS__";
 const MSW_REQUEST_TIME = "__MSW_REQUEST_TIME__";
 const MSW_REQUEST_FAIL_RATIO = "__MSW_REQUEST_FAIL_RATIO__";
+const MSW_RESPONSE_STATUS_CODE = "__MSW_RESPONSE_STATUS_CODE__";
 function getStatus(failRatio) {
   return Math.random() * 100 > failRatio ? 200 : 500;
 }
@@ -22238,13 +22239,14 @@ function getList(arr) {
   let list = local && JSON.parse(local) || [];
   arr = arr || list;
   arr = arr.filter((item) => item.checked);
-  console.log(arr);
   if (localStorage.getItem(MSW_GLOBAL_STATUS) !== "1" || !arr.length)
     return [];
+  console.log(arr);
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1e3;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
+  failRatio = +failRatio > 100 ? 100 : failRatio;
   let reqStatus = getStatus(failRatio);
-  console.log(`[status] ${reqStatus}  [delay] ${reqTimes}`);
+  localStorage.setItem(MSW_RESPONSE_STATUS_CODE, reqStatus);
   let reqList = arr.map((item) => {
     return lib.rest.all(item.url, (req, res, ctx) => {
       let commonRes = [
@@ -22468,16 +22470,16 @@ function create_if_block(ctx) {
       current = true;
       if (!mounted) {
         dispose = [
-          listen(div0, "click", stop_propagation(ctx[30])),
-          listen(div1, "click", stop_propagation(ctx[15])),
-          listen(a, "click", ctx[17])
+          listen(div0, "click", stop_propagation(ctx[17])),
+          listen(div1, "click", stop_propagation(ctx[17])),
+          listen(a, "click", ctx[19])
         ];
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 65538) {
+      if (dirty[0] & 262146) {
         each_value_2 = tabs;
         each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_2, each_1_lookup, div2, destroy_block, create_each_block_2, null, get_each_context_2);
       }
@@ -22605,7 +22607,7 @@ function create_each_block_2(key_1, ctx) {
       insert(target, div, anchor);
       append(div, t);
       if (!mounted) {
-        dispose = listen(div, "click", ctx[16].bind(null, ctx[61]));
+        dispose = listen(div, "click", ctx[18].bind(null, ctx[61]));
         mounted = true;
       }
     },
@@ -22645,22 +22647,30 @@ function create_if_block_4(ctx) {
   let t9;
   let div6;
   let div5;
+  let t10;
+  let span;
   let t11;
-  let a1;
+  let t12;
   let t13;
-  let input3;
+  let span_class_value;
   let t14;
   let div8;
   let div7;
   let t16;
-  let a2;
+  let a1;
   let t18;
+  let input3;
+  let t19;
   let div10;
   let div9;
-  let t20;
+  let t21;
+  let a2;
+  let t23;
+  let t24;
   let mounted;
   let dispose;
-  let if_block = ctx[7] && create_if_block_5(ctx);
+  let if_block0 = !ctx[15] && create_if_block_6();
+  let if_block1 = ctx[8] && create_if_block_5(ctx);
   return {
     c() {
       div12 = element("div");
@@ -22687,26 +22697,33 @@ function create_if_block_4(ctx) {
       t9 = space();
       div6 = element("div");
       div5 = element("div");
-      div5.textContent = "Mock\u6570\u636E\u5BFC\u5165(json\u6587\u4EF6)";
-      t11 = space();
-      a1 = element("a");
-      a1.textContent = "\u5BFC \u5165";
-      t13 = space();
-      input3 = element("input");
+      t10 = text$1("\u5F53\u524D\u72B6\u6001\u7801\r\n                    ");
+      span = element("span");
+      t11 = text$1("[ ");
+      t12 = text$1(ctx[4]);
+      t13 = text$1(" ]");
       t14 = space();
       div8 = element("div");
       div7 = element("div");
-      div7.textContent = "Mock\u6570\u636E\u5BFC\u51FA(json\u6587\u4EF6)";
+      div7.textContent = "Mock\u6570\u636E\u5BFC\u5165(json\u6587\u4EF6)";
       t16 = space();
-      a2 = element("a");
-      a2.textContent = "\u5BFC \u51FA";
+      a1 = element("a");
+      a1.textContent = "\u5BFC \u5165";
       t18 = space();
+      input3 = element("input");
+      t19 = space();
       div10 = element("div");
       div9 = element("div");
-      div9.textContent = "\u261EFetch: [GET /test]\u261C";
-      t20 = space();
-      if (if_block)
-        if_block.c();
+      div9.textContent = "Mock\u6570\u636E\u5BFC\u51FA(json\u6587\u4EF6)";
+      t21 = space();
+      a2 = element("a");
+      a2.textContent = "\u5BFC \u51FA";
+      t23 = space();
+      if (if_block0)
+        if_block0.c();
+      t24 = space();
+      if (if_block1)
+        if_block1.c();
       attr(a0, "href", null);
       attr(a0, "class", "msw-handle-clear");
       attr(input0, "type", "checkbox");
@@ -22722,7 +22739,10 @@ function create_if_block_4(ctx) {
       attr(input2, "class", "msw-handle-input");
       attr(input2, "placeholder", "\u9ED8\u8BA4 0 ");
       attr(div4, "class", "msw-handle-li");
+      attr(span, "class", span_class_value = "status-code " + (+ctx[4] === 200 ? "" : "error"));
       attr(div5, "class", "msw-handle-label");
+      attr(div6, "class", "msw-handle-li");
+      attr(div7, "class", "msw-handle-label");
       attr(a1, "href", null);
       attr(a1, "class", "msw-handle-export");
       attr(input3, "type", "file");
@@ -22730,12 +22750,10 @@ function create_if_block_4(ctx) {
       set_style(input3, "display", "none");
       attr(input3, "accept", ".json");
       attr(input3, "placeholder", "\u9009\u62E9\u6587\u4EF6");
-      attr(div6, "class", "msw-handle-li");
-      attr(div7, "class", "msw-handle-label");
+      attr(div8, "class", "msw-handle-li");
+      attr(div9, "class", "msw-handle-label");
       attr(a2, "href", null);
       attr(a2, "class", "msw-handle-export");
-      attr(div8, "class", "msw-handle-li");
-      attr(div9, "class", "msw-handle-test");
       attr(div10, "class", "msw-handle-li");
       attr(div11, "class", "msw-handle-wrap");
       attr(div12, "class", "msw-tabs-wrap");
@@ -22748,7 +22766,7 @@ function create_if_block_4(ctx) {
       append(div0, t1);
       append(div0, label);
       append(label, input0);
-      input0.checked = ctx[11];
+      input0.checked = ctx[12];
       append(label, t2);
       append(div11, t3);
       append(div11, div2);
@@ -22765,42 +22783,49 @@ function create_if_block_4(ctx) {
       append(div11, t9);
       append(div11, div6);
       append(div6, div5);
-      append(div6, t11);
-      append(div6, a1);
-      append(div6, t13);
-      append(div6, input3);
-      ctx[35](input3);
+      append(div5, t10);
+      append(div5, span);
+      append(span, t11);
+      append(span, t12);
+      append(span, t13);
       append(div11, t14);
       append(div11, div8);
       append(div8, div7);
       append(div8, t16);
-      append(div8, a2);
-      append(div11, t18);
+      append(div8, a1);
+      append(div8, t18);
+      append(div8, input3);
+      ctx[36](input3);
+      append(div11, t19);
       append(div11, div10);
       append(div10, div9);
-      append(div11, t20);
-      if (if_block)
-        if_block.m(div11, null);
+      append(div10, t21);
+      append(div10, a2);
+      append(div11, t23);
+      if (if_block0)
+        if_block0.m(div11, null);
+      append(div11, t24);
+      if (if_block1)
+        if_block1.m(div11, null);
       if (!mounted) {
         dispose = [
-          listen(a0, "click", ctx[18]),
-          listen(input0, "change", ctx[31]),
+          listen(a0, "click", ctx[20]),
           listen(input0, "change", ctx[32]),
-          listen(input1, "input", ctx[33]),
-          listen(input1, "focusout", ctx[20].bind(null, "time")),
-          listen(input2, "input", ctx[34]),
-          listen(input2, "focusout", ctx[20].bind(null, "fail")),
-          listen(a1, "click", ctx[22]),
-          listen(input3, "change", ctx[21]),
-          listen(a2, "click", ctx[23]),
-          listen(div9, "click", getData)
+          listen(input0, "change", ctx[33]),
+          listen(input1, "input", ctx[34]),
+          listen(input1, "focusout", ctx[22].bind(null, "time")),
+          listen(input2, "input", ctx[35]),
+          listen(input2, "focusout", ctx[22].bind(null, "fail")),
+          listen(a1, "click", ctx[24]),
+          listen(input3, "change", ctx[23]),
+          listen(a2, "click", ctx[25])
         ];
         mounted = true;
       }
     },
     p(ctx2, dirty) {
-      if (dirty[0] & 2048) {
-        input0.checked = ctx2[11];
+      if (dirty[0] & 4096) {
+        input0.checked = ctx2[12];
       }
       if (dirty[0] & 4 && input1.value !== ctx2[2]) {
         set_input_value(input1, ctx2[2]);
@@ -22808,27 +22833,66 @@ function create_if_block_4(ctx) {
       if (dirty[0] & 8 && input2.value !== ctx2[3]) {
         set_input_value(input2, ctx2[3]);
       }
-      if (ctx2[7]) {
-        if (if_block) {
-          if_block.p(ctx2, dirty);
+      if (dirty[0] & 16)
+        set_data(t12, ctx2[4]);
+      if (dirty[0] & 16 && span_class_value !== (span_class_value = "status-code " + (+ctx2[4] === 200 ? "" : "error"))) {
+        attr(span, "class", span_class_value);
+      }
+      if (!ctx2[15])
+        if_block0.p(ctx2, dirty);
+      if (ctx2[8]) {
+        if (if_block1) {
+          if_block1.p(ctx2, dirty);
         } else {
-          if_block = create_if_block_5(ctx2);
-          if_block.c();
-          if_block.m(div11, null);
+          if_block1 = create_if_block_5(ctx2);
+          if_block1.c();
+          if_block1.m(div11, null);
         }
-      } else if (if_block) {
-        if_block.d(1);
-        if_block = null;
+      } else if (if_block1) {
+        if_block1.d(1);
+        if_block1 = null;
       }
     },
     d(detaching) {
       if (detaching)
         detach(div12);
-      ctx[35](null);
-      if (if_block)
-        if_block.d();
+      ctx[36](null);
+      if (if_block0)
+        if_block0.d();
+      if (if_block1)
+        if_block1.d();
       mounted = false;
       run_all(dispose);
+    }
+  };
+}
+function create_if_block_6(ctx) {
+  let div1;
+  let div0;
+  let mounted;
+  let dispose;
+  return {
+    c() {
+      div1 = element("div");
+      div0 = element("div");
+      div0.textContent = "\u261EFetch: [GET /test]\u261C";
+      attr(div0, "class", "msw-handle-test");
+      attr(div1, "class", "msw-handle-li");
+    },
+    m(target, anchor) {
+      insert(target, div1, anchor);
+      append(div1, div0);
+      if (!mounted) {
+        dispose = listen(div0, "click", getData);
+        mounted = true;
+      }
+    },
+    p: noop$1,
+    d(detaching) {
+      if (detaching)
+        detach(div1);
+      mounted = false;
+      dispose();
     }
   };
 }
@@ -22839,17 +22903,17 @@ function create_if_block_5(ctx) {
   return {
     c() {
       div = element("div");
-      t = text$1(ctx[8]);
-      attr(div, "class", div_class_value = "msw-config-tips " + (ctx[9] === "error" ? "error" : "success"));
+      t = text$1(ctx[9]);
+      attr(div, "class", div_class_value = "msw-config-tips " + (ctx[10] === "error" ? "error" : "success"));
     },
     m(target, anchor) {
       insert(target, div, anchor);
       append(div, t);
     },
     p(ctx2, dirty) {
-      if (dirty[0] & 256)
-        set_data(t, ctx2[8]);
-      if (dirty[0] & 512 && div_class_value !== (div_class_value = "msw-config-tips " + (ctx2[9] === "error" ? "error" : "success"))) {
+      if (dirty[0] & 512)
+        set_data(t, ctx2[9]);
+      if (dirty[0] & 1024 && div_class_value !== (div_class_value = "msw-config-tips " + (ctx2[10] === "error" ? "error" : "success"))) {
         attr(div, "class", div_class_value);
       }
     },
@@ -22881,7 +22945,7 @@ function create_if_block_2(ctx) {
     let key = get_key(child_ctx);
     each_1_lookup.set(key, each_blocks[i] = create_each_block_1(key, child_ctx));
   }
-  let if_block = ctx[7] && create_if_block_3(ctx);
+  let if_block = ctx[8] && create_if_block_3(ctx);
   return {
     c() {
       div1 = element("div");
@@ -22902,8 +22966,8 @@ function create_if_block_2(ctx) {
         if_block.c();
       attr(select, "class", "msw-method");
       attr(select, "name", "method");
-      if (ctx[4] === void 0)
-        add_render_callback(() => ctx[36].call(select));
+      if (ctx[5] === void 0)
+        add_render_callback(() => ctx[37].call(select));
       attr(input, "type", "text");
       attr(input, "class", "msw-config-input");
       attr(input, "placeholder", "/paths");
@@ -22923,24 +22987,24 @@ function create_if_block_2(ctx) {
       for (let i = 0; i < each_blocks.length; i += 1) {
         each_blocks[i].m(select, null);
       }
-      select_option(select, ctx[4]);
+      select_option(select, ctx[5]);
       append(div0, t0);
       append(div0, input);
-      set_input_value(input, ctx[5]);
+      set_input_value(input, ctx[6]);
       append(div0, t1);
       append(div0, a);
       append(div1, t3);
       append(div1, textarea);
-      set_input_value(textarea, ctx[6]);
+      set_input_value(textarea, ctx[7]);
       append(div1, t4);
       if (if_block)
         if_block.m(div1, null);
       if (!mounted) {
         dispose = [
-          listen(select, "change", ctx[36]),
-          listen(input, "input", ctx[37]),
-          listen(a, "click", ctx[24]),
-          listen(textarea, "input", ctx[38])
+          listen(select, "change", ctx[37]),
+          listen(input, "input", ctx[38]),
+          listen(a, "click", ctx[26]),
+          listen(textarea, "input", ctx[39])
         ];
         mounted = true;
       }
@@ -22950,16 +23014,16 @@ function create_if_block_2(ctx) {
         each_value_1 = rests;
         each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value_1, each_1_lookup, select, destroy_block, create_each_block_1, null, get_each_context_1);
       }
-      if (dirty[0] & 16) {
-        select_option(select, ctx2[4]);
+      if (dirty[0] & 32) {
+        select_option(select, ctx2[5]);
       }
-      if (dirty[0] & 32 && input.value !== ctx2[5]) {
-        set_input_value(input, ctx2[5]);
+      if (dirty[0] & 64 && input.value !== ctx2[6]) {
+        set_input_value(input, ctx2[6]);
       }
-      if (dirty[0] & 64) {
-        set_input_value(textarea, ctx2[6]);
+      if (dirty[0] & 128) {
+        set_input_value(textarea, ctx2[7]);
       }
-      if (ctx2[7]) {
+      if (ctx2[8]) {
         if (if_block) {
           if_block.p(ctx2, dirty);
         } else {
@@ -23019,17 +23083,17 @@ function create_if_block_3(ctx) {
   return {
     c() {
       div = element("div");
-      t = text$1(ctx[8]);
-      attr(div, "class", div_class_value = "msw-config-tips " + (ctx[9] === "error" ? "error" : "success"));
+      t = text$1(ctx[9]);
+      attr(div, "class", div_class_value = "msw-config-tips " + (ctx[10] === "error" ? "error" : "success"));
     },
     m(target, anchor) {
       insert(target, div, anchor);
       append(div, t);
     },
     p(ctx2, dirty) {
-      if (dirty[0] & 256)
-        set_data(t, ctx2[8]);
-      if (dirty[0] & 512 && div_class_value !== (div_class_value = "msw-config-tips " + (ctx2[9] === "error" ? "error" : "success"))) {
+      if (dirty[0] & 512)
+        set_data(t, ctx2[9]);
+      if (dirty[0] & 1024 && div_class_value !== (div_class_value = "msw-config-tips " + (ctx2[10] === "error" ? "error" : "success"))) {
         attr(div, "class", div_class_value);
       }
     },
@@ -23064,7 +23128,7 @@ function create_if_block_1(ctx) {
   let each_1_lookup = /* @__PURE__ */ new Map();
   let mounted;
   let dispose;
-  let each_value = ctx[10];
+  let each_value = ctx[11];
   const get_key = (ctx2) => ctx2[53].id;
   for (let i = 0; i < each_value.length; i += 1) {
     let child_ctx = get_each_context(ctx, each_value, i);
@@ -23122,7 +23186,7 @@ function create_if_block_1(ctx) {
       append(tr, th4);
       append(th4, label);
       append(label, input);
-      input.checked = ctx[12];
+      input.checked = ctx[13];
       append(label, t8);
       append(tr, t9);
       append(tr, th5);
@@ -23133,18 +23197,18 @@ function create_if_block_1(ctx) {
       }
       if (!mounted) {
         dispose = [
-          listen(input, "change", ctx[39]),
-          listen(input, "change", ctx[40])
+          listen(input, "change", ctx[40]),
+          listen(input, "change", ctx[41])
         ];
         mounted = true;
       }
     },
     p(ctx2, dirty) {
-      if (dirty[0] & 4096) {
-        input.checked = ctx2[12];
+      if (dirty[0] & 8192) {
+        input.checked = ctx2[13];
       }
-      if (dirty[0] & 234882048) {
-        each_value = ctx2[10];
+      if (dirty[0] & 939526144) {
+        each_value = ctx2[11];
         each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, tbody, destroy_block, create_each_block, null, get_each_context);
       }
     },
@@ -23193,10 +23257,10 @@ function create_each_block(key_1, ctx) {
   let mounted;
   let dispose;
   function change_handler_2() {
-    return ctx[41](ctx[53], ctx[55]);
+    return ctx[42](ctx[53], ctx[55]);
   }
   function input_change_handler_1() {
-    ctx[42].call(input, ctx[54], ctx[55]);
+    ctx[43].call(input, ctx[54], ctx[55]);
   }
   return {
     key: key_1,
@@ -23272,21 +23336,21 @@ function create_each_block(key_1, ctx) {
           listen(input, "change", change_handler_2),
           listen(input, "change", input_change_handler_1),
           listen(a0, "click", function() {
-            if (is_function(ctx[25].bind(null, {
+            if (is_function(ctx[27].bind(null, {
               ...ctx[53],
               index: ctx[55]
             })))
-              ctx[25].bind(null, {
+              ctx[27].bind(null, {
                 ...ctx[53],
                 index: ctx[55]
               }).apply(this, arguments);
           }),
           listen(a1, "click", function() {
-            if (is_function(ctx[26].bind(null, {
+            if (is_function(ctx[28].bind(null, {
               ...ctx[53],
               index: ctx[55]
             })))
-              ctx[26].bind(null, {
+              ctx[28].bind(null, {
                 ...ctx[53],
                 index: ctx[55]
               }).apply(this, arguments);
@@ -23297,15 +23361,15 @@ function create_each_block(key_1, ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 1024 && t0_value !== (t0_value = ctx[55] + 1 + ""))
+      if (dirty[0] & 2048 && t0_value !== (t0_value = ctx[55] + 1 + ""))
         set_data(t0, t0_value);
-      if (dirty[0] & 1024 && t2_value !== (t2_value = ctx[53].url + ""))
+      if (dirty[0] & 2048 && t2_value !== (t2_value = ctx[53].url + ""))
         set_data(t2, t2_value);
-      if (dirty[0] & 1024 && t4_value !== (t4_value = ctx[53].method + ""))
+      if (dirty[0] & 2048 && t4_value !== (t4_value = ctx[53].method + ""))
         set_data(t4, t4_value);
-      if (dirty[0] & 1024 && t7_value !== (t7_value = JSON.stringify(JSON.parse(ctx[53].data), null, 2) + ""))
+      if (dirty[0] & 2048 && t7_value !== (t7_value = JSON.stringify(JSON.parse(ctx[53].data), null, 2) + ""))
         set_data(t7, t7_value);
-      if (dirty[0] & 1024) {
+      if (dirty[0] & 2048) {
         input.checked = ctx[53].checked;
       }
     },
@@ -23345,7 +23409,7 @@ function create_fragment(ctx) {
         if_block.m(div1, null);
       current = true;
       if (!mounted) {
-        dispose = listen(div0, "click", ctx[14]);
+        dispose = listen(div0, "click", ctx[16]);
         mounted = true;
       }
     },
@@ -23410,6 +23474,7 @@ function instance($$self, $$props, $$invalidate) {
   let currentTab = "01";
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1e3;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
+  let statusCode = 200;
   let reqMethod = "all";
   let reqUrl = "";
   let mockData = defaultData;
@@ -23442,7 +23507,7 @@ function instance($$self, $$props, $$invalidate) {
     let status2 = localStorage.getItem(MSW_GLOBAL_STATUS);
     if (!status2) {
       localStorage.setItem(MSW_GLOBAL_STATUS, "1");
-      $$invalidate(11, globalStatus = true);
+      $$invalidate(12, globalStatus = true);
     }
   }
   function showModal() {
@@ -23456,22 +23521,23 @@ function instance($$self, $$props, $$invalidate) {
     if (code === currentTab)
       return;
     $$invalidate(1, currentTab = code);
-    $$invalidate(7, showMsg = false);
+    $$invalidate(8, showMsg = false);
   }
   function resetHandlers2() {
     mocker.resetHandlers(...getList());
     mocker.printHandlers();
     mocker.restoreHandlers();
     mocker.listHandlers();
+    $$invalidate(4, statusCode = localStorage.getItem(MSW_RESPONSE_STATUS_CODE));
   }
   function clearData() {
     if (confirm("\u786E\u8BA4\u8981\u6E05\u7A7A\u672C\u5730\u6570\u636E\uFF1F")) {
       localStorage.removeItem(MSW_LIST_KEY);
-      $$invalidate(10, list = []);
+      $$invalidate(11, list = []);
     }
   }
   function changeStatusGlobal() {
-    $$invalidate(11, globalStatus = !globalStatus);
+    $$invalidate(12, globalStatus = !globalStatus);
     localStorage.setItem(MSW_GLOBAL_STATUS, `${+globalStatus}`);
     resetHandlers2();
   }
@@ -23508,9 +23574,9 @@ function instance($$self, $$props, $$invalidate) {
         if (list.length) {
           let urlList = list.map((item) => item.url);
           let lastList = res.filter((item) => !urlList.includes(item.url));
-          $$invalidate(10, list = [...lastList, ...list]);
+          $$invalidate(11, list = [...lastList, ...list]);
         } else {
-          $$invalidate(10, list = [...res]);
+          $$invalidate(11, list = [...res]);
         }
         setLocalList();
         message({ type: "success", msg: `\u3010\u5BFC\u5165\u6210\u529F\u3011` });
@@ -23560,7 +23626,7 @@ function instance($$self, $$props, $$invalidate) {
     if (mockType === "edit") {
       let local = getLocalList();
       local[mockIndex] = { ...data2 };
-      $$invalidate(10, list = [...local]);
+      $$invalidate(11, list = [...local]);
       message({ type: "success", msg: `\u3010\u7F16\u8F91\u6210\u529F\u3011` });
       mockType = "";
     } else {
@@ -23572,7 +23638,7 @@ function instance($$self, $$props, $$invalidate) {
         });
         return;
       }
-      $$invalidate(10, list = [data2, ...getLocalList()]);
+      $$invalidate(11, list = [data2, ...getLocalList()]);
       message({ type: "success", msg: `\u3010\u6DFB\u52A0\u6210\u529F\u3011` });
     }
     setLocalList();
@@ -23580,38 +23646,38 @@ function instance($$self, $$props, $$invalidate) {
   }
   function edit(item) {
     let { url, method, data: data2, id, date, checked, index } = item;
-    $$invalidate(5, reqUrl = url);
-    $$invalidate(4, reqMethod = method);
-    $$invalidate(6, mockData = JSON.stringify(JSON.parse(data2), null, 2));
+    $$invalidate(6, reqUrl = url);
+    $$invalidate(5, reqMethod = method);
+    $$invalidate(7, mockData = JSON.stringify(JSON.parse(data2), null, 2));
     mockType = "edit";
     mockIndex = index;
     $$invalidate(1, currentTab = "02");
   }
   function del({ id, index }) {
     list.splice(index, 1);
-    $$invalidate(10, list = [...list]);
+    $$invalidate(11, list = [...list]);
     setLocalList();
   }
   function changeStatus(item) {
     let { index, checked } = item;
-    $$invalidate(10, list[index].checked = !checked, list);
+    $$invalidate(11, list[index].checked = !checked, list);
     setLocalList();
   }
   function changeStatusAll() {
-    $$invalidate(12, allStatus = !allStatus);
+    $$invalidate(13, allStatus = !allStatus);
     localStorage.setItem(MSW_ALL_STATUS, `${+allStatus}`);
-    $$invalidate(10, list = list.map((item) => {
+    $$invalidate(11, list = list.map((item) => {
       return { ...item, checked: allStatus };
     }));
     setLocalList();
   }
   function message({ type, msg }) {
-    $$invalidate(9, msgType = type);
-    $$invalidate(8, msgText = msg);
-    $$invalidate(7, showMsg = true);
+    $$invalidate(10, msgType = type);
+    $$invalidate(9, msgText = msg);
+    $$invalidate(8, showMsg = true);
     let timer = setTimeout(
       () => {
-        $$invalidate(7, showMsg = false);
+        $$invalidate(8, showMsg = false);
         clearTimeout(timer);
         timer = null;
       },
@@ -23619,15 +23685,14 @@ function instance($$self, $$props, $$invalidate) {
     );
   }
   function initParams() {
-    $$invalidate(5, reqUrl = "");
-    $$invalidate(6, mockData = defaultData);
-    $$invalidate(4, reqMethod = "all");
+    $$invalidate(6, reqUrl = "");
+    $$invalidate(7, mockData = defaultData);
+    $$invalidate(5, reqMethod = "all");
   }
-  const click_handler = () => $$invalidate(0, show = false);
   const change_handler = () => changeStatusGlobal();
   function input0_change_handler() {
     globalStatus = this.checked;
-    $$invalidate(11, globalStatus);
+    $$invalidate(12, globalStatus);
   }
   function input1_input_handler() {
     reqTimes = this.value;
@@ -23640,40 +23705,41 @@ function instance($$self, $$props, $$invalidate) {
   function input3_binding($$value) {
     binding_callbacks[$$value ? "unshift" : "push"](() => {
       fileObj = $$value;
-      $$invalidate(13, fileObj);
+      $$invalidate(14, fileObj);
     });
   }
   function select_change_handler() {
     reqMethod = select_value(this);
-    $$invalidate(4, reqMethod);
+    $$invalidate(5, reqMethod);
   }
   function input_input_handler() {
     reqUrl = this.value;
-    $$invalidate(5, reqUrl);
+    $$invalidate(6, reqUrl);
   }
   function textarea_input_handler() {
     mockData = this.value;
-    $$invalidate(6, mockData);
+    $$invalidate(7, mockData);
   }
   const change_handler_1 = () => changeStatusAll();
   function input_change_handler() {
     allStatus = this.checked;
-    $$invalidate(12, allStatus);
+    $$invalidate(13, allStatus);
   }
   const change_handler_2 = (item, index) => changeStatus({ ...item, index });
   function input_change_handler_1(each_value, index) {
     each_value[index].checked = this.checked;
-    $$invalidate(10, list);
+    $$invalidate(11, list);
   }
   $$self.$$set = ($$props2) => {
     if ("base" in $$props2)
-      $$invalidate(29, base = $$props2.base);
+      $$invalidate(31, base = $$props2.base);
   };
   return [
     show,
     currentTab,
     reqTimes,
     failRatio,
+    statusCode,
     reqMethod,
     reqUrl,
     mockData,
@@ -23684,6 +23750,7 @@ function instance($$self, $$props, $$invalidate) {
     globalStatus,
     allStatus,
     fileObj,
+    isProd,
     showModal,
     closeModal,
     tabChange,
@@ -23700,7 +23767,6 @@ function instance($$self, $$props, $$invalidate) {
     changeStatus,
     changeStatusAll,
     base,
-    click_handler,
     change_handler,
     input0_change_handler,
     input1_input_handler,
@@ -23718,7 +23784,7 @@ function instance($$self, $$props, $$invalidate) {
 class Msw extends SvelteElement {
   constructor(options) {
     super();
-    this.shadowRoot.innerHTML = `<style>*{padding:0;margin:0;box-sizing:border-box}a{font-style:normal;text-decoration:none;color:#333;cursor:pointer}input,textarea{outline:none;border:1px solid #999;text-indent:10px}input::placeholder,textarea::placeholder{color:#bbb}label{cursor:pointer}.msw-container{width:100%;text-align:left}.msw-show{position:fixed;right:50px;bottom:50px;z-index:9999;padding:8px 15px;background-color:#07c160;color:#fff;border-radius:4px;font-size:14px;box-shadow:0 0 10px rgba(0, 0, 0, 0.4);cursor:pointer;user-select:none}.msw-mask{width:100vw;height:100vh;position:fixed;right:0;bottom:0;z-index:8888;background-color:rgba(0, 0, 0, 0.6)}.msw-box{position:fixed;left:0;bottom:0;z-index:9999;width:100%;height:70vh;padding:15px;background-color:#fff}.msw-title{display:flex;justify-content:space-between;align-items:center;color:#666;font-size:20px;font-weight:400}.msw-close{color:#333;cursor:pointer}.msw-tabs-head{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding-bottom:5px;border-bottom:1px solid #eee}.msw-tabs-inner{display:flex}.msw-reset{display:block;width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#67c23a;color:#fff;border-radius:3px}.msw-reset:hover{background-color:#85ce61}.msw-tabs-item{padding:5px 10px;cursor:pointer;transition:all linear 200ms}.msw-handle-clear{width:100px;height:30px;line-height:30px;text-align:center;background-color:#e6a23c;color:#fff;border-radius:3px}.msw-handle-clear:hover{background-color:#ebb563}.msw-tabs-item.active{background-color:pink}.msw-handle-li{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px}.msw-handle-input{width:200px;line-height:30px}.msw-handle-export{margin-left:0}.msw-config{display:flex;align-items:center}.msw-method{width:100px;height:30px}.msw-config-input{width:300px;height:30px;border:1px solid #999;border-left:none;text-indent:10px}.msw-config-add,.msw-handle-export{width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#5787FF;color:#fff;border-radius:3px}.msw-config-add:hover,.msw-handle-export:hover{background-color:rgba(87, 135, 255, 0.9098039216)}.msw-config-data{min-width:80%;max-width:100%;max-height:400px;margin-top:15px;padding:10px;text-indent:0;background-color:#fff6f7}.msw-config-tips{margin-top:10px}.msw-config-tips.error{color:#f56c6c}.msw-config-tips.success{color:#67c23a}.table-list{height:calc(70vh - 130px);overflow-y:scroll}.msw-list{width:100%;border-color:#ddd;border-collapse:collapse;table-layout:fixed}.msw-list th,.msw-list td{padding:5px;word-wrap:break-word;white-space:normal}.msw-list td{word-wrap:break-word}.msw-list th{background-color:#f0f9eb}.msw-list th:nth-child(1){width:60px}.msw-list th:nth-child(2){max-width:300px;width:20%}.msw-list th:nth-child(3){width:80px}.msw-list th:nth-child(5){width:80px}.msw-list th:nth-child(6){width:86px}.msw-list .msw-list-data{width:100%;padding:5px;max-height:300px;min-height:100px;overflow-y:scroll;background-color:#fff6f7;position:relative;z-index:10;white-space:break-spaces;outline-color:#fe6c6f}.msw-list .msw-list-data::-webkit-scrollbar{display:none;height:0;width:0;background-color:transparent}@media screen and (max-width: 640px){.table-list{overflow-x:scroll}.msw-list{width:960px}}.msw-list-btn.edit{color:#409eff}.msw-list-btn.del{color:#f56c6c}.msw-handle-li-global{color:#409eff}.msw-handle-test{cursor:pointer;color:#409eff;background:#ecf5ff;border:1px solid #b3d8ff;border-radius:4px;padding:5px 10px}.msw-handle-test:hover{background-color:#409eff;color:#fff}</style>`;
+    this.shadowRoot.innerHTML = `<style>*{padding:0;margin:0;box-sizing:border-box}a{font-style:normal;text-decoration:none;color:#333;cursor:pointer}input,textarea{outline:none;border:1px solid #999;text-indent:10px}input::placeholder,textarea::placeholder{color:#bbb}label{cursor:pointer}.msw-container{width:100%;text-align:left}.msw-show{position:fixed;right:50px;bottom:50px;z-index:9999;padding:8px 15px;background-color:#AB4BFE;color:#fff;border-radius:4px;font-size:14px;box-shadow:0 0 10px rgba(0, 0, 0, 0.4);cursor:pointer;user-select:none}.msw-mask{width:100vw;height:100vh;position:fixed;right:0;bottom:0;z-index:8888;background-color:rgba(0, 0, 0, 0.6)}.msw-box{position:fixed;left:0;bottom:0;z-index:9999;width:100%;height:70vh;padding:15px;background-color:#fff}.msw-title{display:flex;justify-content:space-between;align-items:center;color:#666;font-size:20px;font-weight:400}.msw-close{color:#333;cursor:pointer}.msw-tabs-head{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding-bottom:5px;border-bottom:1px solid #eee}.msw-tabs-inner{display:flex}.msw-reset{display:block;width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#67c23a;color:#fff;border-radius:3px}.msw-reset:hover{background-color:#85ce61}.msw-tabs-item{padding:5px 10px;cursor:pointer;transition:all linear 200ms}.msw-handle-clear{width:100px;height:30px;line-height:30px;text-align:center;background-color:#e6a23c;color:#fff;border-radius:3px}.msw-handle-clear:hover{background-color:#ebb563}.msw-tabs-item.active{background-color:pink}.msw-handle-li{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px}.msw-handle-input{width:200px;line-height:30px}.msw-handle-export{margin-left:0}.msw-config{display:flex;align-items:center}.msw-method{width:100px;height:30px}.msw-config-input{width:300px;height:30px;border:1px solid #999;border-left:none;text-indent:10px}.msw-config-add,.msw-handle-export{width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#5787FF;color:#fff;border-radius:3px}.msw-config-add:hover,.msw-handle-export:hover{background-color:rgba(87, 135, 255, 0.9098039216)}.msw-config-data{min-width:80%;max-width:100%;max-height:400px;margin-top:15px;padding:10px;text-indent:0;background-color:#fff6f7}.status-code{color:#00BE00}.status-code.error{color:#f56c6c}.msw-config-tips{margin-top:10px}.msw-config-tips.error{color:#f56c6c}.msw-config-tips.success{color:#67c23a}.table-list{height:calc(70vh - 130px);overflow-y:scroll}.msw-list{width:100%;border-color:#ddd;border-collapse:collapse;table-layout:fixed}.msw-list th,.msw-list td{padding:5px;word-wrap:break-word;white-space:normal}.msw-list td{word-wrap:break-word}.msw-list th{background-color:#f0f9eb}.msw-list th:nth-child(1){width:60px}.msw-list th:nth-child(2){max-width:300px;width:20%}.msw-list th:nth-child(3),.msw-list th:nth-child(5),.msw-list th:nth-child(6){width:86px}.msw-list .msw-list-data{width:100%;padding:5px;max-height:300px;min-height:100px;overflow-y:scroll;background-color:#fff6f7;position:relative;z-index:10;white-space:break-spaces;outline-color:#fe6c6f}.msw-list .msw-list-data::-webkit-scrollbar{display:none;height:0;width:0;background-color:transparent}@media screen and (max-width: 640px){.table-list{overflow-x:scroll}.msw-list{width:960px}}.msw-list-btn.edit{color:#409eff}.msw-list-btn.del{color:#f56c6c}.msw-handle-li-global{color:#409eff}.msw-handle-test{cursor:pointer;color:#409eff;background:#ecf5ff;border:1px solid #b3d8ff;border-radius:4px;padding:5px 10px}.msw-handle-test:hover{background-color:#409eff;color:#fff}</style>`;
     init(
       this,
       {
@@ -23729,7 +23795,7 @@ class Msw extends SvelteElement {
       instance,
       create_fragment,
       safe_not_equal,
-      { base: 29 },
+      { base: 31 },
       null,
       [-1, -1, -1]
     );
@@ -23747,7 +23813,7 @@ class Msw extends SvelteElement {
     return ["base"];
   }
   get base() {
-    return this.$$.ctx[29];
+    return this.$$.ctx[31];
   }
   set base(base) {
     this.$$set({ base });

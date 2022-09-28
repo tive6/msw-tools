@@ -42,7 +42,7 @@ label {
   bottom: 50px;
   z-index: 9999;
   padding: 8px 15px;
-  background-color: #07c160;
+  background-color: #AB4BFE;
   color: #fff;
   border-radius: 4px;
   font-size: 14px;
@@ -211,6 +211,14 @@ label {
   background-color: #fff6f7;
 }
 
+.status-code {
+  color: #00BE00;
+
+  &.error {
+    color: #f56c6c;
+  }
+}
+
 .msw-config-tips {
   margin-top: 10px;
 
@@ -270,14 +278,8 @@ label {
       width: 20%;
     }
 
-    &:nth-child(3) {
-      width: 80px;
-    }
-
-    &:nth-child(5) {
-      width: 80px;
-    }
-
+    &:nth-child(3),
+    &:nth-child(5),
     &:nth-child(6) {
       width: 86px;
     }

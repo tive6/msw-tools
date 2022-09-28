@@ -1,6 +1,6 @@
 # msw-tools
 
-Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte.
+Msw-Tools（Mock Service Worker tools） is a data Mock tool built based on MSW.JS and Svelte. It is used for data linkage between front and back end interfaces and functional testing of different data and different scenarios.
 
 ## Features
 
@@ -14,6 +14,8 @@ Msw-tools（Mock Service Worker Tools） is an interface data mock tool for loca
 ## Online demo
 
 立即体验：[msw-tools demo](https://tiven.cn/service/demos/msw-tools "msw-tools online demo")
+工具介绍：[msw-tools blog](https://tiven.cn/p/a0368a1d/ "msw-tools | 天问博客-专注于大前端技术")
+![Msw-Tools](https://tiven.cn/assets/img/msw-tools-demos.gif "msw-tools")
 
 ## Getting started
 
@@ -85,15 +87,38 @@ if (process.env.NODE_ENV === "development") {
 </script>
 ```
 
-## Tools Demo
+## Options
 
-![Msw-Tools](https://tiven.cn/assets/img/msw-tools-demos.gif "msw-tools")
+**base**：开发或生产环境服务的公共基础路径。
+
+- 类型： `string`
+- 默认： `/`
+
+使用参照：
+
+1. 访问 URL：`https://tiven.cn`， 对应的 Base：`/`， 使用 `<msw-tools base="/" />`。
+2. 访问 URL：`https://tiven.cn/service/` ，对应的 Base：`/service/`，使用 `<msw-tools base="/service/" />`。
+
+需要与打包工具和 **Router** 路由的 **base** 保持一致。请参考：
+
+- **Vite** 的 `base` 配置：[Vite Base](https://cn.vitejs.dev/config/shared-options.html#base "Base | Vite")
+- **Vue3** 的 `Router/base` 路由配置：[Vue3 Base](https://router.vuejs.org/zh/api/#createwebhistory "Vue3 | createWebHistory base")
+
+## Reminder
+
+1. `mockServiceWorker.js` 文件只能放在静态文件目录中（`/public`），作为 `Service Worker` 服务的注册文件，不参与打包编译，只能以 **相对路径** 的形式引用，不然 `Service Worker` 服务无法注册，会导致请求拦截不生效。
+2. `service Worker` API 使用限制：只能在 **https（已安转证书）、localhost、127.0.0.1** 等服务下使用，否则控制台会出现 `[MSW] Mocking enabled (fallback mode)` 日志，也就是说 **http** 域名服务下不可用。
+
+## TODO
+
+- **Msw-Tools** 功能持续优化
+- 开启控制台的按钮可拖拽移动
+- 封装 **mswjs** 相关 API，减小打包体积
+- 规划中...
 
 ## Feedback
 
 - **Email：** [tw.email@qq.com](mailto:tw.email@qq.com "天问eMail | msw-tools")
 - **Issues：** [msw-tools](https://github.com/tive6/msw-tools/issues "Issues | msw-tools")
 
-## License
-
-The MIT License
+欢迎广大 **Front-ender** 、**Tester** 体验使用，如有疑问或需求建议请到 [Github Issues](https://github.com/tive6/msw-tools/issues "Issues | msw-tools") 提出。
