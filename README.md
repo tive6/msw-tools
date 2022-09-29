@@ -1,10 +1,18 @@
 # msw-tools
 
-Msw-Tools（Mock Service Worker tools） is a data Mock tool built based on MSW.JS and Svelte. It is used for data linkage between front and back end interfaces and functional testing of different data and different scenarios.
+**`Msw-Tools`（Mock Service Worker Tools）是一个基于 `Msw.js` 和 `Svelte` 构建的数据 Mock 工具，用于前后端接口数据联调，方便开发者在不同数据、不同场景下进行功能测试。**
+
+## What can do ?
+
+- **`Msw-Tools` 能做什么？**
+- **`Msw-Tools` 能做什么？**
+- **`Msw-Tools` 能做什么？**
+
+**`Msw-Tools` 以浏览器 `localStorage` 为`数据库`，能让开发者分布式的在浏览器上建立一套独立的接口服务，前端人员在不依赖后端接口完成的情况下走正常的开发调试流程，开发者可以很精确自由的控制哪些接口使用 `Msw-Tools` 提供的本地 `Mock` 数据服务，哪些接口使用后端提供的接口数据服务。** 再也不用担心加班熬夜调接口了，摸鱼什么的统统到碗里来 `^_^`。
 
 ## Features
 
-- **无框架限制：** 使用 Svelte 独立封装的 Custom Web Components，像使用 Div 一样无感使用。
+- **无框架限制：** 使用 `Svelte` 独立封装的 `Custom Web Components`，像使用 `div、span` 等原生标签一样无感使用，不管是 **Vue2/Vue3、React、Angular、Svelte、SolidJs** 等流行框架，还是传统的多页面 **HTML、JQuery、JSP、PHP** 都可以轻松集成。
 - **无侵入性：** 根据开发环境动态加载，与业务功能代码无依赖、无耦合、无关联。
 - **配置范围广：** 个性化配置 Mock 接口，Response Data、Status Code、Request Pending Time。
 - **控制粒度细：** 可以精确控制到每一个数据接口是否使用 Mock。
