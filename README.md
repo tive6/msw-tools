@@ -2,6 +2,8 @@
 
 **`Msw-Tools`（Mock Service Worker Tools）是一个基于 `Msw.js` 和 `Svelte` 构建的数据 Mock 工具，用于前后端接口数据联调，方便开发者在不同数据、不同场景下进行功能测试。**
 
+Mock Service Worker Tools (MSW-Tools) is a data Mock tool built based on MSW.JS and Svelte. It is used for data linkage between front and back end interfaces, facilitating developers to perform functional tests in different data and scenarios.
+
 ## What can do ?
 
 - **`Msw-Tools` 能做什么？**
