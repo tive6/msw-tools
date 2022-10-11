@@ -222,6 +222,11 @@
   let basePath = "/";
   let skipUrls = [];
 
+  $: {
+    setLocalList(list)
+    getSkipUrls(list)
+  }
+
   onMount(async () => {
     init();
 
@@ -373,7 +378,7 @@
             ...res
           ];
         }
-        setLocalList();
+        // setLocalList();
         message({
           type: "success",
           msg: `【导入成功】`
@@ -466,7 +471,7 @@
         msg: `【添加成功】`
       });
     }
-    setLocalList();
+    // setLocalList();
     initParams();
   }
 
@@ -495,14 +500,14 @@
     list = [
       ...list
     ];
-    setLocalList();
+    // setLocalList();
   }
 
   function changeStatus (item) {
     let { index, checked } = item;
     list[index].checked = !checked;
-    setLocalList();
-    getSkipUrls();
+    // setLocalList();
+    // getSkipUrls();
   }
 
   function changeStatusAll () {
@@ -514,11 +519,12 @@
         checked: allStatus
       };
     });
-    setLocalList();
-    getSkipUrls();
+    // setLocalList();
+    // getSkipUrls();
   }
 
   function getSkipUrls () {
+    // console.log('getSkipUrls')
     skipUrls = list.reduce((prev, item)=>{
       if (item.checked===false) {
         prev.push(item.url)
