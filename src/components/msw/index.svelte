@@ -186,7 +186,7 @@
     MSW_GLOBAL_STATUS,
     MSW_REQUEST_TIME,
     MSW_REQUEST_FAIL_RATIO,
-    MSW_RESPONSE_STATUS_CODE,
+    MSW_RESPONSE_STATUS_CODE
   } from "../../common/keys";
 
   export let base = "";
@@ -199,7 +199,7 @@
   const defaultData = JSON.stringify({ code: 0, msg: "OK", data: 1 }, null, 2);
 
   let isProd = import.meta.env.PROD;
-  console.log("[ENV]", isProd);
+  console.log("[ENV isProd]", isProd);
 
   let show = false;
   let currentTab = "01";
@@ -219,33 +219,46 @@
   let allStatus = localStorage.getItem(MSW_ALL_STATUS) === "1";
   let urlPatt = /^[/]\S{1,}/;
   let fileObj = null;
+  let basePath = "/";
+  let skipUrls = [];
 
   onMount(async () => {
-    console.log("[baseUrl]", base);
     init();
 
     if (isProd) {
-      let basePath = base || '/'
-      mocker.start({
-        // 对于没有 mock 的接口直接通过，避免异常
-        onUnhandledRequest: "bypass",
-        serviceWorker: {
-          // Points to the custom location of the Service Worker file.
-          // url: 'http://localhost:1234/mockServiceWorker.js',
-          url: `${basePath}mockServiceWorker.js`,
-          options: {
-            // Narrow the scope of the Service Worker to intercept requests
-            // only from pages under this path.
-            scope: basePath
-          }
-        }
-      });
+      startMocker();
     }
 
+    resetHandlers();
   });
 
+  function startMocker () {
+    mocker.start({
+      // 对于没有 mock 的接口直接通过，避免异常
+      onUnhandledRequest: "bypass",
+      serviceWorker: {
+        // Points to the custom location of the Service Worker file.
+        // url: 'http://localhost:1234/mockServiceWorker.js',
+        url: `${basePath}mockServiceWorker.js`,
+        options: {
+          // Narrow the scope of the Service Worker to intercept requests
+          // only from pages under this path.
+          scope: basePath
+        }
+      }
+    });
+  }
+
   function init () {
+    basePath = base || "/";
+    console.log("[baseUrl]", basePath);
     let status = localStorage.getItem(MSW_GLOBAL_STATUS);
+    getStatusCode();
+    getSkipUrls();
+    if (!statusCode) {
+      localStorage.setItem(MSW_RESPONSE_STATUS_CODE, 200);
+      statusCode = 200
+    }
     if (!status) {
       localStorage.setItem(MSW_GLOBAL_STATUS, "1");
       globalStatus = true;
@@ -272,14 +285,22 @@
   function tabChange (code) {
     if (code === currentTab) return;
     currentTab = code;
-    showMsg = false
+    showMsg = false;
   }
 
   function resetHandlers () {
-    mocker.resetHandlers(...getList());
-    mocker.printHandlers();
-    mocker.restoreHandlers();
-    mocker.listHandlers();
+    let allHandlers = getList()
+    console.log(allHandlers)
+    allHandlers.forEach(handler=>{
+      if (skipUrls.includes(handler.info.path)) {
+        handler.markAsSkipped()
+      }
+    })
+    mocker.resetHandlers(...allHandlers);
+    // mocker.printHandlers();
+  }
+
+  function getStatusCode () {
     statusCode = localStorage.getItem(MSW_RESPONSE_STATUS_CODE);
   }
 
@@ -293,6 +314,11 @@
   function changeStatusGlobal () {
     globalStatus = !globalStatus;
     localStorage.setItem(MSW_GLOBAL_STATUS, `${+globalStatus}`);
+    if (globalStatus) {
+      startMocker();
+    } else {
+      mocker.stop();
+    }
     resetHandlers();
   }
 
@@ -304,14 +330,14 @@
       localStorage.setItem(MSW_REQUEST_FAIL_RATIO, failRatio);
     }
   }
-  
-  function fileChange(e) {
-    let fileList = fileObj.files
-    if (fileList.length>0) {
-      let file = fileList[0]
-      let { type } = file
-      if (type==="application/json") {
-        importHandle(file)
+
+  function fileChange (e) {
+    let fileList = fileObj.files;
+    if (fileList.length > 0) {
+      let file = fileList[0];
+      let { type } = file;
+      if (type === "application/json") {
+        importHandle(file);
       } else {
         message({
           type: "error",
@@ -325,29 +351,27 @@
       });
     }
   }
-  
-  function fileTrigger() {
-    fileObj.click()
+
+  function fileTrigger () {
+    fileObj.click();
   }
 
-  async function importHandle(file) {
-    // console.log(file)
+  async function importHandle (file) {
     try {
-      let jsonStr = await fileToJson(file)
-      let res = JSON.parse(jsonStr)
-      // console.log(res)
+      let jsonStr = await fileToJson(file);
+      let res = JSON.parse(jsonStr);
       if (Array.isArray(res) && res.length) {
         if (list.length) {
-          let urlList = list.map(item=>item.url)
-          let lastList = res.filter(item=>!urlList.includes(item.url))
+          let urlList = list.map(item => item.url);
+          let lastList = res.filter(item => !urlList.includes(item.url));
           list = [
             ...lastList,
-            ...list,
-          ]
+            ...list
+          ];
         } else {
           list = [
             ...res
-          ]
+          ];
         }
         setLocalList();
         message({
@@ -356,7 +380,7 @@
         });
       }
     } catch (err) {
-      console.log(err)
+      console.log(err);
       message({
         type: "error",
         msg: `【导入失败】 ${err}`
@@ -364,8 +388,8 @@
     }
   }
 
-  function exportHandle() {
-    jsonDownload(list)
+  function exportHandle () {
+    jsonDownload(list);
   }
 
   function getLocalList () {
@@ -478,6 +502,7 @@
     let { index, checked } = item;
     list[index].checked = !checked;
     setLocalList();
+    getSkipUrls();
   }
 
   function changeStatusAll () {
@@ -490,6 +515,16 @@
       };
     });
     setLocalList();
+    getSkipUrls();
+  }
+
+  function getSkipUrls () {
+    skipUrls = list.reduce((prev, item)=>{
+      if (item.checked===false) {
+        prev.push(item.url)
+      }
+      return prev
+    }, [])
   }
 
   function uuid () {
@@ -516,5 +551,5 @@
 </script>
 
 <style lang="scss" type="text/scss">
-  @import "index";
+    @import "index";
 </style>

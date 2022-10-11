@@ -737,11 +737,37 @@ const require$$0 = {
   "510": "Not Extended",
   "511": "Network Authentication Required"
 };
-var lib$9 = {};
-var Headers = {};
-var normalizeHeaderName$1 = {};
-Object.defineProperty(normalizeHeaderName$1, "__esModule", { value: true });
-normalizeHeaderName$1.normalizeHeaderName = void 0;
+var __defProp$1 = Object.defineProperty;
+var __getOwnPropDesc$1 = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames$1 = Object.getOwnPropertyNames;
+var __hasOwnProp$1 = Object.prototype.hasOwnProperty;
+var __export$1 = (target, all) => {
+  for (var name in all)
+    __defProp$1(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps$1 = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames$1(from))
+      if (!__hasOwnProp$1.call(to, key) && key !== except)
+        __defProp$1(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc$1(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS$1 = (mod) => __copyProps$1(__defProp$1({}, "__esModule", { value: true }), mod);
+var src_exports$1 = {};
+__export$1(src_exports$1, {
+  Headers: () => HeadersPolyfill,
+  flattenHeadersList: () => flattenHeadersList,
+  flattenHeadersObject: () => flattenHeadersObject,
+  headersToList: () => headersToList,
+  headersToObject: () => headersToObject,
+  headersToString: () => headersToString,
+  listToHeaders: () => listToHeaders,
+  objectToHeaders: () => objectToHeaders,
+  reduceHeadersObject: () => reduceHeadersObject,
+  stringToHeaders: () => stringToHeaders
+});
+var lib$9 = __toCommonJS$1(src_exports$1);
 var HEADERS_INVALID_CHARACTERS = /[^a-z0-9\-#$%&'*+.^_`|~]/i;
 function normalizeHeaderName(name) {
   if (typeof name !== "string") {
@@ -752,566 +778,176 @@ function normalizeHeaderName(name) {
   }
   return name.toLowerCase();
 }
-normalizeHeaderName$1.normalizeHeaderName = normalizeHeaderName;
-var normalizeHeaderValue$1 = {};
-Object.defineProperty(normalizeHeaderValue$1, "__esModule", { value: true });
-normalizeHeaderValue$1.normalizeHeaderValue = void 0;
 function normalizeHeaderValue(value) {
   if (typeof value !== "string") {
     value = String(value);
   }
   return value;
 }
-normalizeHeaderValue$1.normalizeHeaderValue = normalizeHeaderValue;
-var __generator$2 = commonjsGlobal && commonjsGlobal.__generator || function(thisArg, body2) {
-  var _ = { label: 0, sent: function() {
-    if (t[0] & 1)
-      throw t[1];
-    return t[1];
-  }, trys: [], ops: [] }, f, y, t, g;
-  return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() {
-    return this;
-  }), g;
-  function verb(n) {
-    return function(v) {
-      return step([n, v]);
-    };
-  }
-  function step(op) {
-    if (f)
-      throw new TypeError("Generator is already executing.");
-    while (_)
-      try {
-        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done)
-          return t;
-        if (y = 0, t)
-          op = [op[0] & 2, t.value];
-        switch (op[0]) {
-          case 0:
-          case 1:
-            t = op;
-            break;
-          case 4:
-            _.label++;
-            return { value: op[1], done: false };
-          case 5:
-            _.label++;
-            y = op[1];
-            op = [0];
-            continue;
-          case 7:
-            op = _.ops.pop();
-            _.trys.pop();
-            continue;
-          default:
-            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
-              _ = 0;
-              continue;
-            }
-            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
-              _.label = op[1];
-              break;
-            }
-            if (op[0] === 6 && _.label < t[1]) {
-              _.label = t[1];
-              t = op;
-              break;
-            }
-            if (t && _.label < t[2]) {
-              _.label = t[2];
-              _.ops.push(op);
-              break;
-            }
-            if (t[2])
-              _.ops.pop();
-            _.trys.pop();
-            continue;
-        }
-        op = body2.call(thisArg, _);
-      } catch (e) {
-        op = [6, e];
-        y = 0;
-      } finally {
-        f = t = 0;
-      }
-    if (op[0] & 5)
-      throw op[1];
-    return { value: op[0] ? op[1] : void 0, done: true };
-  }
-};
-var __read$3 = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m)
-    return o;
-  var i = m.call(o), r, ar = [], e;
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-      ar.push(r.value);
-  } catch (error2) {
-    e = { error: error2 };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"]))
-        m.call(i);
-    } finally {
-      if (e)
-        throw e.error;
-    }
-  }
-  return ar;
-};
-var __values$1 = commonjsGlobal && commonjsGlobal.__values || function(o) {
-  var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
-  if (m)
-    return m.call(o);
-  if (o && typeof o.length === "number")
-    return {
-      next: function() {
-        if (o && i >= o.length)
-          o = void 0;
-        return { value: o && o[i++], done: !o };
-      }
-    };
-  throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
-};
-var _a, _b;
-Object.defineProperty(Headers, "__esModule", { value: true });
-var normalizeHeaderName_1 = normalizeHeaderName$1;
-var normalizeHeaderValue_1 = normalizeHeaderValue$1;
 var NORMALIZED_HEADERS = Symbol("normalizedHeaders");
 var RAW_HEADER_NAMES = Symbol("rawHeaderNames");
-var HeadersPolyfill = function() {
-  function HeadersPolyfill2(init2) {
-    var _this = this;
+var _a, _b;
+var HeadersPolyfill = class {
+  constructor(init2) {
     this[_a] = {};
     this[_b] = /* @__PURE__ */ new Map();
-    if (["Headers", "HeadersPolyfill"].includes(init2 === null || init2 === void 0 ? void 0 : init2.constructor.name) || init2 instanceof HeadersPolyfill2) {
-      var initialHeaders = init2;
-      initialHeaders.forEach(function(value, name) {
-        _this.append(name, value);
+    if (["Headers", "HeadersPolyfill"].includes(init2 == null ? void 0 : init2.constructor.name) || init2 instanceof HeadersPolyfill) {
+      const initialHeaders = init2;
+      initialHeaders.forEach((value, name) => {
+        this.append(name, value);
       }, this);
     } else if (Array.isArray(init2)) {
-      init2.forEach(function(_c) {
-        var _d = __read$3(_c, 2), name = _d[0], value = _d[1];
-        _this.append(name, Array.isArray(value) ? value.join(", ") : value);
+      init2.forEach(([name, value]) => {
+        this.append(name, Array.isArray(value) ? value.join(", ") : value);
       });
     } else if (init2) {
-      Object.getOwnPropertyNames(init2).forEach(function(name) {
-        var value = init2[name];
-        _this.append(name, Array.isArray(value) ? value.join(", ") : value);
+      Object.getOwnPropertyNames(init2).forEach((name) => {
+        const value = init2[name];
+        this.append(name, Array.isArray(value) ? value.join(", ") : value);
       });
     }
   }
-  HeadersPolyfill2.prototype[_a = NORMALIZED_HEADERS, _b = RAW_HEADER_NAMES, Symbol.iterator] = function() {
+  [(_a = NORMALIZED_HEADERS, _b = RAW_HEADER_NAMES, Symbol.iterator)]() {
     return this.entries();
-  };
-  HeadersPolyfill2.prototype.keys = function() {
-    var _c, _d, name_1, e_1_1;
-    var e_1, _e;
-    return __generator$2(this, function(_f) {
-      switch (_f.label) {
-        case 0:
-          _f.trys.push([0, 5, 6, 7]);
-          _c = __values$1(Object.keys(this[NORMALIZED_HEADERS])), _d = _c.next();
-          _f.label = 1;
-        case 1:
-          if (!!_d.done)
-            return [3, 4];
-          name_1 = _d.value;
-          return [4, name_1];
-        case 2:
-          _f.sent();
-          _f.label = 3;
-        case 3:
-          _d = _c.next();
-          return [3, 1];
-        case 4:
-          return [3, 7];
-        case 5:
-          e_1_1 = _f.sent();
-          e_1 = { error: e_1_1 };
-          return [3, 7];
-        case 6:
-          try {
-            if (_d && !_d.done && (_e = _c.return))
-              _e.call(_c);
-          } finally {
-            if (e_1)
-              throw e_1.error;
-          }
-          return [7];
-        case 7:
-          return [2];
-      }
-    });
-  };
-  HeadersPolyfill2.prototype.values = function() {
-    var _c, _d, value, e_2_1;
-    var e_2, _e;
-    return __generator$2(this, function(_f) {
-      switch (_f.label) {
-        case 0:
-          _f.trys.push([0, 5, 6, 7]);
-          _c = __values$1(Object.values(this[NORMALIZED_HEADERS])), _d = _c.next();
-          _f.label = 1;
-        case 1:
-          if (!!_d.done)
-            return [3, 4];
-          value = _d.value;
-          return [4, value];
-        case 2:
-          _f.sent();
-          _f.label = 3;
-        case 3:
-          _d = _c.next();
-          return [3, 1];
-        case 4:
-          return [3, 7];
-        case 5:
-          e_2_1 = _f.sent();
-          e_2 = { error: e_2_1 };
-          return [3, 7];
-        case 6:
-          try {
-            if (_d && !_d.done && (_e = _c.return))
-              _e.call(_c);
-          } finally {
-            if (e_2)
-              throw e_2.error;
-          }
-          return [7];
-        case 7:
-          return [2];
-      }
-    });
-  };
-  HeadersPolyfill2.prototype.entries = function() {
-    var _c, _d, name_2, e_3_1;
-    var e_3, _e;
-    return __generator$2(this, function(_f) {
-      switch (_f.label) {
-        case 0:
-          _f.trys.push([0, 5, 6, 7]);
-          _c = __values$1(Object.keys(this[NORMALIZED_HEADERS])), _d = _c.next();
-          _f.label = 1;
-        case 1:
-          if (!!_d.done)
-            return [3, 4];
-          name_2 = _d.value;
-          return [4, [name_2, this.get(name_2)]];
-        case 2:
-          _f.sent();
-          _f.label = 3;
-        case 3:
-          _d = _c.next();
-          return [3, 1];
-        case 4:
-          return [3, 7];
-        case 5:
-          e_3_1 = _f.sent();
-          e_3 = { error: e_3_1 };
-          return [3, 7];
-        case 6:
-          try {
-            if (_d && !_d.done && (_e = _c.return))
-              _e.call(_c);
-          } finally {
-            if (e_3)
-              throw e_3.error;
-          }
-          return [7];
-        case 7:
-          return [2];
-      }
-    });
-  };
-  HeadersPolyfill2.prototype.get = function(name) {
-    return this[NORMALIZED_HEADERS][normalizeHeaderName_1.normalizeHeaderName(name)] || null;
-  };
-  HeadersPolyfill2.prototype.set = function(name, value) {
-    var normalizedName = normalizeHeaderName_1.normalizeHeaderName(name);
-    this[NORMALIZED_HEADERS][normalizedName] = normalizeHeaderValue_1.normalizeHeaderValue(value);
+  }
+  *keys() {
+    for (const name of Object.keys(this[NORMALIZED_HEADERS])) {
+      yield name;
+    }
+  }
+  *values() {
+    for (const value of Object.values(this[NORMALIZED_HEADERS])) {
+      yield value;
+    }
+  }
+  *entries() {
+    for (const name of Object.keys(this[NORMALIZED_HEADERS])) {
+      yield [name, this.get(name)];
+    }
+  }
+  get(name) {
+    return this[NORMALIZED_HEADERS][normalizeHeaderName(name)] || null;
+  }
+  set(name, value) {
+    const normalizedName = normalizeHeaderName(name);
+    this[NORMALIZED_HEADERS][normalizedName] = normalizeHeaderValue(value);
     this[RAW_HEADER_NAMES].set(normalizedName, name);
-  };
-  HeadersPolyfill2.prototype.append = function(name, value) {
-    var normalizedName = normalizeHeaderName_1.normalizeHeaderName(name);
-    var resolvedValue = this.has(normalizedName) ? this.get(normalizedName) + ", " + value : value;
+  }
+  append(name, value) {
+    const normalizedName = normalizeHeaderName(name);
+    let resolvedValue = this.has(normalizedName) ? `${this.get(normalizedName)}, ${value}` : value;
     this.set(name, resolvedValue);
-  };
-  HeadersPolyfill2.prototype.delete = function(name) {
+  }
+  delete(name) {
     if (!this.has(name)) {
       return;
     }
-    var normalizedName = normalizeHeaderName_1.normalizeHeaderName(name);
+    const normalizedName = normalizeHeaderName(name);
     delete this[NORMALIZED_HEADERS][normalizedName];
     this[RAW_HEADER_NAMES].delete(normalizedName);
-  };
-  HeadersPolyfill2.prototype.all = function() {
+  }
+  all() {
     return this[NORMALIZED_HEADERS];
-  };
-  HeadersPolyfill2.prototype.raw = function() {
-    var e_4, _c;
-    var rawHeaders = {};
-    try {
-      for (var _d = __values$1(this.entries()), _e = _d.next(); !_e.done; _e = _d.next()) {
-        var _f = __read$3(_e.value, 2), name_3 = _f[0], value = _f[1];
-        rawHeaders[this[RAW_HEADER_NAMES].get(name_3)] = value;
-      }
-    } catch (e_4_1) {
-      e_4 = { error: e_4_1 };
-    } finally {
-      try {
-        if (_e && !_e.done && (_c = _d.return))
-          _c.call(_d);
-      } finally {
-        if (e_4)
-          throw e_4.error;
-      }
+  }
+  raw() {
+    const rawHeaders = {};
+    for (const [name, value] of this.entries()) {
+      rawHeaders[this[RAW_HEADER_NAMES].get(name)] = value;
     }
     return rawHeaders;
-  };
-  HeadersPolyfill2.prototype.has = function(name) {
-    return this[NORMALIZED_HEADERS].hasOwnProperty(normalizeHeaderName_1.normalizeHeaderName(name));
-  };
-  HeadersPolyfill2.prototype.forEach = function(callback, thisArg) {
-    for (var name_4 in this[NORMALIZED_HEADERS]) {
-      if (this[NORMALIZED_HEADERS].hasOwnProperty(name_4)) {
-        callback.call(thisArg, this[NORMALIZED_HEADERS][name_4], name_4, this);
+  }
+  has(name) {
+    return this[NORMALIZED_HEADERS].hasOwnProperty(normalizeHeaderName(name));
+  }
+  forEach(callback, thisArg) {
+    for (const name in this[NORMALIZED_HEADERS]) {
+      if (this[NORMALIZED_HEADERS].hasOwnProperty(name)) {
+        callback.call(thisArg, this[NORMALIZED_HEADERS][name], name, this);
       }
     }
-  };
-  return HeadersPolyfill2;
-}();
-Headers.default = HeadersPolyfill;
-var headersToString$1 = {};
-var headersToList$1 = {};
-Object.defineProperty(headersToList$1, "__esModule", { value: true });
-headersToList$1.headersToList = void 0;
+  }
+};
 function headersToList(headers) {
-  var headersList = [];
-  headers.forEach(function(value, name) {
-    var resolvedValue = value.includes(",") ? value.split(",").map(function(value2) {
-      return value2.trim();
-    }) : value;
+  const headersList = [];
+  headers.forEach((value, name) => {
+    const resolvedValue = value.includes(",") ? value.split(",").map((value2) => value2.trim()) : value;
     headersList.push([name, resolvedValue]);
   });
   return headersList;
 }
-headersToList$1.headersToList = headersToList;
-var __read$2 = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m)
-    return o;
-  var i = m.call(o), r, ar = [], e;
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-      ar.push(r.value);
-  } catch (error2) {
-    e = { error: error2 };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"]))
-        m.call(i);
-    } finally {
-      if (e)
-        throw e.error;
-    }
-  }
-  return ar;
-};
-Object.defineProperty(headersToString$1, "__esModule", { value: true });
-headersToString$1.headersToString = void 0;
-var headersToList_1 = headersToList$1;
 function headersToString(headers) {
-  var list = headersToList_1.headersToList(headers);
-  var lines = list.map(function(_a2) {
-    var _b2 = __read$2(_a2, 2), name = _b2[0], value = _b2[1];
-    var values = [].concat(value);
-    return name + ": " + values.join(", ");
+  const list = headersToList(headers);
+  const lines = list.map(([name, value]) => {
+    const values = [].concat(value);
+    return `${name}: ${values.join(", ")}`;
   });
   return lines.join("\r\n");
 }
-headersToString$1.headersToString = headersToString;
-var headersToObject$1 = {};
-Object.defineProperty(headersToObject$1, "__esModule", { value: true });
-headersToObject$1.headersToObject = void 0;
 var singleValueHeaders = ["user-agent"];
 function headersToObject(headers) {
-  var headersObject = {};
-  headers.forEach(function(value, name) {
-    var isMultiValue = !singleValueHeaders.includes(name.toLowerCase()) && value.includes(",");
-    headersObject[name] = isMultiValue ? value.split(",").map(function(s) {
-      return s.trim();
-    }) : value;
+  const headersObject = {};
+  headers.forEach((value, name) => {
+    const isMultiValue = !singleValueHeaders.includes(name.toLowerCase()) && value.includes(",");
+    headersObject[name] = isMultiValue ? value.split(",").map((s) => s.trim()) : value;
   });
   return headersObject;
 }
-headersToObject$1.headersToObject = headersToObject;
-var stringToHeaders$1 = {};
-Object.defineProperty(stringToHeaders$1, "__esModule", { value: true });
-stringToHeaders$1.stringToHeaders = void 0;
-var Headers_1$2 = Headers;
 function stringToHeaders(str) {
-  var lines = str.trim().split(/[\r\n]+/);
-  return lines.reduce(function(headers, line) {
+  const lines = str.trim().split(/[\r\n]+/);
+  return lines.reduce((headers, line) => {
     if (line.trim() === "") {
       return headers;
     }
-    var parts = line.split(": ");
-    var name = parts.shift();
-    var value = parts.join(": ");
+    const parts = line.split(": ");
+    const name = parts.shift();
+    const value = parts.join(": ");
     headers.append(name, value);
     return headers;
-  }, new Headers_1$2.default());
+  }, new HeadersPolyfill());
 }
-stringToHeaders$1.stringToHeaders = stringToHeaders;
-var listToHeaders$1 = {};
-var __read$1 = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m)
-    return o;
-  var i = m.call(o), r, ar = [], e;
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-      ar.push(r.value);
-  } catch (error2) {
-    e = { error: error2 };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"]))
-        m.call(i);
-    } finally {
-      if (e)
-        throw e.error;
-    }
-  }
-  return ar;
-};
-Object.defineProperty(listToHeaders$1, "__esModule", { value: true });
-listToHeaders$1.listToHeaders = void 0;
-var Headers_1$1 = Headers;
 function listToHeaders(list) {
-  var headers = new Headers_1$1.default();
-  list.forEach(function(_a2) {
-    var _b2 = __read$1(_a2, 2), name = _b2[0], value = _b2[1];
-    var values = [].concat(value);
-    values.forEach(function(value2) {
+  const headers = new HeadersPolyfill();
+  list.forEach(([name, value]) => {
+    const values = [].concat(value);
+    values.forEach((value2) => {
       headers.append(name, value2);
     });
   });
   return headers;
 }
-listToHeaders$1.listToHeaders = listToHeaders;
-var objectToHeaders$1 = {};
-var reduceHeadersObject$1 = {};
-Object.defineProperty(reduceHeadersObject$1, "__esModule", { value: true });
-reduceHeadersObject$1.reduceHeadersObject = void 0;
 function reduceHeadersObject(headers, reducer, initialState) {
-  return Object.keys(headers).reduce(function(nextHeaders, name) {
+  return Object.keys(headers).reduce((nextHeaders, name) => {
     return reducer(nextHeaders, name, headers[name]);
   }, initialState);
 }
-reduceHeadersObject$1.reduceHeadersObject = reduceHeadersObject;
-Object.defineProperty(objectToHeaders$1, "__esModule", { value: true });
-objectToHeaders$1.objectToHeaders = void 0;
-var Headers_1 = Headers;
-var reduceHeadersObject_1$1 = reduceHeadersObject$1;
 function objectToHeaders(headersObject) {
-  return reduceHeadersObject_1$1.reduceHeadersObject(headersObject, function(headers, name, value) {
-    var values = [].concat(value).filter(Boolean);
-    values.forEach(function(value2) {
-      headers.append(name, value2);
-    });
-    return headers;
-  }, new Headers_1.default());
+  return reduceHeadersObject(
+    headersObject,
+    (headers, name, value) => {
+      const values = [].concat(value).filter(Boolean);
+      values.forEach((value2) => {
+        headers.append(name, value2);
+      });
+      return headers;
+    },
+    new HeadersPolyfill()
+  );
 }
-objectToHeaders$1.objectToHeaders = objectToHeaders;
-var flattenHeadersList$1 = {};
-var __read = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m)
-    return o;
-  var i = m.call(o), r, ar = [], e;
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done)
-      ar.push(r.value);
-  } catch (error2) {
-    e = { error: error2 };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"]))
-        m.call(i);
-    } finally {
-      if (e)
-        throw e.error;
-    }
-  }
-  return ar;
-};
-Object.defineProperty(flattenHeadersList$1, "__esModule", { value: true });
-flattenHeadersList$1.flattenHeadersList = void 0;
 function flattenHeadersList(list) {
-  return list.map(function(_a2) {
-    var _b2 = __read(_a2, 2), name = _b2[0], values = _b2[1];
+  return list.map(([name, values]) => {
     return [name, [].concat(values).join("; ")];
   });
 }
-flattenHeadersList$1.flattenHeadersList = flattenHeadersList;
-var flattenHeadersObject$1 = {};
-Object.defineProperty(flattenHeadersObject$1, "__esModule", { value: true });
-flattenHeadersObject$1.flattenHeadersObject = void 0;
-var reduceHeadersObject_1 = reduceHeadersObject$1;
 function flattenHeadersObject(headersObject) {
-  return reduceHeadersObject_1.reduceHeadersObject(headersObject, function(headers, name, value) {
-    headers[name] = [].concat(value).join("; ");
-    return headers;
-  }, {});
+  return reduceHeadersObject(
+    headersObject,
+    (headers, name, value) => {
+      headers[name] = [].concat(value).join("; ");
+      return headers;
+    },
+    {}
+  );
 }
-flattenHeadersObject$1.flattenHeadersObject = flattenHeadersObject;
-(function(exports) {
-  Object.defineProperty(exports, "__esModule", { value: true });
-  exports.flattenHeadersObject = exports.flattenHeadersList = exports.reduceHeadersObject = exports.objectToHeaders = exports.listToHeaders = exports.stringToHeaders = exports.headersToObject = exports.headersToList = exports.headersToString = exports.Headers = void 0;
-  var Headers_12 = Headers;
-  Object.defineProperty(exports, "Headers", { enumerable: true, get: function() {
-    return Headers_12.default;
-  } });
-  var headersToString_1 = headersToString$1;
-  Object.defineProperty(exports, "headersToString", { enumerable: true, get: function() {
-    return headersToString_1.headersToString;
-  } });
-  var headersToList_12 = headersToList$1;
-  Object.defineProperty(exports, "headersToList", { enumerable: true, get: function() {
-    return headersToList_12.headersToList;
-  } });
-  var headersToObject_1 = headersToObject$1;
-  Object.defineProperty(exports, "headersToObject", { enumerable: true, get: function() {
-    return headersToObject_1.headersToObject;
-  } });
-  var stringToHeaders_1 = stringToHeaders$1;
-  Object.defineProperty(exports, "stringToHeaders", { enumerable: true, get: function() {
-    return stringToHeaders_1.stringToHeaders;
-  } });
-  var listToHeaders_1 = listToHeaders$1;
-  Object.defineProperty(exports, "listToHeaders", { enumerable: true, get: function() {
-    return listToHeaders_1.listToHeaders;
-  } });
-  var objectToHeaders_1 = objectToHeaders$1;
-  Object.defineProperty(exports, "objectToHeaders", { enumerable: true, get: function() {
-    return objectToHeaders_1.objectToHeaders;
-  } });
-  var reduceHeadersObject_12 = reduceHeadersObject$1;
-  Object.defineProperty(exports, "reduceHeadersObject", { enumerable: true, get: function() {
-    return reduceHeadersObject_12.reduceHeadersObject;
-  } });
-  var flattenHeadersList_1 = flattenHeadersList$1;
-  Object.defineProperty(exports, "flattenHeadersList", { enumerable: true, get: function() {
-    return flattenHeadersList_1.flattenHeadersList;
-  } });
-  var flattenHeadersObject_1 = flattenHeadersObject$1;
-  Object.defineProperty(exports, "flattenHeadersObject", { enumerable: true, get: function() {
-    return flattenHeadersObject_1.flattenHeadersObject;
-  } });
-})(lib$9);
 var _cookie_0_4_2_cookie = {};
 /*!
  * cookie
@@ -1873,7 +1509,7 @@ var StrictEventEmitter = function(_super) {
     return _super.prototype.on.call(this, event.toString(), listener);
   };
   StrictEventEmitter2.prototype.once = function(event, listener) {
-    return _super.prototype.on.call(this, event.toString(), listener);
+    return _super.prototype.once.call(this, event.toString(), listener);
   };
   StrictEventEmitter2.prototype.off = function(event, listener) {
     return _super.prototype.off.call(this, event.toString(), listener);
@@ -1898,7 +1534,10 @@ var StrictEventEmitter = function(_super) {
     return _super.prototype.removeListener.call(this, event.toString(), listener);
   };
   StrictEventEmitter2.prototype.removeAllListeners = function(event) {
-    return _super.prototype.removeAllListeners.call(this, event ? event.toString() : void 0);
+    if (event) {
+      return _super.prototype.removeAllListeners.call(this, event.toString());
+    }
+    return _super.prototype.removeAllListeners.call(this);
   };
   StrictEventEmitter2.prototype.eventNames = function() {
     return _super.prototype.eventNames.call(this);
@@ -2691,7 +2330,7 @@ nextTick$1.nextTickAsync = nextTickAsync;
       return { value: op[0] ? op[1] : void 0, done: true };
     }
   };
-  var __read2 = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
+  var __read = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m)
       return o;
@@ -2764,7 +2403,7 @@ nextTick$1.nextTickAsync = nextTickAsync;
                     switch (_a3.label) {
                       case 0:
                         _a3.trys.push([0, 2, , 3]);
-                        return [4, listener.apply(void 0, __spreadArray([], __read2(args)))];
+                        return [4, listener.apply(void 0, __spreadArray([], __read(args)))];
                       case 1:
                         _a3.sent();
                         resolve();
@@ -2807,7 +2446,7 @@ nextTick$1.nextTickAsync = nextTickAsync;
           log('cleaned up "%s" listeners queue!', event);
         });
       });
-      return _super.prototype.emit.apply(this, __spreadArray([event], __read2(args)));
+      return _super.prototype.emit.apply(this, __spreadArray([event], __read(args)));
     };
     AsyncEventEmitter3.prototype.untilIdle = function(event, filter) {
       if (filter === void 0) {
@@ -3721,12 +3360,12 @@ function require_isGeneratorFunction_1_0_10_isGeneratorFunction() {
   };
   return _isGeneratorFunction_1_0_10_isGeneratorFunction;
 }
-var _isCallable_1_2_5_isCallable;
-var hasRequired_isCallable_1_2_5_isCallable;
-function require_isCallable_1_2_5_isCallable() {
-  if (hasRequired_isCallable_1_2_5_isCallable)
-    return _isCallable_1_2_5_isCallable;
-  hasRequired_isCallable_1_2_5_isCallable = 1;
+var _isCallable_1_2_7_isCallable;
+var hasRequired_isCallable_1_2_7_isCallable;
+function require_isCallable_1_2_7_isCallable() {
+  if (hasRequired_isCallable_1_2_7_isCallable)
+    return _isCallable_1_2_7_isCallable;
+  hasRequired_isCallable_1_2_7_isCallable = 1;
   var fnToStr = Function.prototype.toString;
   var reflectApply = typeof Reflect === "object" && Reflect !== null && Reflect.apply;
   var badArrayLike;
@@ -3771,21 +3410,33 @@ function require_isCallable_1_2_5_isCallable() {
     }
   };
   var toStr = Object.prototype.toString;
+  var objectClass = "[object Object]";
   var fnClass = "[object Function]";
   var genClass = "[object GeneratorFunction]";
+  var ddaClass = "[object HTMLAllCollection]";
+  var ddaClass2 = "[object HTML document.all class]";
+  var ddaClass3 = "[object HTMLCollection]";
   var hasToStringTag = typeof Symbol === "function" && !!Symbol.toStringTag;
-  var isDDA = typeof document === "object" ? function isDocumentDotAll(value) {
-    if (typeof value === "undefined" || typeof value === "object") {
-      try {
-        return value("") === null;
-      } catch (e) {
-      }
-    }
-    return false;
-  } : function() {
+  var isIE68 = !(0 in [,]);
+  var isDDA = function isDocumentDotAll() {
     return false;
   };
-  _isCallable_1_2_5_isCallable = reflectApply ? function isCallable(value) {
+  if (typeof document === "object") {
+    var all = document.all;
+    if (toStr.call(all) === toStr.call(document.all)) {
+      isDDA = function isDocumentDotAll(value) {
+        if ((isIE68 || !value) && (typeof value === "undefined" || typeof value === "object")) {
+          try {
+            var str = toStr.call(value);
+            return (str === ddaClass || str === ddaClass2 || str === ddaClass3 || str === objectClass) && value("") == null;
+          } catch (e) {
+          }
+        }
+        return false;
+      };
+    }
+  }
+  _isCallable_1_2_7_isCallable = reflectApply ? function isCallable(value) {
     if (isDDA(value)) {
       return true;
     }
@@ -3795,9 +3446,6 @@ function require_isCallable_1_2_5_isCallable() {
     if (typeof value !== "function" && typeof value !== "object") {
       return false;
     }
-    if (typeof value === "function" && !value.prototype) {
-      return true;
-    }
     try {
       reflectApply(value, null, badArrayLike);
     } catch (e) {
@@ -3805,7 +3453,7 @@ function require_isCallable_1_2_5_isCallable() {
         return false;
       }
     }
-    return !isES6ClassFn(value);
+    return !isES6ClassFn(value) && tryFunctionObject(value);
   } : function isCallable(value) {
     if (isDDA(value)) {
       return true;
@@ -3816,9 +3464,6 @@ function require_isCallable_1_2_5_isCallable() {
     if (typeof value !== "function" && typeof value !== "object") {
       return false;
     }
-    if (typeof value === "function" && !value.prototype) {
-      return true;
-    }
     if (hasToStringTag) {
       return tryFunctionObject(value);
     }
@@ -3826,9 +3471,12 @@ function require_isCallable_1_2_5_isCallable() {
       return false;
     }
     var strClass = toStr.call(value);
-    return strClass === fnClass || strClass === genClass || tryFunctionObject(value);
+    if (strClass !== fnClass && strClass !== genClass && !/^\[object HTML/.test(strClass)) {
+      return false;
+    }
+    return tryFunctionObject(value);
   };
-  return _isCallable_1_2_5_isCallable;
+  return _isCallable_1_2_7_isCallable;
 }
 var _forEach_0_3_3_forEach;
 var hasRequired_forEach_0_3_3_forEach;
@@ -3836,7 +3484,7 @@ function require_forEach_0_3_3_forEach() {
   if (hasRequired_forEach_0_3_3_forEach)
     return _forEach_0_3_3_forEach;
   hasRequired_forEach_0_3_3_forEach = 1;
-  var isCallable = require_isCallable_1_2_5_isCallable();
+  var isCallable = require_isCallable_1_2_7_isCallable();
   var toStr = Object.prototype.toString;
   var hasOwnProperty2 = Object.prototype.hasOwnProperty;
   var forEachArray = function forEachArray2(array, iterator, receiver) {
@@ -5042,7 +4690,7 @@ var __generator$1 = commonjsGlobal && commonjsGlobal.__generator || function(thi
 };
 Object.defineProperty(IsomorphicRequest$1, "__esModule", { value: true });
 IsomorphicRequest$1.IsomorphicRequest = void 0;
-var lib_1 = lib$9;
+var headers_polyfill_1 = lib$9;
 var outvariant_1$1 = lib$5;
 var bufferUtils_1 = bufferUtils;
 var uuid_1 = uuid$1;
@@ -5065,7 +4713,7 @@ var IsomorphicRequest = function() {
     this.id = uuid_1.uuidv4();
     this.url = input;
     this.method = init2.method || "GET";
-    this.headers = new lib_1.Headers(init2.headers);
+    this.headers = new headers_polyfill_1.Headers(init2.headers);
     this.credentials = init2.credentials || "same-origin";
     this._body = init2.body || defaultBody;
   }
@@ -16830,7 +16478,7 @@ const _graphql_16_6_0_graphql = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Ob
   findBreakingChanges,
   findDangerousChanges
 }, Symbol.toStringTag, { value: "Module" }));
-const require$$13 = /* @__PURE__ */ getAugmentedNamespace(_graphql_16_6_0_graphql);
+const require$$12 = /* @__PURE__ */ getAugmentedNamespace(_graphql_16_6_0_graphql);
 function lexer(str) {
   var tokens = [];
   var i = 0;
@@ -17192,7 +16840,7 @@ const dist_es2015 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineP
   tokensToRegexp,
   pathToRegexp
 }, Symbol.toStringTag, { value: "Module" }));
-const require$$14 = /* @__PURE__ */ getAugmentedNamespace(dist_es2015);
+const require$$13 = /* @__PURE__ */ getAugmentedNamespace(dist_es2015);
 var fetch$2 = {};
 var toIsoResponse = {};
 var hasRequiredToIsoResponse;
@@ -17202,13 +16850,13 @@ function requireToIsoResponse() {
   hasRequiredToIsoResponse = 1;
   Object.defineProperty(toIsoResponse, "__esModule", { value: true });
   toIsoResponse.toIsoResponse = void 0;
-  var headers_polyfill_1 = lib$9;
+  var headers_polyfill_12 = lib$9;
   function toIsoResponse$1(response2) {
     var _a2;
     return {
       status: (_a2 = response2.status) !== null && _a2 !== void 0 ? _a2 : 200,
       statusText: response2.statusText || "OK",
-      headers: headers_polyfill_1.objectToHeaders(response2.headers || {}),
+      headers: headers_polyfill_12.objectToHeaders(response2.headers || {}),
       body: response2.body
     };
   }
@@ -17356,7 +17004,7 @@ function requireFetch() {
       return { value: op[0] ? op[1] : void 0, done: true };
     }
   };
-  var __read2 = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
+  var __read = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m)
       return o;
@@ -17379,7 +17027,7 @@ function requireFetch() {
   };
   Object.defineProperty(fetch$2, "__esModule", { value: true });
   fetch$2.FetchInterceptor = void 0;
-  var headers_polyfill_1 = lib$9;
+  var headers_polyfill_12 = lib$9;
   var outvariant_12 = lib$5;
   var IsomorphicRequest_12 = IsomorphicRequest$1;
   var glossary_1 = glossary;
@@ -17415,7 +17063,7 @@ function requireFetch() {
                 isomorphicRequest = new IsomorphicRequest_12.IsomorphicRequest(new URL(url, location.origin), {
                   body: body2,
                   method,
-                  headers: new headers_polyfill_1.Headers(request.headers),
+                  headers: new headers_polyfill_12.Headers(request.headers),
                   credentials: request.credentials
                 });
                 interactiveIsomorphicRequest = new InteractiveIsomorphicRequest_1.InteractiveIsomorphicRequest(isomorphicRequest);
@@ -17424,7 +17072,7 @@ function requireFetch() {
                 this.emitter.emit("request", interactiveIsomorphicRequest);
                 this.log("awaiting for the mocked response...");
                 return [4, this.emitter.untilIdle("request", function(_a3) {
-                  var _b3 = __read2(_a3.args, 1), request2 = _b3[0];
+                  var _b3 = __read(_a3.args, 1), request2 = _b3[0];
                   return request2.id === interactiveIsomorphicRequest.id;
                 })];
               case 2:
@@ -17432,7 +17080,7 @@ function requireFetch() {
                 this.log("all request listeners have been resolved!");
                 return [4, interactiveIsomorphicRequest.respondWith.invoked()];
               case 3:
-                _a2 = __read2.apply(void 0, [_b2.sent(), 1]), mockedResponse = _a2[0];
+                _a2 = __read.apply(void 0, [_b2.sent(), 1]), mockedResponse = _a2[0];
                 this.log("event.respondWith called with:", mockedResponse);
                 if (mockedResponse) {
                   this.log("received mocked response:", mockedResponse);
@@ -17440,7 +17088,7 @@ function requireFetch() {
                   this.log("derived isomorphic response:", isomorphicResponse);
                   this.emitter.emit("response", interactiveIsomorphicRequest, isomorphicResponse);
                   response2 = new Response(mockedResponse.body, __assign(__assign({}, isomorphicResponse), {
-                    headers: headers_polyfill_1.flattenHeadersObject(mockedResponse.headers || {})
+                    headers: headers_polyfill_12.flattenHeadersObject(mockedResponse.headers || {})
                   }));
                   Object.defineProperty(response2, "url", {
                     writable: false,
@@ -17502,7 +17150,7 @@ function requireFetch() {
             _a2 = {
               status: response2.status,
               statusText: response2.statusText,
-              headers: headers_polyfill_1.objectToHeaders(headers_polyfill_1.headersToObject(response2.headers))
+              headers: headers_polyfill_12.objectToHeaders(headers_polyfill_12.headersToObject(response2.headers))
             };
             return [4, response2.text()];
           case 1:
@@ -19998,7 +19646,7 @@ function requireXMLHttpRequestOverride() {
       };
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
   };
-  var __read2 = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
+  var __read = commonjsGlobal && commonjsGlobal.__read || function(o, n) {
     var m = typeof Symbol === "function" && o[Symbol.iterator];
     if (!m)
       return o;
@@ -20022,7 +19670,7 @@ function requireXMLHttpRequestOverride() {
   Object.defineProperty(XMLHttpRequestOverride, "__esModule", { value: true });
   XMLHttpRequestOverride.createXMLHttpRequestOverride = void 0;
   var until_12 = lib$6;
-  var headers_polyfill_1 = lib$9;
+  var headers_polyfill_12 = lib$9;
   var xmldom_1 = requireLib();
   var parseJson_1 = requireParseJson();
   var toIsoResponse_1 = requireToIsoResponse();
@@ -20064,8 +19712,8 @@ function requireXMLHttpRequestOverride() {
         this.responseURL = "";
         this.upload = {};
         this.timeout = 0;
-        this._requestHeaders = new headers_polyfill_1.Headers();
-        this._responseHeaders = new headers_polyfill_1.Headers();
+        this._requestHeaders = new headers_polyfill_12.Headers();
+        this._responseHeaders = new headers_polyfill_12.Headers();
       }
       XMLHttpRequestOverride2.prototype.setReadyState = function(nextState) {
         if (nextState === this.readyState) {
@@ -20113,8 +19761,8 @@ function requireXMLHttpRequestOverride() {
         this.response = null;
         this.responseText = null;
         this.responseXML = null;
-        this._requestHeaders = new headers_polyfill_1.Headers();
-        this._responseHeaders = new headers_polyfill_1.Headers();
+        this._requestHeaders = new headers_polyfill_12.Headers();
+        this._responseHeaders = new headers_polyfill_12.Headers();
       };
       XMLHttpRequestOverride2.prototype.open = function(method, url, async, user, password) {
         if (async === void 0) {
@@ -20173,7 +19821,7 @@ function requireXMLHttpRequestOverride() {
               switch (_b2.label) {
                 case 0:
                   return [4, emitter.untilIdle("request", function(_a4) {
-                    var _b3 = __read2(_a4.args, 1), request = _b3[0];
+                    var _b3 = __read(_a4.args, 1), request = _b3[0];
                     return request.id === interactiveIsomorphicRequest.id;
                   })];
                 case 1:
@@ -20181,7 +19829,7 @@ function requireXMLHttpRequestOverride() {
                   this.log("all request listeners have been resolved!");
                   return [4, interactiveIsomorphicRequest.respondWith.invoked()];
                 case 2:
-                  _a3 = __read2.apply(void 0, [_b2.sent(), 1]), mockedResponse = _a3[0];
+                  _a3 = __read.apply(void 0, [_b2.sent(), 1]), mockedResponse = _a3[0];
                   this.log("event.respondWith called with:", mockedResponse);
                   return [2, mockedResponse];
               }
@@ -20189,7 +19837,7 @@ function requireXMLHttpRequestOverride() {
           });
         })).then(function(_a3) {
           var _b2, _c;
-          var _d = __read2(_a3, 2), middlewareException = _d[0], mockedResponse = _d[1];
+          var _d = __read(_a3, 2), middlewareException = _d[0], mockedResponse = _d[1];
           if (middlewareException) {
             _this.log("middleware function threw an exception!", middlewareException);
             _this.trigger("error");
@@ -20201,7 +19849,7 @@ function requireXMLHttpRequestOverride() {
             _this.trigger("loadstart");
             _this.status = (_b2 = mockedResponse.status) !== null && _b2 !== void 0 ? _b2 : 200;
             _this.statusText = mockedResponse.statusText || "OK";
-            _this._responseHeaders = mockedResponse.headers ? headers_polyfill_1.objectToHeaders(mockedResponse.headers) : new headers_polyfill_1.Headers();
+            _this._responseHeaders = mockedResponse.headers ? headers_polyfill_12.objectToHeaders(mockedResponse.headers) : new headers_polyfill_12.Headers();
             _this.log("set response status", _this.status, _this.statusText);
             _this.log("set response headers", _this._responseHeaders);
             _this.setReadyState(_this.HEADERS_RECEIVED);
@@ -20243,7 +19891,7 @@ function requireXMLHttpRequestOverride() {
               _this.log("original response body:", _this.response);
               var responseHeaders = originalRequest_1.getAllResponseHeaders();
               _this.log("original response headers:\n", responseHeaders);
-              _this._responseHeaders = headers_polyfill_1.stringToHeaders(responseHeaders);
+              _this._responseHeaders = headers_polyfill_12.stringToHeaders(responseHeaders);
               _this.log("original response headers (normalized)", _this._responseHeaders);
               _this.log("original response finished");
               emitter.emit("response", isomorphicRequest, {
@@ -20294,7 +19942,7 @@ function requireXMLHttpRequestOverride() {
           this.log("cannot return headers: headers not received (state: %s)", this.readyState);
           return "";
         }
-        return headers_polyfill_1.headersToString(this._responseHeaders);
+        return headers_polyfill_12.headersToString(this._responseHeaders);
       };
       XMLHttpRequestOverride2.prototype.addEventListener = function(name, listener) {
         this.log("addEventListener", name, listener);
@@ -20395,7 +20043,7 @@ function requireXMLHttpRequestOverride() {
         var _this = this;
         this.log("propagating request headers to the original request", headers);
         Object.entries(headers.raw()).forEach(function(_a3) {
-          var _b2 = __read2(_a3, 2), name = _b2[0], value = _b2[1];
+          var _b2 = __read(_a3, 2), name = _b2[0], value = _b2[1];
           _this.log('setting "%s" (%s) header on the original request', name, value);
           request.setRequestHeader(name, value);
         });
@@ -20865,12 +20513,12 @@ var NetworkError = class extends Error {
   }
 };
 var import_interceptors2 = lib$4;
-var import_headers_polyfill4 = lib$9;
+var import_headers_polyfill5 = lib$9;
 var cookieUtils3 = __toESM(_cookie_0_4_2_cookie);
 var import_cookies = lib$2;
 var import_interceptors = lib$4;
 var import_bufferUtils = bufferUtils;
-var import_lib = lib$9;
+var import_headers_polyfill4 = lib$9;
 var cookieUtils2 = __toESM(_cookie_0_4_2_cookie);
 function getAllCookies() {
   return cookieUtils2.parse(document.cookie);
@@ -20997,7 +20645,7 @@ var MockedRequest = class extends import_interceptors.IsomorphicRequest {
     return {
       status: 101,
       statusText: "Continue",
-      headers: new import_lib.Headers(),
+      headers: new import_headers_polyfill4.Headers(),
       body: null,
       passthrough: true,
       once: false
@@ -21021,15 +20669,15 @@ var MockedRequest = class extends import_interceptors.IsomorphicRequest {
 };
 function parseWorkerRequest(rawRequest) {
   const url = new URL(rawRequest.url);
-  const headers = new import_headers_polyfill4.Headers(rawRequest.headers);
+  const headers = new import_headers_polyfill5.Headers(rawRequest.headers);
   return new MockedRequest(url, __spreadProps(__spreadValues({}, rawRequest), {
     body: (0, import_interceptors2.encodeBuffer)(rawRequest.body || ""),
     headers
   }));
 }
 var import_until2 = lib$6;
-var getResponse = async (request, handlers2, resolutionContext) => {
-  const relevantHandlers = handlers2.filter((handler) => {
+var getResponse = async (request, handlers, resolutionContext) => {
+  const relevantHandlers = handlers.filter((handler) => {
     return handler.test(request, resolutionContext);
   });
   if (relevantHandlers.length === 0) {
@@ -21074,7 +20722,7 @@ var getResponse = async (request, handlers2, resolutionContext) => {
   };
 };
 var import_js_levenshtein = __toESM(require_jsLevenshtein_1_1_6_jsLevenshtein());
-var import_graphql = require$$13;
+var import_graphql = require$$12;
 var getPublicUrlFromRequest = (request) => {
   return request.referrer.startsWith(request.url.origin) ? request.url.pathname : new URL(request.url.pathname, `${request.url.protocol}//${request.url.host}`).href;
 };
@@ -21190,14 +20838,14 @@ function prepareRequest(request) {
     headers: request.headers.all()
   });
 }
-var import_headers_polyfill5 = lib$9;
+var import_headers_polyfill6 = lib$9;
 function prepareResponse(res) {
-  const responseHeaders = (0, import_headers_polyfill5.objectToHeaders)(res.headers);
+  const responseHeaders = (0, import_headers_polyfill6.objectToHeaders)(res.headers);
   return __spreadProps(__spreadValues({}, res), {
     body: parseBody(res.body, responseHeaders)
   });
 }
-var import_path_to_regexp = require$$14;
+var import_path_to_regexp = require$$13;
 var import_getCleanUrl = getCleanUrl$1;
 var REDUNDANT_CHARACTERS_EXP = /[\?|#].*$/g;
 function getSearchParams(path) {
@@ -21246,7 +20894,7 @@ function matchRequestUrl(url, path, baseUrl) {
     params
   };
 }
-var import_headers_polyfill6 = lib$9;
+var import_headers_polyfill7 = lib$9;
 function compose(...fns) {
   return (...args) => {
     return fns.reduceRight((leftFn, rightFn) => {
@@ -21266,7 +20914,7 @@ var defaultResponseTransformers = [];
 function createResponseComposition(responseOverrides, defaultTransformers = defaultResponseTransformers) {
   return async (...transformers) => {
     const initialResponse = Object.assign({}, defaultResponse, {
-      headers: new import_headers_polyfill6.Headers({
+      headers: new import_headers_polyfill7.Headers({
         "x-powered-by": "msw"
       })
     }, responseOverrides);
@@ -21284,7 +20932,7 @@ var response = Object.assign(createResponseComposition(), {
     throw new NetworkError(message);
   }
 });
-var SOURCE_FRAME = /\/msw\/src\/(.+)/;
+var SOURCE_FRAME = /[\/\\]msw[\/\\]src[\/\\](.+)/;
 var BUILD_FRAME = /(node_modules)?[\/\\]lib[\/\\](umd|esm|iief|cjs)[\/\\]|^[^\/\\]*$/;
 function getCallFrame(error2) {
   const stack = error2.stack;
@@ -21557,8 +21205,8 @@ Consider naming this operation or using "graphql.operation" request handler to i
 var MAX_MATCH_SCORE = 3;
 var MAX_SUGGESTION_COUNT = 4;
 var TYPE_MATCH_DELTA = 0.5;
-function groupHandlersByType(handlers2) {
-  return handlers2.reduce((groups, handler) => {
+function groupHandlersByType(handlers) {
+  return handlers.reduce((groups, handler) => {
     if (handler instanceof RestHandler) {
       groups.rest.push(handler);
     }
@@ -21599,25 +21247,25 @@ function getGraphQLHandlerScore(parsedQuery) {
     return score - operationTypeScoreDelta;
   };
 }
-function getSuggestedHandler(request, handlers2, getScore) {
-  const suggestedHandlers = handlers2.reduce((suggestions, handler) => {
+function getSuggestedHandler(request, handlers, getScore) {
+  const suggestedHandlers = handlers.reduce((suggestions, handler) => {
     const score = getScore(request, handler);
     return suggestions.concat([[score, handler]]);
   }, []).sort(([leftScore], [rightScore]) => leftScore - rightScore).filter(([score]) => score <= MAX_MATCH_SCORE).slice(0, MAX_SUGGESTION_COUNT).map(([, handler]) => handler);
   return suggestedHandlers;
 }
-function getSuggestedHandlersMessage(handlers2) {
-  if (handlers2.length > 1) {
+function getSuggestedHandlersMessage(handlers) {
+  if (handlers.length > 1) {
     return `Did you mean to request one of the following resources instead?
 
-${handlers2.map((handler) => `  \u2022 ${handler.info.header}`).join("\n")}`;
+${handlers.map((handler) => `  \u2022 ${handler.info.header}`).join("\n")}`;
   }
-  return `Did you mean to request "${handlers2[0].info.header}" instead?`;
+  return `Did you mean to request "${handlers[0].info.header}" instead?`;
 }
-function onUnhandledRequest(request, handlers2, strategy = "warn") {
+function onUnhandledRequest(request, handlers, strategy = "warn") {
   const parsedGraphQLQuery = tryCatch(() => parseGraphQLRequest(request));
   function generateHandlerSuggestion() {
-    const handlerGroups = groupHandlersByType(handlers2);
+    const handlerGroups = groupHandlersByType(handlers);
     const relevantHandlers = parsedGraphQLQuery ? handlerGroups.graphql : handlerGroups.rest;
     const suggestedHandlers = getSuggestedHandler(request, relevantHandlers, parsedGraphQLQuery ? getGraphQLHandlerScore(parsedGraphQLQuery) : getRestHandlerScore());
     return suggestedHandlers.length > 0 ? getSuggestedHandlersMessage(suggestedHandlers) : "";
@@ -21666,7 +21314,7 @@ function readResponseCookies(request, response2) {
   import_cookies2.store.add(__spreadProps(__spreadValues({}, request), { url: request.url.toString() }), response2);
   import_cookies2.store.persist();
 }
-async function handleRequest(request, handlers2, options, emitter, handleRequestOptions) {
+async function handleRequest(request, handlers, options, emitter, handleRequestOptions) {
   var _a2, _b2, _c, _d, _e, _f;
   emitter.emit("request:start", request);
   if (request.headers.get("x-msw-bypass") === "true") {
@@ -21675,7 +21323,7 @@ async function handleRequest(request, handlers2, options, emitter, handleRequest
     return;
   }
   const [lookupError, lookupResult] = await (0, import_until2.until)(() => {
-    return getResponse(request, handlers2, handleRequestOptions == null ? void 0 : handleRequestOptions.resolutionContext);
+    return getResponse(request, handlers, handleRequestOptions == null ? void 0 : handleRequestOptions.resolutionContext);
   });
   if (lookupError) {
     emitter.emit("unhandledException", lookupError, request);
@@ -21683,7 +21331,7 @@ async function handleRequest(request, handlers2, options, emitter, handleRequest
   }
   const { handler, response: response2 } = lookupResult;
   if (!handler) {
-    onUnhandledRequest(request, handlers2, options.onUnhandledRequest);
+    onUnhandledRequest(request, handlers, options.onUnhandledRequest);
     emitter.emit("request:unhandled", request);
     emitter.emit("request:end", request);
     (_b2 = handleRequestOptions == null ? void 0 : handleRequestOptions.onPassthroughResponse) == null ? void 0 : _b2.call(handleRequestOptions, request);
@@ -21711,17 +21359,18 @@ async function handleRequest(request, handlers2, options, emitter, handleRequest
   emitter.emit("request:end", request);
   return transformedResponse;
 }
-var import_headers_polyfill8 = lib$9;
+var import_headers_polyfill9 = lib$9;
 function serializeResponse(source) {
   return {
     status: source.status,
     statusText: source.statusText,
-    headers: (0, import_headers_polyfill8.flattenHeadersObject)((0, import_headers_polyfill8.headersToObject)(source.headers)),
+    headers: (0, import_headers_polyfill9.flattenHeadersObject)((0, import_headers_polyfill9.headersToObject)(source.headers)),
     body: source.body
   };
 }
 var createRequestListener = (context, options) => {
   return async (event, message) => {
+    var _a2;
     const messageChannel = new WorkerChannel(event.ports[0]);
     const request = parseWorkerRequest(message.payload);
     try {
@@ -21760,7 +21409,7 @@ var createRequestListener = (context, options) => {
 
 %s
 
-This exception has been gracefully handled as a 500 response, however, it's strongly recommended to resolve this error, as it indicates a mistake in your code. If you wish to mock an error response, please see this guide: https://mswjs.io/docs/recipes/mocking-error-responses`, request.method, request.url, error2);
+This exception has been gracefully handled as a 500 response, however, it's strongly recommended to resolve this error, as it indicates a mistake in your code. If you wish to mock an error response, please see this guide: https://mswjs.io/docs/recipes/mocking-error-responses`, request.method, request.url, (_a2 = error2.stack) != null ? _a2 : error2);
         messageChannel.postMessage("MOCK_RESPONSE", {
           status: 500,
           statusText: "Request Handler Error",
@@ -21918,11 +21567,11 @@ var createStop = (context) => {
     printStopMessage({ quiet: (_a2 = context.startOptions) == null ? void 0 : _a2.quiet });
   };
 };
-function use(currentHandlers, ...handlers2) {
-  currentHandlers.unshift(...handlers2);
+function use(currentHandlers, ...handlers) {
+  currentHandlers.unshift(...handlers);
 }
-function restoreHandlers(handlers2) {
-  handlers2.forEach((handler) => {
+function restoreHandlers(handlers) {
+  handlers.forEach((handler) => {
     handler.markAsSkipped(false);
   });
 }
@@ -22144,8 +21793,8 @@ function setupWorker(...requestHandlers) {
       publicEmitter.removeAllListeners();
       stopHandler();
     },
-    use(...handlers2) {
-      use(context.requestHandlers, ...handlers2);
+    use(...handlers) {
+      use(context.requestHandlers, ...handlers);
     },
     restoreHandlers() {
       restoreHandlers(context.requestHandlers);
@@ -22157,8 +21806,8 @@ function setupWorker(...requestHandlers) {
       return toReadonlyArray(context.requestHandlers);
     },
     printHandlers() {
-      const handlers2 = this.listHandlers();
-      handlers2.forEach((handler) => {
+      const handlers = this.listHandlers();
+      handlers.forEach((handler) => {
         const { header, callFrame } = handler.info;
         const pragma = handler.info.hasOwnProperty("operationType") ? "[graphql]" : "[rest]";
         console.groupCollapsed(`${pragma} ${header}`);
@@ -22238,14 +21887,13 @@ function getList(arr) {
   let local = localStorage.getItem(MSW_LIST_KEY);
   let list = local && JSON.parse(local) || [];
   arr = arr || list;
-  arr = arr.filter((item) => item.checked);
   if (localStorage.getItem(MSW_GLOBAL_STATUS) !== "1" || !arr.length)
     return [];
-  console.log(arr);
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1e3;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
   failRatio = +failRatio > 100 ? 100 : failRatio;
   let reqStatus = getStatus(failRatio);
+  console.log("[Status Code]", reqStatus);
   localStorage.setItem(MSW_RESPONSE_STATUS_CODE, reqStatus);
   let reqList = arr.map((item) => {
     return lib.rest.all(item.url, (req, res, ctx) => {
@@ -22268,7 +21916,6 @@ function getList(arr) {
       }
     });
   });
-  console.log(reqList);
   return reqList;
 }
 function jsonDownload(json2) {
@@ -22297,8 +21944,7 @@ function fileToJson(file) {
     };
   });
 }
-const handlers = [...getList()];
-const mocker = lib.setupWorker(...handlers);
+const mocker = lib.setupWorker();
 const tabs = [
   {
     name: "\u63A7\u5236\u53F0",
@@ -22345,22 +21991,22 @@ const rests = [
 ];
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[53] = list[i];
-  child_ctx[54] = list;
-  child_ctx[55] = i;
+  child_ctx[58] = list[i];
+  child_ctx[59] = list;
+  child_ctx[60] = i;
   return child_ctx;
 }
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[56] = list[i].value;
-  child_ctx[57] = list[i].label;
+  child_ctx[61] = list[i].value;
+  child_ctx[62] = list[i].label;
   return child_ctx;
 }
 function get_each_context_2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[60] = list[i].name;
-  child_ctx[61] = list[i].code;
-  child_ctx[55] = i;
+  child_ctx[65] = list[i].name;
+  child_ctx[66] = list[i].code;
+  child_ctx[60] = i;
   return child_ctx;
 }
 function create_if_block(ctx) {
@@ -22389,7 +22035,7 @@ function create_if_block(ctx) {
   let mounted;
   let dispose;
   let each_value_2 = tabs;
-  const get_key = (ctx2) => ctx2[61];
+  const get_key = (ctx2) => ctx2[66];
   for (let i = 0; i < each_value_2.length; i += 1) {
     let child_ctx = get_each_context_2(ctx, each_value_2, i);
     let key = get_key(child_ctx);
@@ -22589,7 +22235,7 @@ function create_if_block(ctx) {
 }
 function create_each_block_2(key_1, ctx) {
   let div;
-  let t_value = ctx[60] + "";
+  let t_value = ctx[65] + "";
   let t;
   let div_class_value;
   let mounted;
@@ -22600,20 +22246,20 @@ function create_each_block_2(key_1, ctx) {
     c() {
       div = element("div");
       t = text$1(t_value);
-      attr(div, "class", div_class_value = "msw-tabs-item " + (ctx[61] === ctx[1] ? "active" : ""));
+      attr(div, "class", div_class_value = "msw-tabs-item " + (ctx[66] === ctx[1] ? "active" : ""));
       this.first = div;
     },
     m(target, anchor) {
       insert(target, div, anchor);
       append(div, t);
       if (!mounted) {
-        dispose = listen(div, "click", ctx[18].bind(null, ctx[61]));
+        dispose = listen(div, "click", ctx[18].bind(null, ctx[66]));
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 2 && div_class_value !== (div_class_value = "msw-tabs-item " + (ctx[61] === ctx[1] ? "active" : ""))) {
+      if (dirty[0] & 2 && div_class_value !== (div_class_value = "msw-tabs-item " + (ctx[66] === ctx[1] ? "active" : ""))) {
         attr(div, "class", div_class_value);
       }
     },
@@ -22939,7 +22585,7 @@ function create_if_block_2(ctx) {
   let mounted;
   let dispose;
   let each_value_1 = rests;
-  const get_key = (ctx2) => ctx2[56];
+  const get_key = (ctx2) => ctx2[61];
   for (let i = 0; i < each_value_1.length; i += 1) {
     let child_ctx = get_each_context_1(ctx, each_value_1, i);
     let key = get_key(child_ctx);
@@ -23051,7 +22697,7 @@ function create_if_block_2(ctx) {
 }
 function create_each_block_1(key_1, ctx) {
   let option;
-  let t_value = ctx[57] + "";
+  let t_value = ctx[62] + "";
   let t;
   return {
     key: key_1,
@@ -23059,7 +22705,7 @@ function create_each_block_1(key_1, ctx) {
     c() {
       option = element("option");
       t = text$1(t_value);
-      option.__value = ctx[56];
+      option.__value = ctx[61];
       option.value = option.__value;
       this.first = option;
     },
@@ -23129,7 +22775,7 @@ function create_if_block_1(ctx) {
   let mounted;
   let dispose;
   let each_value = ctx[11];
-  const get_key = (ctx2) => ctx2[53].id;
+  const get_key = (ctx2) => ctx2[58].id;
   for (let i = 0; i < each_value.length; i += 1) {
     let child_ctx = get_each_context(ctx, each_value, i);
     let key = get_key(child_ctx);
@@ -23226,21 +22872,21 @@ function create_if_block_1(ctx) {
 function create_each_block(key_1, ctx) {
   let tr;
   let td0;
-  let t0_value = ctx[55] + 1 + "";
+  let t0_value = ctx[60] + 1 + "";
   let t0;
   let t1;
   let td1;
-  let t2_value = ctx[53].url + "";
+  let t2_value = ctx[58].url + "";
   let t2;
   let t3;
   let td2;
-  let t4_value = ctx[53].method + "";
+  let t4_value = ctx[58].method + "";
   let t4;
   let t5;
   let td3;
   let pre;
   let t6;
-  let t7_value = JSON.stringify(JSON.parse(ctx[53].data), null, 2) + "";
+  let t7_value = JSON.stringify(JSON.parse(ctx[58].data), null, 2) + "";
   let t7;
   let t8;
   let t9;
@@ -23257,10 +22903,10 @@ function create_each_block(key_1, ctx) {
   let mounted;
   let dispose;
   function change_handler_2() {
-    return ctx[42](ctx[53], ctx[55]);
+    return ctx[42](ctx[58], ctx[60]);
   }
   function input_change_handler_1() {
-    ctx[43].call(input, ctx[54], ctx[55]);
+    ctx[43].call(input, ctx[59], ctx[60]);
   }
   return {
     key: key_1,
@@ -23323,7 +22969,7 @@ function create_each_block(key_1, ctx) {
       append(tr, td4);
       append(td4, label);
       append(label, input);
-      input.checked = ctx[53].checked;
+      input.checked = ctx[58].checked;
       append(label, t10);
       append(tr, t11);
       append(tr, td5);
@@ -23337,22 +22983,22 @@ function create_each_block(key_1, ctx) {
           listen(input, "change", input_change_handler_1),
           listen(a0, "click", function() {
             if (is_function(ctx[27].bind(null, {
-              ...ctx[53],
-              index: ctx[55]
+              ...ctx[58],
+              index: ctx[60]
             })))
               ctx[27].bind(null, {
-                ...ctx[53],
-                index: ctx[55]
+                ...ctx[58],
+                index: ctx[60]
               }).apply(this, arguments);
           }),
           listen(a1, "click", function() {
             if (is_function(ctx[28].bind(null, {
-              ...ctx[53],
-              index: ctx[55]
+              ...ctx[58],
+              index: ctx[60]
             })))
               ctx[28].bind(null, {
-                ...ctx[53],
-                index: ctx[55]
+                ...ctx[58],
+                index: ctx[60]
               }).apply(this, arguments);
           })
         ];
@@ -23361,16 +23007,16 @@ function create_each_block(key_1, ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 2048 && t0_value !== (t0_value = ctx[55] + 1 + ""))
+      if (dirty[0] & 2048 && t0_value !== (t0_value = ctx[60] + 1 + ""))
         set_data(t0, t0_value);
-      if (dirty[0] & 2048 && t2_value !== (t2_value = ctx[53].url + ""))
+      if (dirty[0] & 2048 && t2_value !== (t2_value = ctx[58].url + ""))
         set_data(t2, t2_value);
-      if (dirty[0] & 2048 && t4_value !== (t4_value = ctx[53].method + ""))
+      if (dirty[0] & 2048 && t4_value !== (t4_value = ctx[58].method + ""))
         set_data(t4, t4_value);
-      if (dirty[0] & 2048 && t7_value !== (t7_value = JSON.stringify(JSON.parse(ctx[53].data), null, 2) + ""))
+      if (dirty[0] & 2048 && t7_value !== (t7_value = JSON.stringify(JSON.parse(ctx[58].data), null, 2) + ""))
         set_data(t7, t7_value);
       if (dirty[0] & 2048) {
-        input.checked = ctx[53].checked;
+        input.checked = ctx[58].checked;
       }
     },
     d(detaching) {
@@ -23469,7 +23115,7 @@ function instance($$self, $$props, $$invalidate) {
   let { base = "" } = $$props;
   const defaultData = JSON.stringify({ code: 0, msg: "OK", data: 1 }, null, 2);
   let isProd = true;
-  console.log("[ENV]", isProd);
+  console.log("[ENV isProd]", isProd);
   let show = false;
   let currentTab = "01";
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1e3;
@@ -23487,24 +23133,36 @@ function instance($$self, $$props, $$invalidate) {
   let globalStatus = localStorage.getItem(MSW_GLOBAL_STATUS) === "1";
   let allStatus = localStorage.getItem(MSW_ALL_STATUS) === "1";
   let fileObj = null;
+  let basePath = "/";
+  let skipUrls = [];
   onMount(async () => {
-    console.log("[baseUrl]", base);
     init2();
     {
-      let basePath = base || "/";
-      mocker.start({
-        onUnhandledRequest: "bypass",
-        serviceWorker: {
-          url: `${basePath}mockServiceWorker.js`,
-          options: {
-            scope: basePath
-          }
-        }
-      });
+      startMocker();
     }
+    resetHandlers2();
   });
+  function startMocker() {
+    mocker.start({
+      onUnhandledRequest: "bypass",
+      serviceWorker: {
+        url: `${basePath}mockServiceWorker.js`,
+        options: {
+          scope: basePath
+        }
+      }
+    });
+  }
   function init2() {
+    basePath = base || "/";
+    console.log("[baseUrl]", basePath);
     let status2 = localStorage.getItem(MSW_GLOBAL_STATUS);
+    getStatusCode();
+    getSkipUrls();
+    if (!statusCode) {
+      localStorage.setItem(MSW_RESPONSE_STATUS_CODE, 200);
+      $$invalidate(4, statusCode = 200);
+    }
     if (!status2) {
       localStorage.setItem(MSW_GLOBAL_STATUS, "1");
       $$invalidate(12, globalStatus = true);
@@ -23524,10 +23182,16 @@ function instance($$self, $$props, $$invalidate) {
     $$invalidate(8, showMsg = false);
   }
   function resetHandlers2() {
-    mocker.resetHandlers(...getList());
-    mocker.printHandlers();
-    mocker.restoreHandlers();
-    mocker.listHandlers();
+    let allHandlers = getList();
+    console.log(allHandlers);
+    allHandlers.forEach((handler) => {
+      if (skipUrls.includes(handler.info.path)) {
+        handler.markAsSkipped();
+      }
+    });
+    mocker.resetHandlers(...allHandlers);
+  }
+  function getStatusCode() {
     $$invalidate(4, statusCode = localStorage.getItem(MSW_RESPONSE_STATUS_CODE));
   }
   function clearData() {
@@ -23539,6 +23203,11 @@ function instance($$self, $$props, $$invalidate) {
   function changeStatusGlobal() {
     $$invalidate(12, globalStatus = !globalStatus);
     localStorage.setItem(MSW_GLOBAL_STATUS, `${+globalStatus}`);
+    if (globalStatus) {
+      startMocker();
+    } else {
+      mocker.stop();
+    }
     resetHandlers2();
   }
   function inputChange(type) {
@@ -23662,6 +23331,7 @@ function instance($$self, $$props, $$invalidate) {
     let { index, checked } = item;
     $$invalidate(11, list[index].checked = !checked, list);
     setLocalList();
+    getSkipUrls();
   }
   function changeStatusAll() {
     $$invalidate(13, allStatus = !allStatus);
@@ -23670,6 +23340,18 @@ function instance($$self, $$props, $$invalidate) {
       return { ...item, checked: allStatus };
     }));
     setLocalList();
+    getSkipUrls();
+  }
+  function getSkipUrls() {
+    skipUrls = list.reduce(
+      (prev, item) => {
+        if (item.checked === false) {
+          prev.push(item.url);
+        }
+        return prev;
+      },
+      []
+    );
   }
   function message({ type, msg }) {
     $$invalidate(10, msgType = type);
@@ -23784,7 +23466,7 @@ function instance($$self, $$props, $$invalidate) {
 class Msw extends SvelteElement {
   constructor(options) {
     super();
-    this.shadowRoot.innerHTML = `<style>*{padding:0;margin:0;box-sizing:border-box}a{font-style:normal;text-decoration:none;color:#333;cursor:pointer}input,textarea{outline:none;border:1px solid #999;text-indent:10px}input::placeholder,textarea::placeholder{color:#bbb}label{cursor:pointer}.msw-container{width:100%;text-align:left}.msw-show{position:fixed;right:50px;bottom:50px;z-index:9999;padding:8px 15px;background-color:#AB4BFE;color:#fff;border-radius:4px;font-size:14px;box-shadow:0 0 10px rgba(0, 0, 0, 0.4);cursor:pointer;user-select:none}.msw-mask{width:100vw;height:100vh;position:fixed;right:0;bottom:0;z-index:8888;background-color:rgba(0, 0, 0, 0.6)}.msw-box{position:fixed;left:0;bottom:0;z-index:9999;width:100%;height:70vh;padding:15px;background-color:#fff}.msw-title{display:flex;justify-content:space-between;align-items:center;color:#666;font-size:20px;font-weight:400}.msw-close{color:#333;cursor:pointer}.msw-tabs-head{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding-bottom:5px;border-bottom:1px solid #eee}.msw-tabs-inner{display:flex}.msw-reset{display:block;width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#67c23a;color:#fff;border-radius:3px}.msw-reset:hover{background-color:#85ce61}.msw-tabs-item{padding:5px 10px;cursor:pointer;transition:all linear 200ms}.msw-handle-clear{width:100px;height:30px;line-height:30px;text-align:center;background-color:#e6a23c;color:#fff;border-radius:3px}.msw-handle-clear:hover{background-color:#ebb563}.msw-tabs-item.active{background-color:pink}.msw-handle-li{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px}.msw-handle-input{width:200px;line-height:30px}.msw-handle-export{margin-left:0}.msw-config{display:flex;align-items:center}.msw-method{width:100px;height:30px}.msw-config-input{width:300px;height:30px;border:1px solid #999;border-left:none;text-indent:10px}.msw-config-add,.msw-handle-export{width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#5787FF;color:#fff;border-radius:3px}.msw-config-add:hover,.msw-handle-export:hover{background-color:rgba(87, 135, 255, 0.9098039216)}.msw-config-data{min-width:80%;max-width:100%;max-height:400px;margin-top:15px;padding:10px;text-indent:0;background-color:#fff6f7}.status-code{color:#00BE00}.status-code.error{color:#f56c6c}.msw-config-tips{margin-top:10px}.msw-config-tips.error{color:#f56c6c}.msw-config-tips.success{color:#67c23a}.table-list{height:calc(70vh - 130px);overflow-y:scroll}.msw-list{width:100%;border-color:#ddd;border-collapse:collapse;table-layout:fixed}.msw-list th,.msw-list td{padding:5px;word-wrap:break-word;white-space:normal}.msw-list td{word-wrap:break-word}.msw-list th{background-color:#f0f9eb}.msw-list th:nth-child(1){width:60px}.msw-list th:nth-child(2){max-width:300px;width:20%}.msw-list th:nth-child(3),.msw-list th:nth-child(5),.msw-list th:nth-child(6){width:86px}.msw-list .msw-list-data{width:100%;padding:5px;max-height:300px;min-height:100px;overflow-y:scroll;background-color:#fff6f7;position:relative;z-index:10;white-space:break-spaces;outline-color:#fe6c6f}.msw-list .msw-list-data::-webkit-scrollbar{display:none;height:0;width:0;background-color:transparent}@media screen and (max-width: 640px){.table-list{overflow-x:scroll}.msw-list{width:960px}}.msw-list-btn.edit{color:#409eff}.msw-list-btn.del{color:#f56c6c}.msw-handle-li-global{color:#409eff}.msw-handle-test{cursor:pointer;color:#409eff;background:#ecf5ff;border:1px solid #b3d8ff;border-radius:4px;padding:5px 10px}.msw-handle-test:hover{background-color:#409eff;color:#fff}</style>`;
+    this.shadowRoot.innerHTML = `<style>*{padding:0;margin:0;box-sizing:border-box}a{font-style:normal;text-decoration:none;color:#333;cursor:pointer}input,textarea{outline:none;border:1px solid #999;text-indent:10px}input::placeholder,textarea::placeholder{color:#bbb}label{cursor:pointer}.msw-container{width:100%;text-align:left}.msw-show{position:fixed;right:50px;bottom:50px;z-index:9999;padding:8px 15px;background-color:#ab4bfe;color:#fff;border-radius:4px;font-size:14px;box-shadow:0 0 10px rgba(0, 0, 0, 0.4);cursor:pointer;user-select:none}.msw-mask{width:100vw;height:100vh;position:fixed;right:0;bottom:0;z-index:8888;background-color:rgba(0, 0, 0, 0.6)}.msw-box{position:fixed;left:0;bottom:0;z-index:9999;width:100%;height:70vh;padding:15px;background-color:#fff}.msw-title{display:flex;justify-content:space-between;align-items:center;color:#666;font-size:20px;font-weight:400}.msw-close{color:#333;cursor:pointer}.msw-tabs-head{display:flex;justify-content:space-between;align-items:center;margin:15px 0;padding-bottom:5px;border-bottom:1px solid #eee}.msw-tabs-inner{display:flex}.msw-reset{display:block;width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#67c23a;color:#fff;border-radius:3px}.msw-reset:hover{background-color:#85ce61}.msw-tabs-item{padding:5px 10px;cursor:pointer;transition:all linear 200ms}.msw-handle-clear{width:100px;height:30px;line-height:30px;text-align:center;background-color:#e6a23c;color:#fff;border-radius:3px}.msw-handle-clear:hover{background-color:#ebb563}.msw-tabs-item.active{background-color:pink}.msw-handle-li{display:flex;justify-content:space-between;align-items:center;padding-bottom:15px}.msw-handle-input{width:200px;line-height:30px}.msw-handle-export{margin-left:0}.msw-config{display:flex;align-items:center}.msw-method{width:100px;height:30px}.msw-config-input{width:300px;height:30px;border:1px solid #999;border-left:none;text-indent:10px}.msw-config-add,.msw-handle-export{width:80px;height:30px;line-height:30px;text-align:center;margin-left:30px;background-color:#5787ff;color:#fff;border-radius:3px}.msw-config-add:hover,.msw-handle-export:hover{background-color:rgba(87, 135, 255, 0.9098039216)}.msw-config-data{min-width:80%;max-width:100%;max-height:400px;margin-top:15px;padding:10px;text-indent:0;background-color:#fff6f7}.status-code{color:#00be00}.status-code.error{color:#f56c6c}.msw-config-tips{margin-top:10px}.msw-config-tips.error{color:#f56c6c}.msw-config-tips.success{color:#67c23a}.table-list{height:calc(70vh - 130px);overflow-y:scroll}.msw-list{width:100%;border-color:#ddd;border-collapse:collapse;table-layout:fixed}.msw-list th,.msw-list td{padding:5px;word-wrap:break-word;white-space:normal}.msw-list td{word-wrap:break-word}.msw-list th{background-color:#f0f9eb}.msw-list th:nth-child(1){width:60px}.msw-list th:nth-child(2){max-width:300px;width:20%}.msw-list th:nth-child(3),.msw-list th:nth-child(5),.msw-list th:nth-child(6){width:86px}.msw-list .msw-list-data{width:100%;padding:5px;max-height:300px;min-height:100px;overflow-y:scroll;background-color:#fff6f7;position:relative;z-index:10;white-space:break-spaces;outline-color:#fe6c6f}.msw-list .msw-list-data::-webkit-scrollbar{display:none;height:0;width:0;background-color:transparent}@media screen and (max-width: 640px){.table-list{overflow-x:scroll}.msw-list{width:960px}}.msw-list-btn.edit{color:#409eff}.msw-list-btn.del{color:#f56c6c}.msw-handle-li-global{color:#409eff}.msw-handle-test{cursor:pointer;color:#409eff;background:#ecf5ff;border:1px solid #b3d8ff;border-radius:4px;padding:5px 10px}.msw-handle-test:hover{background-color:#409eff;color:#fff}</style>`;
     init(
       this,
       {

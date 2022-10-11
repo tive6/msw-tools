@@ -23,10 +23,11 @@ Mock Service Worker Tools (MSW-Tools) is a data Mock tool built based on MSW.JS 
 
 ## Online demo
 
-- 立即体验：[msw-tools demo](https://tiven.cn/service/demos/msw-tools "msw-tools online demo")
-- 工具介绍：[msw-tools blog](https://tiven.cn/p/a0368a1d/ "msw-tools | 天问博客-专注于大前端技术")
+> 立即体验：[msw-tools demo](https://tiven.cn/service/demos/msw-tools 'msw-tools online demo')
 
-![Msw-Tools](https://tiven.cn/assets/img/msw-tools-demos.gif "msw-tools")
+> 工具介绍：[msw-tools blog](https://tiven.cn/p/a0368a1d/ 'msw-tools | 天问博客-专注于大前端技术')
+
+![Msw-Tools](https://tiven.cn/assets/img/msw-tools-demos.gif 'msw-tools')
 
 ## Getting started
 
@@ -40,7 +41,7 @@ npm install -D msw-tools
 npm install -D msw
 ```
 
-- install `mockServiceWorker.js`。每个脚手架生成的项目，静态文件目录可能不同，具体请参考：[Common public directories](https://mswjs.io/docs/getting-started/integrate/browser#where-is-my-public-directory "Common public directories")
+- install `mockServiceWorker.js`。每个脚手架生成的项目，静态文件目录可能不同，具体请参考：[Common public directories](https://mswjs.io/docs/getting-started/integrate/browser#where-is-my-public-directory 'Common public directories')
 
 ```shell
 npx msw init public/ --save
@@ -65,20 +66,20 @@ npx msw init public/ --save
 ```js
 // main.js
 
-import { createApp } from "vue";
-import router from "./router";
-import store from "./store";
-import App from "./App.vue";
-import "./assets/css/style.scss";
+import { createApp } from 'vue'
+import router from './router'
+import store from './store'
+import App from './App.vue'
+import './assets/css/style.scss'
 
-const app = createApp(App);
+const app = createApp(App)
 
-app.use(router).use(store);
-app.mount("#app");
+app.use(router).use(store)
+app.mount('#app')
 
-if (process.env.NODE_ENV === "development") {
-  const MswTools = require("msw-tools");
-  new MswTools();
+if (process.env.NODE_ENV === 'development') {
+  const MswTools = require('msw-tools')
+  new MswTools()
 }
 ```
 
@@ -92,9 +93,9 @@ if (process.env.NODE_ENV === "development") {
 </template>
 
 <script setup>
-  import { ref } from "vue";
+  import { ref } from 'vue'
 
-  const isDev = ref(process.env.NODE_ENV === "development");
+  const isDev = ref(process.env.NODE_ENV === 'development')
 </script>
 ```
 
@@ -112,8 +113,8 @@ if (process.env.NODE_ENV === "development") {
 
 需要与打包工具和 **Router** 路由的 **base** 保持一致。请参考：
 
-- **Vite** 的 `base` 配置：[Vite Base](https://cn.vitejs.dev/config/shared-options.html#base "Base | Vite")
-- **Vue3** 的 `Router/base` 路由配置：[Vue3 Base](https://router.vuejs.org/zh/api/#createwebhistory "Vue3 | createWebHistory base")
+- **Vite** 的 `base` 配置：[Vite Base](https://cn.vitejs.dev/config/shared-options.html#base 'Base | Vite')
+- **Vue3** 的 `Router/base` 路由配置：[Vue3 Base](https://router.vuejs.org/zh/api/#createwebhistory 'Vue3 | createWebHistory base')
 
 ## Reminder
 
@@ -129,7 +130,7 @@ if (process.env.NODE_ENV === "development") {
 
 ## Feedback
 
-- **Email：** [tw.email@qq.com](mailto:tw.email@qq.com "天问eMail | msw-tools")
-- **Issues：** [msw-tools](https://github.com/tive6/msw-tools/issues "Issues | msw-tools")
+- **Email：** [tw.email@qq.com](mailto:tw.email@qq.com '天问eMail | msw-tools')
+- **Issues：** [msw-tools](https://github.com/tive6/msw-tools/issues 'Issues | msw-tools')
 
-欢迎广大 **Front-ender** 、**Tester** 体验使用，如有疑问或需求建议请到 [Github Issues](https://github.com/tive6/msw-tools/issues "Issues | msw-tools") 提出。
+欢迎广大 **Front-ender** 、**Tester** 体验使用，如有疑问或需求建议请到 [Github Issues](https://github.com/tive6/msw-tools/issues 'Issues | msw-tools') 提出。

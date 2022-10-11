@@ -1,5 +1,5 @@
 // import { rest } from "msw";
-import { getList } from "./helper";
+// import { getList } from './helper'
 
 // export const defaultHandlers = [];
-export const handlers = [...getList()];
+// export const handlers = [...getList()]

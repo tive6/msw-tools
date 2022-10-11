@@ -42,7 +42,7 @@ label {
   bottom: 50px;
   z-index: 9999;
   padding: 8px 15px;
-  background-color: #AB4BFE;
+  background-color: #ab4bfe;
   color: #fff;
   border-radius: 4px;
   font-size: 14px;
@@ -192,7 +192,7 @@ label {
   text-align: center;
   //border: 1px solid #ddd;
   margin-left: 30px;
-  background-color: #5787FF;
+  background-color: #5787ff;
   color: #fff;
   border-radius: 3px;
 }
@@ -212,7 +212,7 @@ label {
 }
 
 .status-code {
-  color: #00BE00;
+  color: #00be00;
 
   &.error {
     color: #f56c6c;
@@ -313,7 +313,6 @@ label {
 }
 
 .msw-list-btn {
-
   &.edit {
     color: #409eff;
   }
