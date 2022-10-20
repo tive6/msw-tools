@@ -1,7 +1,12 @@
 <svelte:options tag="msw-tools" />
 
 <div class="msw-container">
-  <div on:click={showModal} class="msw-show">MSW</div>
+  <div on:click={showModal}
+       on:mousedown={btnMousedown}
+       on:mousemove={btnMousemove}
+       on:mouseup={btnMouseup}
+       bind:this={btnDOM}
+       class="msw-show">MSW</div>
 
   {#if show }
     <div transition:fade="{{delay: 200, duration: 200}}"
@@ -202,6 +207,12 @@
   console.log("[ENV isProd]", isProd);
 
   let show = false;
+  let btnDOM = null;
+  let isDrop = false;
+  let offset = {
+    x: 0,
+    y: 0,
+  };
   let currentTab = "01";
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1000;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
@@ -285,6 +296,40 @@
   function closeModal () {
     show = false;
     resetHandlers();
+  }
+  
+  function btnMousedown(e) {
+    e = e || window.event
+    console.log(e)
+    isDrop = true
+    console.log(btnDOM)
+    // offset.x = e.clientX - box.offsetLeft;
+    // offset.x = e.clientX - box.offsetLeft;
+  }
+
+  function btnMousemove(e) {
+    e = e || window.event
+    if (isDrop) {
+      offset.x = e.clientX - btnDOM.offsetLeft;
+      offset.x = e.clientX - btnDOM.offsetLeft;
+      btnMove()
+    } else {
+      return false
+    }
+  }
+
+  function btnMouseup(e) {
+    // console.log(e)
+    isDrop = false
+  }
+
+  function btnMove (){
+    btnDOM.style.cssText = `
+    left: ${offset.x}px;
+    top: ${offset.y}px;
+    right: auto;
+    bottom: auto;
+    `
   }
 
   function tabChange (code) {
