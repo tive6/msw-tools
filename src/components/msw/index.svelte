@@ -1,10 +1,9 @@
 <svelte:options tag="msw-tools" />
 
 <div class="msw-container">
-  <div on:click={showModal}
-       on:mousedown={btnMousedown}
-       on:mousemove={btnMousemove}
-       on:mouseup={btnMouseup}
+  <div on:click|preventDefault={showModal}
+       on:mousedown|stopPropagation|preventDefault={btnMousedown}
+       on:touchstart|stopPropagation|preventDefault={btnMousedown}
        bind:this={btnDOM}
        class="msw-show">MSW</div>
 
@@ -179,10 +178,10 @@
 </div>
 
 <script>
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { slide, fade } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-  import { getList, jsonDownload, fileToJson } from "../../msw/helper";
+  import { getList, jsonDownload, fileToJson, getModels } from "../../common/helper";
   import { mocker } from "../../msw/browser.js";
   import { tabs, rests } from "./config.js";
   import {
@@ -191,7 +190,8 @@
     MSW_GLOBAL_STATUS,
     MSW_REQUEST_TIME,
     MSW_REQUEST_FAIL_RATIO,
-    MSW_RESPONSE_STATUS_CODE
+    MSW_RESPONSE_STATUS_CODE,
+    MSW_BTN_POSITION,
   } from "../../common/keys";
 
   export let base = "";
@@ -209,10 +209,13 @@
   let show = false;
   let btnDOM = null;
   let isDrop = false;
+  let isMoving = false;
   let offset = {
     x: 0,
     y: 0,
   };
+  let dropTimer = null;
+  let isMobile = getModels();
   let currentTab = "01";
   let reqTimes = localStorage.getItem(MSW_REQUEST_TIME) || 1000;
   let failRatio = localStorage.getItem(MSW_REQUEST_FAIL_RATIO) || 0;
@@ -232,6 +235,10 @@
   let fileObj = null;
   let basePath = "/";
   let skipUrls = [];
+  let btnW = 0;
+  let btnH = 0;
+  let clientW = 0;
+  let clientH = 0;
 
   $: {
     setLocalList(list)
@@ -240,6 +247,7 @@
 
   onMount(async () => {
     init();
+    initClientData();
 
     if (isProd) {
       startMocker();
@@ -247,6 +255,37 @@
 
     resetHandlers();
   });
+
+  onDestroy(()=>{
+    if (isMobile) {
+      document.removeEventListener('touchmove', mousemove);
+      document.removeEventListener('touchend', mouseup);
+    } else {
+      document.removeEventListener('mousemove', mousemove);
+      document.removeEventListener('mouseup', mouseup);
+    }
+  })
+
+  function initClientData() {
+    let local = localStorage.getItem(MSW_BTN_POSITION)
+    if (local) {
+      offset = JSON.parse(local)
+      btnMove()
+    }
+    let w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+    clientW = isMobile ? w : document.body.clientWidth
+    clientH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    btnW = btnDOM.offsetWidth
+    btnH = btnDOM.offsetHeight
+    // console.log(btnW,  btnH, clientW, clientH)
+    if (isMobile) {
+      document.addEventListener('touchmove', mousemove);
+      document.addEventListener('touchend', mouseup);
+    } else {
+      document.addEventListener('mousemove', mousemove);
+      document.addEventListener('mouseup', mouseup);
+    }
+  }
 
   function startMocker () {
     mocker.start({
@@ -290,37 +329,59 @@
   }
 
   function showModal () {
-    show = true;
+    if (!isMoving) {
+      show = true;
+    }
   }
 
   function closeModal () {
     show = false;
     resetHandlers();
   }
-  
+
   function btnMousedown(e) {
-    e = e || window.event
-    console.log(e)
+    // e = e || window.event
+    // console.log(e)
     isDrop = true
-    console.log(btnDOM)
-    // offset.x = e.clientX - box.offsetLeft;
-    // offset.x = e.clientX - box.offsetLeft;
   }
 
-  function btnMousemove(e) {
+  function mousemove(e) {
     e = e || window.event
     if (isDrop) {
-      offset.x = e.clientX - btnDOM.offsetLeft;
-      offset.x = e.clientX - btnDOM.offsetLeft;
+      isMoving = true
+      let x = 0
+      let y = 0
+      if (isMobile) {
+        x = e.targetTouches[0].clientX - btnW / 2;
+        y = e.targetTouches[0].clientY - btnH / 2;
+      } else {
+        x = e.x - btnW / 2;
+        y = e.y - btnH / 2;
+      }
+      if (x > 5 && x < (clientW-btnW - 5)) {
+        offset.x = x;
+      }
+      if (y > 5 &&  y < (clientH-btnH - 5)) {
+        offset.y = y;
+      }
+      // console.log(offset)
       btnMove()
-    } else {
-      return false
+
+      clearTimeout(dropTimer);
+      dropTimer = setTimeout(()=>{
+        isMoving = false;
+        clearTimeout(dropTimer);
+        dropTimer = null;
+      }, 300);
     }
   }
 
-  function btnMouseup(e) {
-    // console.log(e)
+  function mouseup() {
+    if (isDrop) {
+      window.localStorage.setItem(MSW_BTN_POSITION, JSON.stringify(offset))
+    }
     isDrop = false
+    // console.log('mouseup')
   }
 
   function btnMove (){

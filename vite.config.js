@@ -19,6 +19,9 @@ if (isProd) {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    // port: 3033
+  },
   build: {
     lib,
     minify: "terser",

@@ -6,7 +6,7 @@ import {
   MSW_REQUEST_TIME,
   MSW_REQUEST_FAIL_RATIO,
   MSW_RESPONSE_STATUS_CODE,
-} from '../common/keys'
+} from './keys'
 
 function getStatus(failRatio) {
   return Math.random() * 100 > failRatio ? 200 : 500
@@ -86,4 +86,13 @@ export function fileToJson(file) {
       }
     }
   })
+}
+
+
+export function getModels() {
+  let userAgentInfo = navigator.userAgent;
+  let mobileAgents = ["Android", "iPhone", "SymbianOS", "Windows Phone", "iPad", "iPod"];
+  return mobileAgents.reduce((prev, ua)=>{
+    return userAgentInfo.includes(ua) || prev
+  }, false)
 }
