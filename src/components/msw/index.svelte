@@ -1,9 +1,7 @@
 <svelte:options tag="msw-tools" />
 
 <div class="msw-container">
-  <div on:click|preventDefault={showModal}
-       on:mousedown|stopPropagation|preventDefault={btnMousedown}
-       on:touchstart|stopPropagation|preventDefault={btnMousedown}
+  <div on:click|stopPropagation={showModal}
        bind:this={btnDOM}
        class="msw-show">MSW</div>
 
@@ -214,6 +212,7 @@
     x: 0,
     y: 0,
   };
+  let offsetDown = {};
   let dropTimer = null;
   let isMobile = getModels();
   let currentTab = "01";
@@ -239,6 +238,7 @@
   let btnH = 0;
   let clientW = 0;
   let clientH = 0;
+  let eventType = isMobile ? 'touchstart' : 'mousedown'
 
   $: {
     setLocalList(list)
@@ -254,17 +254,11 @@
     }
 
     resetHandlers();
-  });
-
-  onDestroy(()=>{
-    if (isMobile) {
-      document.removeEventListener('touchmove', mousemove);
-      document.removeEventListener('touchend', mouseup);
-    } else {
-      document.removeEventListener('mousemove', mousemove);
-      document.removeEventListener('mouseup', mouseup);
+    return () => {
+      btnDOM.removeEventListener(eventType, btnMousedown)
+      mocker.stop()
     }
-  })
+  });
 
   function initClientData() {
     let local = localStorage.getItem(MSW_BTN_POSITION)
@@ -278,12 +272,16 @@
     btnW = btnDOM.offsetWidth
     btnH = btnDOM.offsetHeight
     // console.log(btnW,  btnH, clientW, clientH)
+    btnDOM.addEventListener(eventType, btnMousedown)
+  }
+
+  function eventHandle (type) {
     if (isMobile) {
-      document.addEventListener('touchmove', mousemove);
-      document.addEventListener('touchend', mouseup);
+      document[`${type}EventListener`]('touchmove', mousemove);
+      document[`${type}EventListener`]('touchend', mouseup);
     } else {
-      document.addEventListener('mousemove', mousemove);
-      document.addEventListener('mouseup', mouseup);
+      document[`${type}EventListener`]('mousemove', mousemove);
+      document[`${type}EventListener`]('mouseup', mouseup);
     }
   }
 
@@ -340,32 +338,30 @@
   }
 
   function btnMousedown(e) {
-    // e = e || window.event
-    // console.log(e)
+    e = e || window.event
     isDrop = true
+    offsetDown = {
+      ...getOffset(e)
+    };
+    eventHandle('add')
   }
 
   function mousemove(e) {
     e = e || window.event
     if (isDrop) {
-      isMoving = true
-      let x = 0
-      let y = 0
-      if (isMobile) {
-        x = e.targetTouches[0].clientX - btnW / 2;
-        y = e.targetTouches[0].clientY - btnH / 2;
-      } else {
-        x = e.x - btnW / 2;
-        y = e.y - btnH / 2;
-      }
+      let data = getOffset(e);
+      isMoving = !(offsetDown.x === data.x && offsetDown.y === data.y)
+      let x = data.x - btnW / 2;
+      let y = data.y - btnH / 2;
       if (x > 5 && x < (clientW-btnW - 5)) {
         offset.x = x;
       }
       if (y > 5 &&  y < (clientH-btnH - 5)) {
         offset.y = y;
       }
-      // console.log(offset)
-      btnMove()
+      if (isMoving) {
+        btnMove()
+      }
 
       clearTimeout(dropTimer);
       dropTimer = setTimeout(()=>{
@@ -379,6 +375,7 @@
   function mouseup() {
     if (isDrop) {
       window.localStorage.setItem(MSW_BTN_POSITION, JSON.stringify(offset))
+      eventHandle('remove')
     }
     isDrop = false
     // console.log('mouseup')
@@ -391,6 +388,16 @@
     right: auto;
     bottom: auto;
     `
+  }
+
+  function getOffset(e) {
+    return isMobile ? {
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY,
+    } : {
+      x: e.clientX,
+      y: e.clientY,
+    }
   }
 
   function tabChange (code) {

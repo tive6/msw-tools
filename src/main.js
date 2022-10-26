@@ -21,16 +21,16 @@ mocker.start({
   },
 })
 
-mocker.events.on('request:start', (req) => {
-  // console.log(req);
-})
-
-mocker.events.on('request:end', (req) => {
-  // console.log(req);
-  console.log('%s %s ended', req.method, req.url.href)
-  // mocker.printHandlers();
-  // mocker.restoreHandlers();
-  // mocker.listHandlers();
-})
+// mocker.events.on('request:start', (req) => {
+//   // console.log(req);
+// })
+//
+// mocker.events.on('request:end', (req) => {
+//   // console.log(req);
+//   console.log('%s %s ended', req.method, req.url.href)
+//   // mocker.printHandlers();
+//   // mocker.restoreHandlers();
+//   // mocker.listHandlers();
+// })
 
 export default app

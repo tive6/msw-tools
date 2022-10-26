@@ -30,6 +30,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
+    "build": "vite build",
     "builds": "vite build",
     "build:lib": "vite build --mode lib",
     "preview": "vite preview",

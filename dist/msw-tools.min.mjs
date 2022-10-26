@@ -86,12 +86,6 @@ function listen(node, event, handler, options) {
   node.addEventListener(event, handler, options);
   return () => node.removeEventListener(event, handler, options);
 }
-function prevent_default(fn) {
-  return function(event) {
-    event.preventDefault();
-    return fn.call(this, event);
-  };
-}
 function stop_propagation(fn) {
   return function(event) {
     event.stopPropagation();
@@ -220,9 +214,6 @@ function get_current_component() {
 }
 function onMount(fn) {
   get_current_component().$$.on_mount.push(fn);
-}
-function onDestroy(fn) {
-  get_current_component().$$.on_destroy.push(fn);
 }
 const dirty_components = [];
 const binding_callbacks = [];
@@ -22008,22 +21999,22 @@ const rests = [
 ];
 function get_each_context(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[74] = list[i];
-  child_ctx[75] = list;
-  child_ctx[76] = i;
+  child_ctx[78] = list[i];
+  child_ctx[79] = list;
+  child_ctx[80] = i;
   return child_ctx;
 }
 function get_each_context_1(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[77] = list[i].value;
-  child_ctx[78] = list[i].label;
+  child_ctx[81] = list[i].value;
+  child_ctx[82] = list[i].label;
   return child_ctx;
 }
 function get_each_context_2(ctx, list, i) {
   const child_ctx = ctx.slice();
-  child_ctx[81] = list[i].name;
-  child_ctx[82] = list[i].code;
-  child_ctx[76] = i;
+  child_ctx[85] = list[i].name;
+  child_ctx[86] = list[i].code;
+  child_ctx[80] = i;
   return child_ctx;
 }
 function create_if_block(ctx) {
@@ -22052,7 +22043,7 @@ function create_if_block(ctx) {
   let mounted;
   let dispose;
   let each_value_2 = tabs;
-  const get_key = (ctx2) => ctx2[82];
+  const get_key = (ctx2) => ctx2[86];
   for (let i = 0; i < each_value_2.length; i += 1) {
     let child_ctx = get_each_context_2(ctx, each_value_2, i);
     let key = get_key(child_ctx);
@@ -22135,14 +22126,14 @@ function create_if_block(ctx) {
         dispose = [
           listen(div0, "click", stop_propagation(ctx[18])),
           listen(div1, "click", stop_propagation(ctx[18])),
-          listen(a, "click", ctx[21])
+          listen(a, "click", ctx[20])
         ];
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 1048584) {
+      if (dirty[0] & 524296) {
         each_value_2 = tabs;
         each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx, each_value_2, each_1_lookup, div2, destroy_block, create_each_block_2, null, get_each_context_2);
       }
@@ -22252,7 +22243,7 @@ function create_if_block(ctx) {
 }
 function create_each_block_2(key_1, ctx) {
   let div;
-  let t_value = ctx[81] + "";
+  let t_value = ctx[85] + "";
   let t;
   let div_class_value;
   let mounted;
@@ -22263,20 +22254,20 @@ function create_each_block_2(key_1, ctx) {
     c() {
       div = element("div");
       t = text$1(t_value);
-      attr(div, "class", div_class_value = "msw-tabs-item " + (ctx[82] === ctx[3] ? "active" : ""));
+      attr(div, "class", div_class_value = "msw-tabs-item " + (ctx[86] === ctx[3] ? "active" : ""));
       this.first = div;
     },
     m(target, anchor) {
       insert(target, div, anchor);
       append(div, t);
       if (!mounted) {
-        dispose = listen(div, "click", ctx[20].bind(null, ctx[82]));
+        dispose = listen(div, "click", ctx[19].bind(null, ctx[86]));
         mounted = true;
       }
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 8 && div_class_value !== (div_class_value = "msw-tabs-item " + (ctx[82] === ctx[3] ? "active" : ""))) {
+      if (dirty[0] & 8 && div_class_value !== (div_class_value = "msw-tabs-item " + (ctx[86] === ctx[3] ? "active" : ""))) {
         attr(div, "class", div_class_value);
       }
     },
@@ -22458,7 +22449,7 @@ function create_if_block_4(ctx) {
       append(div8, a1);
       append(div8, t18);
       append(div8, input3);
-      ctx[39](input3);
+      ctx[38](input3);
       append(div11, t19);
       append(div11, div10);
       append(div10, div9);
@@ -22472,16 +22463,16 @@ function create_if_block_4(ctx) {
         if_block1.m(div11, null);
       if (!mounted) {
         dispose = [
-          listen(a0, "click", ctx[22]),
+          listen(a0, "click", ctx[21]),
+          listen(input0, "change", ctx[34]),
           listen(input0, "change", ctx[35]),
-          listen(input0, "change", ctx[36]),
-          listen(input1, "input", ctx[37]),
-          listen(input1, "focusout", ctx[24].bind(null, "time")),
-          listen(input2, "input", ctx[38]),
-          listen(input2, "focusout", ctx[24].bind(null, "fail")),
-          listen(a1, "click", ctx[26]),
-          listen(input3, "change", ctx[25]),
-          listen(a2, "click", ctx[27])
+          listen(input1, "input", ctx[36]),
+          listen(input1, "focusout", ctx[23].bind(null, "time")),
+          listen(input2, "input", ctx[37]),
+          listen(input2, "focusout", ctx[23].bind(null, "fail")),
+          listen(a1, "click", ctx[25]),
+          listen(input3, "change", ctx[24]),
+          listen(a2, "click", ctx[26])
         ];
         mounted = true;
       }
@@ -22519,7 +22510,7 @@ function create_if_block_4(ctx) {
     d(detaching) {
       if (detaching)
         detach(div12);
-      ctx[39](null);
+      ctx[38](null);
       if (if_block0)
         if_block0.d();
       if (if_block1)
@@ -22602,7 +22593,7 @@ function create_if_block_2(ctx) {
   let mounted;
   let dispose;
   let each_value_1 = rests;
-  const get_key = (ctx2) => ctx2[77];
+  const get_key = (ctx2) => ctx2[81];
   for (let i = 0; i < each_value_1.length; i += 1) {
     let child_ctx = get_each_context_1(ctx, each_value_1, i);
     let key = get_key(child_ctx);
@@ -22630,7 +22621,7 @@ function create_if_block_2(ctx) {
       attr(select, "class", "msw-method");
       attr(select, "name", "method");
       if (ctx[7] === void 0)
-        add_render_callback(() => ctx[40].call(select));
+        add_render_callback(() => ctx[39].call(select));
       attr(input, "type", "text");
       attr(input, "class", "msw-config-input");
       attr(input, "placeholder", "/paths");
@@ -22664,10 +22655,10 @@ function create_if_block_2(ctx) {
         if_block.m(div1, null);
       if (!mounted) {
         dispose = [
-          listen(select, "change", ctx[40]),
-          listen(input, "input", ctx[41]),
-          listen(a, "click", ctx[28]),
-          listen(textarea, "input", ctx[42])
+          listen(select, "change", ctx[39]),
+          listen(input, "input", ctx[40]),
+          listen(a, "click", ctx[27]),
+          listen(textarea, "input", ctx[41])
         ];
         mounted = true;
       }
@@ -22714,7 +22705,7 @@ function create_if_block_2(ctx) {
 }
 function create_each_block_1(key_1, ctx) {
   let option;
-  let t_value = ctx[78] + "";
+  let t_value = ctx[82] + "";
   let t;
   return {
     key: key_1,
@@ -22722,7 +22713,7 @@ function create_each_block_1(key_1, ctx) {
     c() {
       option = element("option");
       t = text$1(t_value);
-      option.__value = ctx[77];
+      option.__value = ctx[81];
       option.value = option.__value;
       this.first = option;
     },
@@ -22792,7 +22783,7 @@ function create_if_block_1(ctx) {
   let mounted;
   let dispose;
   let each_value = ctx[0];
-  const get_key = (ctx2) => ctx2[74].id;
+  const get_key = (ctx2) => ctx2[78].id;
   for (let i = 0; i < each_value.length; i += 1) {
     let child_ctx = get_each_context(ctx, each_value, i);
     let key = get_key(child_ctx);
@@ -22860,8 +22851,8 @@ function create_if_block_1(ctx) {
       }
       if (!mounted) {
         dispose = [
-          listen(input, "change", ctx[43]),
-          listen(input, "change", ctx[44])
+          listen(input, "change", ctx[42]),
+          listen(input, "change", ctx[43])
         ];
         mounted = true;
       }
@@ -22870,7 +22861,7 @@ function create_if_block_1(ctx) {
       if (dirty[0] & 16384) {
         input.checked = ctx2[14];
       }
-      if (dirty[0] & 1610612737 | dirty[1] & 1) {
+      if (dirty[0] & 1879048193) {
         each_value = ctx2[0];
         each_blocks = update_keyed_each(each_blocks, dirty, get_key, 1, ctx2, each_value, each_1_lookup, tbody, destroy_block, create_each_block, null, get_each_context);
       }
@@ -22889,21 +22880,21 @@ function create_if_block_1(ctx) {
 function create_each_block(key_1, ctx) {
   let tr;
   let td0;
-  let t0_value = ctx[76] + 1 + "";
+  let t0_value = ctx[80] + 1 + "";
   let t0;
   let t1;
   let td1;
-  let t2_value = ctx[74].url + "";
+  let t2_value = ctx[78].url + "";
   let t2;
   let t3;
   let td2;
-  let t4_value = ctx[74].method + "";
+  let t4_value = ctx[78].method + "";
   let t4;
   let t5;
   let td3;
   let pre;
   let t6;
-  let t7_value = JSON.stringify(JSON.parse(ctx[74].data), null, 2) + "";
+  let t7_value = JSON.stringify(JSON.parse(ctx[78].data), null, 2) + "";
   let t7;
   let t8;
   let t9;
@@ -22920,10 +22911,10 @@ function create_each_block(key_1, ctx) {
   let mounted;
   let dispose;
   function change_handler_2() {
-    return ctx[45](ctx[74], ctx[76]);
+    return ctx[44](ctx[78], ctx[80]);
   }
   function input_change_handler_1() {
-    ctx[46].call(input, ctx[75], ctx[76]);
+    ctx[45].call(input, ctx[79], ctx[80]);
   }
   return {
     key: key_1,
@@ -22986,7 +22977,7 @@ function create_each_block(key_1, ctx) {
       append(tr, td4);
       append(td4, label);
       append(label, input);
-      input.checked = ctx[74].checked;
+      input.checked = ctx[78].checked;
       append(label, t10);
       append(tr, t11);
       append(tr, td5);
@@ -22999,23 +22990,23 @@ function create_each_block(key_1, ctx) {
           listen(input, "change", change_handler_2),
           listen(input, "change", input_change_handler_1),
           listen(a0, "click", function() {
-            if (is_function(ctx[29].bind(null, {
-              ...ctx[74],
-              index: ctx[76]
+            if (is_function(ctx[28].bind(null, {
+              ...ctx[78],
+              index: ctx[80]
             })))
-              ctx[29].bind(null, {
-                ...ctx[74],
-                index: ctx[76]
+              ctx[28].bind(null, {
+                ...ctx[78],
+                index: ctx[80]
               }).apply(this, arguments);
           }),
           listen(a1, "click", function() {
-            if (is_function(ctx[30].bind(null, {
-              ...ctx[74],
-              index: ctx[76]
+            if (is_function(ctx[29].bind(null, {
+              ...ctx[78],
+              index: ctx[80]
             })))
-              ctx[30].bind(null, {
-                ...ctx[74],
-                index: ctx[76]
+              ctx[29].bind(null, {
+                ...ctx[78],
+                index: ctx[80]
               }).apply(this, arguments);
           })
         ];
@@ -23024,16 +23015,16 @@ function create_each_block(key_1, ctx) {
     },
     p(new_ctx, dirty) {
       ctx = new_ctx;
-      if (dirty[0] & 1 && t0_value !== (t0_value = ctx[76] + 1 + ""))
+      if (dirty[0] & 1 && t0_value !== (t0_value = ctx[80] + 1 + ""))
         set_data(t0, t0_value);
-      if (dirty[0] & 1 && t2_value !== (t2_value = ctx[74].url + ""))
+      if (dirty[0] & 1 && t2_value !== (t2_value = ctx[78].url + ""))
         set_data(t2, t2_value);
-      if (dirty[0] & 1 && t4_value !== (t4_value = ctx[74].method + ""))
+      if (dirty[0] & 1 && t4_value !== (t4_value = ctx[78].method + ""))
         set_data(t4, t4_value);
-      if (dirty[0] & 1 && t7_value !== (t7_value = JSON.stringify(JSON.parse(ctx[74].data), null, 2) + ""))
+      if (dirty[0] & 1 && t7_value !== (t7_value = JSON.stringify(JSON.parse(ctx[78].data), null, 2) + ""))
         set_data(t7, t7_value);
       if (dirty[0] & 1) {
-        input.checked = ctx[74].checked;
+        input.checked = ctx[78].checked;
       }
     },
     d(detaching) {
@@ -23067,17 +23058,13 @@ function create_fragment(ctx) {
     m(target, anchor) {
       insert(target, div1, anchor);
       append(div1, div0);
-      ctx[34](div0);
+      ctx[33](div0);
       append(div1, t1);
       if (if_block)
         if_block.m(div1, null);
       current = true;
       if (!mounted) {
-        dispose = [
-          listen(div0, "click", prevent_default(ctx[17])),
-          listen(div0, "mousedown", stop_propagation(prevent_default(ctx[19]))),
-          listen(div0, "touchstart", stop_propagation(prevent_default(ctx[19])))
-        ];
+        dispose = listen(div0, "click", stop_propagation(ctx[17]));
         mounted = true;
       }
     },
@@ -23115,11 +23102,11 @@ function create_fragment(ctx) {
     d(detaching) {
       if (detaching)
         detach(div1);
-      ctx[34](null);
+      ctx[33](null);
       if (if_block)
         if_block.d();
       mounted = false;
-      run_all(dispose);
+      dispose();
     }
   };
 }
@@ -23144,6 +23131,7 @@ function instance($$self, $$props, $$invalidate) {
   let isDrop = false;
   let isMoving = false;
   let offset = { x: 0, y: 0 };
+  let offsetDown = {};
   let dropTimer = null;
   let isMobile = getModels();
   let currentTab = "01";
@@ -23168,6 +23156,7 @@ function instance($$self, $$props, $$invalidate) {
   let btnH = 0;
   let clientW = 0;
   let clientH = 0;
+  let eventType = isMobile ? "touchstart" : "mousedown";
   onMount(async () => {
     init2();
     initClientData();
@@ -23175,15 +23164,10 @@ function instance($$self, $$props, $$invalidate) {
       startMocker();
     }
     resetHandlers2();
-  });
-  onDestroy(() => {
-    if (isMobile) {
-      document.removeEventListener("touchmove", mousemove);
-      document.removeEventListener("touchend", mouseup);
-    } else {
-      document.removeEventListener("mousemove", mousemove);
-      document.removeEventListener("mouseup", mouseup);
-    }
+    return () => {
+      btnDOM.removeEventListener(eventType, btnMousedown);
+      mocker.stop();
+    };
   });
   function initClientData() {
     let local = localStorage.getItem(MSW_BTN_POSITION);
@@ -23196,12 +23180,15 @@ function instance($$self, $$props, $$invalidate) {
     clientH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
     btnW = btnDOM.offsetWidth;
     btnH = btnDOM.offsetHeight;
+    btnDOM.addEventListener(eventType, btnMousedown);
+  }
+  function eventHandle(type) {
     if (isMobile) {
-      document.addEventListener("touchmove", mousemove);
-      document.addEventListener("touchend", mouseup);
+      document[`${type}EventListener`]("touchmove", mousemove);
+      document[`${type}EventListener`]("touchend", mouseup);
     } else {
-      document.addEventListener("mousemove", mousemove);
-      document.addEventListener("mouseup", mouseup);
+      document[`${type}EventListener`]("mousemove", mousemove);
+      document[`${type}EventListener`]("mouseup", mouseup);
     }
   }
   function startMocker() {
@@ -23240,28 +23227,27 @@ function instance($$self, $$props, $$invalidate) {
     resetHandlers2();
   }
   function btnMousedown(e) {
+    e = e || window.event;
     isDrop = true;
+    offsetDown = { ...getOffset(e) };
+    eventHandle("add");
   }
   function mousemove(e) {
     e = e || window.event;
     if (isDrop) {
-      isMoving = true;
-      let x = 0;
-      let y = 0;
-      if (isMobile) {
-        x = e.targetTouches[0].clientX - btnW / 2;
-        y = e.targetTouches[0].clientY - btnH / 2;
-      } else {
-        x = e.x - btnW / 2;
-        y = e.y - btnH / 2;
-      }
+      let data2 = getOffset(e);
+      isMoving = !(offsetDown.x === data2.x && offsetDown.y === data2.y);
+      let x = data2.x - btnW / 2;
+      let y = data2.y - btnH / 2;
       if (x > 5 && x < clientW - btnW - 5) {
         offset.x = x;
       }
       if (y > 5 && y < clientH - btnH - 5) {
         offset.y = y;
       }
-      btnMove();
+      if (isMoving) {
+        btnMove();
+      }
       clearTimeout(dropTimer);
       dropTimer = setTimeout(
         () => {
@@ -23276,6 +23262,7 @@ function instance($$self, $$props, $$invalidate) {
   function mouseup() {
     if (isDrop) {
       window.localStorage.setItem(MSW_BTN_POSITION, JSON.stringify(offset));
+      eventHandle("remove");
     }
     isDrop = false;
   }
@@ -23290,6 +23277,12 @@ function instance($$self, $$props, $$invalidate) {
     `,
       btnDOM
     );
+  }
+  function getOffset(e) {
+    return isMobile ? {
+      x: e.targetTouches[0].clientX,
+      y: e.targetTouches[0].clientY
+    } : { x: e.clientX, y: e.clientY };
   }
   function tabChange(code) {
     if (code === currentTab)
@@ -23529,7 +23522,7 @@ function instance($$self, $$props, $$invalidate) {
   }
   $$self.$$set = ($$props2) => {
     if ("base" in $$props2)
-      $$invalidate(33, base = $$props2.base);
+      $$invalidate(32, base = $$props2.base);
   };
   $$self.$$.update = () => {
     if ($$self.$$.dirty[0] & 1) {
@@ -23559,7 +23552,6 @@ function instance($$self, $$props, $$invalidate) {
     isProd,
     showModal,
     closeModal,
-    btnMousedown,
     tabChange,
     resetHandlers2,
     clearData,
@@ -23603,7 +23595,7 @@ class Msw extends SvelteElement {
       instance,
       create_fragment,
       safe_not_equal,
-      { base: 33 },
+      { base: 32 },
       null,
       [-1, -1, -1]
     );
@@ -23621,7 +23613,7 @@ class Msw extends SvelteElement {
     return ["base"];
   }
   get base() {
-    return this.$$.ctx[33];
+    return this.$$.ctx[32];
   }
   set base(base) {
     this.$$set({ base });
