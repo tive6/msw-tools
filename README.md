@@ -123,8 +123,8 @@ if (process.env.NODE_ENV === 'development') {
 
 ## TODO
 
+- 开启控制台的按钮可拖拽移动 `✔`
 - **Msw-Tools** 功能持续优化
-- 开启控制台的按钮可拖拽移动
 - 封装 **mswjs** 相关 API，减小打包体积
 - 规划中...
 
