@@ -119,7 +119,7 @@ if (process.env.NODE_ENV === 'development') {
 ## Reminder
 
 1. `mockServiceWorker.js` 文件只能放在静态文件目录中（`/public`），作为 `Service Worker` 服务的注册文件，不参与打包编译，只能以 **相对路径** 的形式引用，不然 `Service Worker` 服务无法注册，会导致请求拦截不生效。
-2. `service Worker` API 使用限制：只能在 **https（已安转证书）、localhost、127.0.0.1** 等服务下使用，否则控制台会出现 `[MSW] Mocking enabled (fallback mode)` 日志，也就是说 **http** 域名服务，包括本地 **IP** 服务，例如：`http://10.168.44.123:3000/` 等服务下不可用。
+2. 由于浏览器 `service Worker` API 使用限制：只能在 **https（已安转证书）、localhost、127.0.0.1** 等服务下使用，否则控制台会出现 `[MSW] Mocking enabled (fallback mode)` 日志，也就是说 **http** 域名服务，包括本地 **IP** 服务，例如：`http://10.168.44.123:3000/` 等服务下不可用。
 
 ## TODO
 
