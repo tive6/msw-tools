@@ -1,5 +1,7 @@
 <svelte:options tag="msw-tools" />
 
+<svelte:window on:keydown={handleKeydown}/>
+
 <div class="msw-container">
   <div on:click|stopPropagation={showModal}
        bind:this={btnDOM}
@@ -96,7 +98,7 @@
                 </select>
                 <input bind:value={reqUrl} type="text" class="msw-config-input"
                        placeholder="/paths">
-                <a href={null} on:click={add} class="msw-config-add">
+                <a href={null} on:click={save} class="msw-config-add">
                   保 存
                 </a>
               </div>
@@ -260,6 +262,23 @@
     }
   });
 
+  function handleKeydown(e) {
+    console.log(e)
+    if (!show) return
+    let {
+      key,
+      keyCode,
+      ctrlKey,
+    } = e
+    // Esc 关闭控制台
+    if (keyCode===27) show = false
+    // Ctrl + S 保存
+    if (currentTab === '02' && ctrlKey && keyCode === 83) {
+      save()
+      e.preventDefault()
+    }
+  }
+  
   function initClientData() {
     let local = localStorage.getItem(MSW_BTN_POSITION)
     if (local) {
@@ -277,7 +296,9 @@
 
   function eventHandle (type) {
     if (isMobile) {
-      document[`${type}EventListener`]('touchmove', mousemove);
+      document[`${type}EventListener`]('touchmove', mousemove, {
+        passive: false,
+      });
       document[`${type}EventListener`]('touchend', mouseup);
     } else {
       document[`${type}EventListener`]('mousemove', mousemove);
@@ -370,6 +391,8 @@
         dropTimer = null;
       }, 300);
     }
+    e.preventDefault()
+    // e.stopPropagation()
   }
 
   function mouseup() {
@@ -519,7 +542,7 @@
     localStorage.setItem(MSW_LIST_KEY, JSON.stringify(list));
   }
 
-  function add () {
+  function save () {
     let url = reqUrl.trim();
     let data = {
       url,

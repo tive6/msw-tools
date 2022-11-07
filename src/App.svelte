@@ -21,6 +21,9 @@
 </main>
 
 <style>
+    main {
+        height: 3000px;
+    }
     .top {
         text-align: center;
     }
