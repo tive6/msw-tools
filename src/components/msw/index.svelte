@@ -393,6 +393,7 @@
     }
     e.preventDefault()
     // e.stopPropagation()
+    // e.stopImmediatePropagation()
   }
 
   function mouseup() {
