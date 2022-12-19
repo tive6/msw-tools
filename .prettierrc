@@ -1,4 +1,11 @@
 {
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "svelteSortOrder" : "options-styles-scripts-markup",
+  "svelteStrictMode": true,
+  "svelteBracketNewLine": false,
+  "svelteAllowShorthand": false,
+  "svelteIndentScriptAndStyle": false,
+  "plugins": ["prettier-plugin-svelte"]
 }

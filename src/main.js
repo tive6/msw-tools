@@ -1,7 +1,5 @@
-// import "./app.css";
 import App from './App.svelte'
 import { mocker } from './msw/browser'
-console.log(mocker)
 
 const app = new App({
   target: document.getElementById('app'),
