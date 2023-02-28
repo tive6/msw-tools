@@ -712,9 +712,9 @@ function initParams() {
                         <!--                            class="msw-list-data"-->
                         <!--                            placeholder="Mock数据"-->
                         <!--                            rows="8"></textarea>-->
-                        <pre class="msw-list-data" contenteditable="true">
-                    {JSON.stringify(JSON.parse(item.data), null, 2)}
-                  </pre>
+                        <!-- eslint-disable -->
+                        <pre class="msw-list-data" contenteditable="true">{JSON.stringify(JSON.parse(item.data), null, 2)}</pre>
+                        <!-- eslint-disable -->
                       </td>
                       <!--                <td>{item.date}</td>-->
                       <td>
@@ -731,7 +731,6 @@ function initParams() {
                           on:click="{edit.bind(null, { ...item, index })}"
                           href="{null}"
                           class="msw-list-btn edit">编辑</a>
-                        <!--                  <br>-->
                         <a
                           on:click="{del.bind(null, { ...item, index })}"
                           href="{null}"
