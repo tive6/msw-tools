@@ -35,7 +35,6 @@
     "build:lib": "vite build --mode lib",
     "preview": "vite preview",
     "serve": "serve -s dist",
-    "postbuild": "npm run serve",
     "git": "tive git -c tive.git.config.js",
     "lint": "eslint . --ext .js,.svelte --fix"
   },
