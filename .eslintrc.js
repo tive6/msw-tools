@@ -15,7 +15,7 @@ module.exports = {
     node: true,
   },
   extends: [
-    // 'plugin:svelte/base',
+    'plugin:svelte/base',
     'plugin:svelte/recommended',
     'plugin:prettier/recommended',
     'plugin:svelte/prettier',
@@ -31,7 +31,7 @@ module.exports = {
   rules: {
     semi: ['error', 'never'], // uncomment if you want to remove ;
     'svelte/valid-compile': [
-      'warn',
+      'off',
       {
         ignoreWarnings: false,
       },

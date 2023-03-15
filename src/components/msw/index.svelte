@@ -95,7 +95,6 @@ onMount(async () => {
 })
 
 function handleKeydown(e) {
-  console.log(e)
   if (!show) return
   let { keyCode, ctrlKey } = e
   // Esc 关闭控制台
