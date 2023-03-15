@@ -1,20 +1,21 @@
-import { defineConfig, loadEnv } from "vite";
-import { svelte } from "@sveltejs/vite-plugin-svelte";
-import sveltePreprocess from "svelte-preprocess";
+import { defineConfig } from 'vite'
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import sveltePreprocess from 'svelte-preprocess'
+import eslintPlugin from 'vite-plugin-eslint'
 
-console.log("[NODE_ENV]", process.env.NODE_ENV);
-const isProd = process.env.NODE_ENV === "production";
+console.log('[NODE_ENV]', process.env.NODE_ENV)
+const isProd = process.env.NODE_ENV === 'production'
 
-let lib = {};
-let customElement = false;
+let lib = {}
+let customElement = false
 if (isProd) {
   lib = {
-    entry: "src/components/index.js",
-    name: "MswTools",
-    formats: ["umd", "es"],
-    fileName: "msw-tools.min",
-  };
-  customElement = true;
+    entry: 'src/components/index.js',
+    name: 'MswTools',
+    formats: ['umd', 'es'],
+    fileName: 'msw-tools.min',
+  }
+  customElement = true
 }
 
 // https://vitejs.dev/config/
@@ -24,7 +25,7 @@ export default defineConfig({
   },
   build: {
     lib,
-    minify: "terser",
+    minify: 'terser',
     terserOptions: {
       compress: {
         drop_console: false,
@@ -33,7 +34,7 @@ export default defineConfig({
     },
   },
   define: {
-    "process.env": {},
+    'process.env': {},
   },
   plugins: [
     svelte({
@@ -44,5 +45,8 @@ export default defineConfig({
       },
       preprocess: sveltePreprocess(),
     }),
+    eslintPlugin({
+      include: ['src/**/*.js', 'src/**/*.svelte', 'src/*.js', 'src/*.svelte'],
+    }),
   ],
-});
+})
