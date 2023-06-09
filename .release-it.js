@@ -1,4 +1,4 @@
-{
+module.exports = {
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": "angular",
@@ -6,7 +6,13 @@
     }
   },
   "git": {
-    "commitMessage": "chore: Release v${version}"
+    "tagName": "v${version}",
+    "commitMessage": "chore: Release v${version}",
+    "requireCleanWorkingDir": false,
+    "requireBranch": "master"
+  },
+  "hooks": {
+    "before:init": ["git pull origin master"],
   },
   "github": {
     "release": true,

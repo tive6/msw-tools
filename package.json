@@ -40,7 +40,8 @@
     "prepare": "husky install",
     "commit": "cz",
     "release:major": "release-it major",
-    "release": "release-it"
+    "release": "release-it",
+    "release:test": "release-it --dry-run"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.5",
