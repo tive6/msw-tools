@@ -36,20 +36,32 @@
     "preview": "vite preview",
     "serve": "serve -s dist",
     "git": "tive git -c tive.git.config.js",
-    "lint": "eslint . --ext .js,.svelte --fix"
+    "lint": "eslint . --ext .js,.svelte --fix",
+    "prepare": "husky install",
+    "commit": "cz",
+    "release:major": "release-it major",
+    "release": "release-it"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "@release-it/conventional-changelog": "^5.1.1",
     "@sveltejs/vite-plugin-svelte": "^1.0.2",
+    "commitizen": "^4.3.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-svelte": "^2.14.0",
     "eslint-plugin-svelte3": "^4.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.2.2",
     "node-sass": "^7.0.3",
     "prettier": "^2.8.1",
     "prettier-eslint": "^15.0.1",
     "prettier-plugin-svelte": "^2.8.1",
+    "release-it": "^15.11.0",
     "sass": "^1.54.9",
     "svelte": "^3.49.0",
     "svelte-eslint-parser": "^0.22.1",
@@ -71,5 +83,15 @@
     "dist/msw-tools.min.mjs",
     "dist/msw-tools.min.umd.js",
     "README.md"
-  ]
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,tsx,ts,svelte}": [
+      "npm run lint"
+    ]
+  }
 }
