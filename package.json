@@ -1,6 +1,6 @@
 {
   "name": "msw-tools",
-  "version": "1.0.52",
+  "version": "1.1.0",
   "description": "Msw-tools（Mock Service Worker Tools） is an interface data mock tool for local development and testing based on Msw.js and Svelte.",
   "main": "dist/msw-tools.min.umd.js",
   "keywords": [
@@ -59,7 +59,7 @@
     "vite-plugin-eslint": "^1.8.1"
   },
   "dependencies": {
-    "msw": "^0.47.2"
+    "msw": "^1.2.1"
   },
   "msw": {
     "workerDirectory": "public"

@@ -77,7 +77,7 @@ const app = createApp(App)
 app.use(router).use(store)
 app.mount('#app')
 
-if (process.env.NODE_ENV === 'development') {
+if (import.meta.env.MODE === 'development') {
   const MswTools = require('msw-tools')
   new MswTools()
 }
@@ -87,15 +87,22 @@ if (process.env.NODE_ENV === 'development') {
 
 ```html
 <template>
-  <msw-tools base="/" v-if="isDev" />
+  <msw-tools :base="env.baseUrl" v-if="env.isDev" />
 
   <router-view />
 </template>
 
 <script setup>
-  import { ref } from 'vue'
+  import { reactive } from 'vue'
 
-  const isDev = ref(process.env.NODE_ENV === 'development')
+  const env = reactive({
+    baseUrl: '',
+    isDev: true,
+  })
+  
+  const { BASE_URL, MODE } = import.meta.env
+  env.baseUrl = BASE_URL
+  env.isDev = MODE === 'development'
 </script>
 ```
 
@@ -111,7 +118,7 @@ if (process.env.NODE_ENV === 'development') {
 1. 访问 URL：`https://tiven.cn`， 对应的 Base：`/`， 使用 `<msw-tools base="/" />`。
 2. 访问 URL：`https://tiven.cn/service/` ，对应的 Base：`/service/`，使用 `<msw-tools base="/service/" />`。
 
-需要与打包工具和 **Router** 路由的 **base** 保持一致。请参考：
+需要与打包工具和 **Router** 路由的 **base** 和 `vite.config.js` 中配置的 **base** 保持一致。请参考：
 
 - **Vite** 的 `base` 配置：[Vite Base](https://cn.vitejs.dev/config/shared-options.html#base 'Base | Vite')
 - **Vue3** 的 `Router/base` 路由配置：[Vue3 Base](https://router.vuejs.org/zh/api/#createwebhistory 'Vue3 | createWebHistory base')
