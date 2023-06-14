@@ -72,15 +72,17 @@ import store from './store'
 import App from './App.vue'
 import './assets/css/style.scss'
 
+// 只在开发环境使用
+if (import.meta.env.MODE === 'development') {
+  const MswTools = require('msw-tools')
+  new MswTools()
+}
+
 const app = createApp(App)
 
 app.use(router).use(store)
 app.mount('#app')
 
-if (import.meta.env.MODE === 'development') {
-  const MswTools = require('msw-tools')
-  new MswTools()
-}
 ```
 
 2. 在根组件 `App.vue` 中使用 `<msw-tools />` 导入
@@ -131,7 +133,7 @@ if (import.meta.env.MODE === 'development') {
 ## TODO
 
 - 开启控制台的按钮可拖拽移动 `✔`
-- **Msw-Tools** 功能持续优化
+- **Msw-Tools** 功能持续优化 `doing`
 - 封装 **mswjs** 相关 API，减小打包体积
 - 规划中...
 
